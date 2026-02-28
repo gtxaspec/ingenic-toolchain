@@ -1,0 +1,7 @@
+load_lib gcc-dg.exp
+
+set dg-do-what-default run
+
+dg-init
+dg-runtest [lsort [glob -nocomplain $srcdir/$subdir/*.c]] "" ""
+dg-finish

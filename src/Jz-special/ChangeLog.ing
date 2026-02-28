@@ -1,0 +1,17 @@
+2017-06-29 ChengJin Wang <chengjin.wang@ingenic.com>
+
+	Fix the bug about mxu load instructions.
+
+	Jz-mxu/
+	* jzmedia.h (S32LDD): Add clobber mask "memory".
+	(S32LDDV): Likewise.
+	(S32LDDR): Likewise.
+	(S32LDIR): Likewise.
+	(S32LDI): Likewise.
+	(S32LDIVR): Likewise.
+        (S32IDIV): Likewise.
+	(S32LDDVR): Likewise.
+	(S16LDD): Likewise.
+	(S16LDI): Likewise.
+	(S8LDD): Likewise.
+	(S8LDI): Likewise.

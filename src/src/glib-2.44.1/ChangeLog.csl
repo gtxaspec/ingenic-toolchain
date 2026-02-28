@@ -1,0 +1,11 @@
+2015-06-24  Zachary T Welch  <zwelch@codesourcery.com>
+
+	* glib/glib-init.c: Fix Win32 DLL initialization.
+
+2015-06-24  Zachary T Welch  <zwelch@codesourcery.com>
+
+	* gio/gwin32networking.h: Fix broken typedefs.
+
+2015-06-24  Zachary T Welch  <zwelch@codesourcery.com>
+
+	* gio/tests/org.gtk.test.gschema.xml.orig: Remove.

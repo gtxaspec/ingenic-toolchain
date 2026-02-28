@@ -1,0 +1,10 @@
+2012-08-27  James Norris  <jnorris@codesourcery.com>
+
+        Apply pending fix from Torbjorn Granlund @ gmplib.org 
+
+	* mpn/powerpc/mode64/gcd_1.asm: Add conditional define.
+
+2012-05-28  Julian Brown  <julian@codesourcery.com>
+
+	* configfsf.guess: Import new upstream version (config.guess).
+	* configfsf.sub: Likewise (config.sub).

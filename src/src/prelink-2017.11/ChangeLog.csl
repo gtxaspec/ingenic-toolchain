@@ -1,0 +1,1098 @@
+2015-03-24  Zachary T Welch  <zwelch@codesourcery.com>
+
+	* src/prelink-win32.h, src/glob.c, src/stubs.c, src/prelink-win32.c:
+	Use #ifdef _WIN64 logic to fix build.
+	* src/prelink.h: Fix prototype of convert_format.
+	* stub-include-win32/glob.h: Fix definition for __USE_LARGEFILE64.
+
+2014-07-03  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* src/arch-arm.c (arm_prelink_conflict_rel): Always create a
+	conflict for R_ARM_TLS_DESC relocs.
+	(arm_prelink_conflict_rela): Likewise.
+
+2014-04-09  Julian Brown  <julian@codesourcery.com>
+
+	Issue #16150
+
+	* release-notes-csl.xml (Prelinker indirect function support):
+	Add note.
+
+2014-04-09  Kyle McMartin  <kmcmartin@redhat.com>
+	    Jakub Jelinek  <jakub@redhat.com>
+	    Julian Brown  <julian@codesourcery.com>
+
+	Issue #16150
+
+	* testsuite/ifunc.h: Add ARM support.
+	* src/prelink.h (R_ARM_IRELATIVE): Define.
+	* src/arch-arm.c (arm_adjust_rel, arm_adjust_rela)
+	(arm_prelink_rel, arm_prelink_rela, arm_apply_conflict_rela)
+	(arm_rela_to_rel, arm_rel_to_rela, arm_undo_prelink_rel):
+	Handle R_ARM_IRELATIVE.
+	(arm_prelink_conflict_rel, arm_prelink_conflict_rela): Handle
+	R_ARM_IRELATIVE, ifunc conflicts.
+
+2013-09-06  Catherine Moore  <clm@codesourcery.com>
+
+	* release-notes-csl.xml: New note for prelinker support
+	in MIPS Linux Lite toolchains.
+
+2013-04-19  Tom de Vries  <tom@codesourcery.com>
+
+	Issue #13843
+
+	* src/arch-mips.c (PL_ARCH(mips64)): Set rtype_class_valid field to
+	RTYPE_CLASS_VALID.
+
+2012-09-11  Joseph Myers  <joseph@codesourcery.com>
+
+	Issue #13825
+
+	* src/rtld/dl-lookup.c, src/rtld/dl-lookupX.h, src/rtld/rtld.c:
+	Use appropriate forats and types for target size_t, not unsigned
+	long.
+
+2012-09-11  Joseph Myers  <joseph@codesourcery.com>
+
+	Issue #13806
+
+	* src/arch-arm.c (arm_prelink_conflict_rel)
+	(arm_prelink_conflict_rela, arm_rel_to_rela)
+	(arm_need_rel_to_rela): Handle addends for R_ARM_TLS_DTPOFF32.
+	* src/dwarf2.c (adjust_attributes): Add parameter offset_hash.
+	Avoid adjusting same place more than once.  Adjust address for
+	DW_AT_high_pc when mapping to section.
+	(loclistoffset_hash, loclistoffset_eq, loclistoffset_del): New.
+	(adjust_dwarf2_info): Create hash for adjust_attributes.
+
+2012-05-30  Joseph Myers  <joseph@codesourcery.com>
+
+	* testsuite/cxx1.sh, testsuite/cxx2.sh, testsuite/cycle1.sh,
+	testsuite/cycle2.sh, testsuite/deps1.sh, testsuite/deps2.sh,
+	testsuite/ifunc1.sh, testsuite/ifunc2.sh, testsuite/ifunc3.sh,
+	testsuite/layout1.sh, testsuite/layout2.sh, testsuite/quick1.sh,
+	testsuite/quick2.sh, testsuite/quick3.sh, testsuite/reloc1.sh,
+	testsuite/reloc10.sh, testsuite/reloc11.sh, testsuite/reloc2.sh,
+	testsuite/reloc3.sh, testsuite/reloc4.sh, testsuite/reloc5.sh,
+	testsuite/reloc6.sh, testsuite/reloc7.sh, testsuite/reloc8.sh,
+	testsuite/reloc9.sh, testsuite/shuffle1.sh, testsuite/shuffle2.sh,
+	testsuite/shuffle3.sh, testsuite/shuffle4.sh,
+	testsuite/shuffle5.sh, testsuite/shuffle6.sh,
+	testsuite/shuffle7.sh, testsuite/shuffle8.sh,
+	testsuite/shuffle9.sh, testsuite/tls1.sh, testsuite/tls2.sh,
+	testsuite/tls3.sh, testsuite/tls4.sh, testsuite/tls5.sh,
+	testsuite/tls6.sh, testsuite/tls7.sh, testsuite/undo1.sh: Sync
+	closer with Yocto prelink, branch cross_prelink_staging, commit
+	787875c6c4becd0f20f5965ec202fa103fe356c2.
+
+2012-05-29  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/cache.c, src/dso.c, src/elf.h, src/main.c: Resync some
+	whitespace with Yocto prelink.
+
+2012-05-29  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/prelink.h (convert_format): New.
+	* src/stubs.c (format_buf, convert_format): New.
+	(error): Call convert_format.
+	* src/cache.c, src/conflict.c, src/dso.c, src/get.c, src/layout.c,
+	src/space.c: Do not condition formats on _WIN32.  Call
+	convert_format for formats using %ll and not passed through error.
+
+2012-05-28  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/prelink-win32.h (fsync): Declare.
+	* src/prelink-win32.c (fsync): Define.
+	* src/cache.c, src/dso.c, src/execstack.c, src/gather.c,
+	src/layout.c, src/verify.c: Do not condition fsync calls on
+	_WIN32.
+
+2012-05-24  Joseph Myers  <joseph@codesourcery.com>
+
+	* testsuite/ifunc1.sh, testsuite/ifunc2.sh, testsuite/ifunc3.sh:
+	Use $RUN LD_LIBRARY_PATH=. for test programs.
+
+2012-05-23  Joseph Myers  <joseph@codesourcery.com>
+
+	* Merge from Yocto prelink, branch cross_prelink, commit
+	840f3ae6a662efbbee7bc371d1cc0934675234eb.
+	* Update new files and changed code for Windows host.
+	* src/prelink-win32.h: Include elf.h.  Define _ELF_REPL_H before
+	including libelf.h.  Remove ELF definitions.
+	* src/elf.h: Disable __BEGIN_DECLS and __END_DECLS for Windows
+	host.
+	* src/rtld/rtld.c: Define and undefine basename around include of
+	libgen.h for Windows host.  Use %lx instead of %Zx printf formats.
+	* src/rtld/dl-lookupX.h: Define __attribute_noinline__ for Windows
+	host.  Use %lx instead of %Zx printf formats.
+	* stub-include-win32/libintl.h: New file.
+	* stub-include-win32/missing.h: Define __stpcpy.
+	* src/plarches.h (__start_pl_arch, __stop_pl_arch): Disable for
+	DSO_READONLY.
+	* Regenerate generated files with autoreconf -if.
+	* testsuite/cxx3.sh: Update for cross-testing infrastructure.
+
+2012-05-21  Joseph Myers  <joseph@codesourcery.com>
+
+	* Merge from Yocto prelink, branch cross_prelink_r174, commit
+	1c973105e4bad9e31f0096fd6baa41e772d17484.
+
+2012-05-02  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	* src/ld-libs.c (main): Don't canonicalize sysroot under Windows.
+
+2012-05-02  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	* src/ld-libs.c (main): Don't canonicalize sysroot under Windows.
+
+2012.06-07  Janis Johnson  <janosjo@codesourcery.com>
+
+	Backport from 2012.03:
+	2012-05-02  Maxim Kuvyrkov  <maxim@codesourcery.com>
+	* src/stubs.c (canonicalize_file_name): Fix thinko.
+
+2012-04-10  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	Issue #13054
+	* src/ld-libs.c (find_lib_by_soname): Follow ld.so's behavior of
+	pulling its name from PT_INTERP.
+
+2012-03-20  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	Issue #13054
+	* release-notes-csl.xml: Add note.
+
+2012-03-20  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	Issue #13054
+	* src/reloc.c (find_reloc_sections): Don't error due to a gap between
+	sections.
+
+2011-11-02  Meador Inge  <meadori@codesourcery.com>
+
+	CB-557
+
+	* testsuite/shuffle4.sh:  Explicitly link all shared libraries.
+	* testsuite/cxx1.sh: Likewise.
+	* testsuite/shuffle8.sh: Likewise.
+	* testsuite/tls3.sh: Likewise.
+	* testsuite/undo1.sh: Likewise.
+	* testsuite/ifunc3.sh: Likewise.
+	* testsuite/reloc3.sh: Likewise.
+	* testsuite/reloc7.sh: Likewise.
+	* testsuite/quick1.sh: Likewise.
+	* testsuite/reloc11.sh: Likewise.
+	* testsuite/shuffle3.sh: Likewise.
+	* testsuite/shuffle7.sh: Likewise.
+	* testsuite/tls2.sh: Likewise.
+	* testsuite/ifunc2.sh: Likewise.
+	* testsuite/tls6.sh: Likewise.
+	* testsuite/reloc6.sh: Likewise.
+	* testsuite/reloc10.sh: Likewise.
+	* testsuite/deps2.sh: Likewise.
+	* testsuite/shuffle2.sh: Likewise.
+	* testsuite/shuffle6.sh: Likewise.
+	* testsuite/tls1.sh: Likewise.
+	* testsuite/ifunc1.sh: Likewise.
+	* testsuite/reloc1.sh: Likewise.
+	* testsuite/tls5.sh: Likewise.
+	* testsuite/reloc5.sh: Likewise.
+	* testsuite/reloc9.sh: Likewise.
+	* testsuite/quick3.sh: Likewise.
+	* testsuite/deps1.sh: Likewise.
+	* testsuite/shuffle1.sh: Likewise.
+	* testsuite/shuffle5.sh: Likewise.
+	* testsuite/cxx2.sh: Likewise.
+	* testsuite/shuffle9.sh: Likewise.
+	* testsuite/tls4.sh: Likewise.
+	* testsuite/reloc4.sh: Likewise.
+	* testsuite/reloc8.sh: Likewise.
+	* testsuite/quick2.sh: Likewise.
+
+2011-09-30  Joseph Myers  <joseph@codesourcery.com>
+
+	* testsuite/ifunc1.sh, testsuite/ifunc2.sh, testsuite/ifunc3.sh:
+	Use $RUN_HOST, $RUN and $READELF as appropriate.
+
+2011-04-13  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #10231
+	* src/prelink.h (DT_TLSDESC_PLT, R_ARM_TLS_DESC): New macros.
+	(DSO): Add info_DT_TLSDESC_PLT member.
+	(DT_TLSDESC_PLT_BIT): New macro.
+	* src/arch-arm.c (arm_prelink_rel, arm_prelink_rela): Handle
+	R_ARM_TLS_DESC relocation.
+	(arm_prelink_conflict_rel, arm_prelink_conflict_rela): Likewise.
+	(arm_rel_to_rela): Likewise.
+	(arm_undo_prelink_rel): Likewise.
+	(arm_reloc_class): Likewise.
+	* src/dso.c (read_dynamic): Handle DT_TLSDESC_PLT dynamic tag.
+	* src/ld-libs.c (R_ARM_TLS_DESC): New macro.
+	(reloc_type_class): Handle R_ARM_TLS_DESC relocation.
+
+	* release-notes-csl.xml
+	(Prelinker new thread-local storage ABI support): New.
+
+2010-12-16  Rhonda Wittels  <rhonda@codesourcery.com>
+
+	* src/dwarf2.c (adjust_location_list): Insert 'break' after last valid
+	case.
+	* release-notes-csl.xml (Prelinker fix): Fix fall-through error.
+
+2010-09-17  Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue #8906
+	* testsuite/movelibs.sh: Set LD_WARN to 1.
+
+2010-06-02  Andrew Jenner  <andrew@codesourcery.com>
+	Andrew Stubbs <ams@codesourcery.com>
+
+	Port fix of MontaVista bug 38730 (No symbol tables for prelinked shared
+	libraries).
+
+	* src/prelink.h (SHT_MIPS_DWARF): Define.
+	* src/dso.c (adjust_dso): Handle SHT_MIPS_DWARF.
+
+2010-05-10  Paul Brook  <paul@codesourcery.com>
+
+	* src/dwarf2.c (adjust_dwarf2_frame): Skip 'S' augmentation.
+
+2009-10-15  Joseph Myers  <joseph@codesourcery.com>
+
+	Issue #6789
+
+	* m4/libelf.m4: Resync with version of code in upstream
+	aclocal.m4.
+	* aclocal.m4, configure: Regenerate.
+
+2009-09-23  Sandra Loosemore  <sandra@codesourcery.com>
+
+	Issue #6551
+
+	* release-notes-csl.xml (Prelinker update): Prelink is not
+	an FSF project.
+
+2009-09-01  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5273
+	* src/arch-mips.c (mips_prelink_reloc): Resolve
+	R_MIPS_TLS_DTPMOD32 and R_MIPS_TLS_DTPMOD64 relocations in
+	executables.
+
+2009-08-06  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/dwarf2.c (dwarf2_write_le64, dwarf2_write_be64): Shift by 56
+	not 58 for MSB.
+
+2009-04-27  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+	* release-notes-csl.xml (Prelinker fix): New.
+	* src/ld-libs.c (load_ld_so_conf): Fix a buffer overrun.  Don't
+	record empty paths.
+
+2009-04-23  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+        * testsuite/Makefile.am (check-cycle): Run the testsuite with
+        -Wl,--hash-style=gnu too.
+        * testsuite/Makefile.in: Regenerate.
+
+2009-04-23  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+	* testsuite/Makefile.am (check-cycle): Use $(TARGET) rather than
+	`uname -m' to get at the target system.
+	* testsuite/Makefile.in: Regenerate.
+
+2009-04-23  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+	Backport 2009-03-05  Maciej W. Rozycki  <macro@codesourcery.com>
+	* testsuite/Makefile.am (TARGET): New variable.
+	(TESTS_ENVIRONMENT): Include $(TARGET).
+	* testsuite/Makefile.in: Regenerate.
+
+2009-04-23  Sandra Loosemore  <sandra@codesourcery.com>
+
+	Issue #5165
+	* release-notes-csl.xml
+	(Prelinker support for the GNU hash algorithm): New.
+
+2009-04-23  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+	* src/ld-lookup.c (rtld_elf_hash): Handle an initial NULL
+	character correctly.  Reformat for consistency with
+	rtld_elf_gnu_hash().
+
+2009-04-23  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+	* src/ld-do-lookup.h (FCT): Remove the hash argument and
+	calculate the value within the function.  Call
+	do_lookup_get_first() and do_lookup_get_next() to iterate over
+	symbols.
+	* src/prelink.h (dynamic_info_is_set): Convert macro to a
+	function.  Return 1 for success rather than the bit set.
+	* src/ld-libs.h (ldlibs_link_map): Add l_gnu_hash, l_maskword64,
+	l_nmaskwords, l_shift and l_maskwords members.
+	* src/ld-libs.c (create_ldlibs_link_map): Handle the GNU hash.
+	* src/ld-lookup.c (rtld_elf_gnu_hash): New function.
+	(rtld_elf_any_hash): Likewise.
+	(rtld_elf_hash): Move above "ld-do-lookup.h" inclusions.
+	(do_lookup_get_first, do_lookup_get_next): New functions.
+	(rtld_lookup_symbol): Remove hash calculation.
+	(rtld_lookup_symbol_versioned): Likewise.
+	* src/space.c (find_readonly_space): Handle the GNU hash.
+
+2009-04-23  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+	* src/dso-readonly.c (adjust_dynamic): Correct handling of the
+	address-type dynamic section entries.
+
+2009-04-23  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #5165
+	* src/execle_open.c (execve_open): Add missing pid
+	initialisation.
+
+2009-03-19  Joseph Myers  <joseph@codesourcery.com>
+
+	Issue #4626
+
+	* src/cache.c, src/dso-readonly.c, src/dso.c, src/execstack.c,
+	src/gather.c, src/layout.c, src/mapfile.c, src/verify.c: fsync
+	file descriptors before closing them.
+
+2009-03-05  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* testsuite/shuffle9.c (nonalloced): Use % instead of @ as the
+	section type prefix.
+
+2009-03-05  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* testsuite/cxx1.sh: Expect no conflicts for
+	arm*-*-*linux-*eabi.
+	* testsuite/cxx2.sh: Likewise.
+
+2009-03-05  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* testsuite/Makefile.am (TARGET): New variable.
+	(TESTS_ENVIRONMENT): Include $(TARGET).
+	* testsuite/Makefile.in: Regenerate
+
+2008-03-04  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* testsuite/cxx2.sh, testsuite/shuffle9.sh: Use $RUN, $RUN_HOST
+	and $READELF.
+
+2009-02-19  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	Issue #4678
+	Update for new MinGW version.
+
+	* src/stubs.c: Use <search.h> instead of redefining VISIT if
+	MinGW provides VISIT.
+
+2009-01-15  Joseph Myers  <joseph@codesourcery.com>
+
+	Issue #4485
+	* src/conflict.c (prelink_build_conflicts): Use >= not > to
+	determine whether a relocation points outside the first bss
+	section.
+
+2008-11-26  Joseph Myers  <joseph@codesourcery.com>
+
+	* testsuite/reloc2.sh: Add ARM to architectures requiring PIC
+	shared libraries.
+
+2008-10-02  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* src/arch-mips.c (mips_prelink_reloc): Do not complain about
+	TLS_DTPMOD32 or TLS_DTPMOD64 relocations found in executables.
+
+2008-09-23  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/arch-arm.c (arm_prelink_conflict_rela): Correct
+	R_ARM_TLS_TPOFF32 handling.
+	* testsuite/tls3.sh: Add ARM to architectures requiring PIC shared
+	libraries.
+
+2008-09-18  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/ld-libs.c (reloc_type_class, determine_tlsoffsets): Handle
+	SPARC.
+	* src/arch-sparc64.c (sparc64_prelink_rela,
+	sparc64_prelink_conflict_rela, sparc64_undo_prelink_rela,
+	sparc64_reloc_class): Handle TLS relocations.
+	(PL_ARCH(sparc64)): Update mmap_base and mmap_end for
+	TASK_UNMAPPED_BASE change to 0xfffff80100000000.
+
+2008-09-17  Joseph Myers  <joseph@codesourcery.com>
+
+	* testsuite/tls1.sh, testsuite/tls2.sh, testsuite/tls3.sh,
+	testsuite/tls4.sh, testsuite/tls5.sh, testsuite/tls6.sh,
+	testsuite/tls7.sh: Use correct libraries and dynamic linker for
+	testing TLS availability.
+
+2008-09-17  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/Makefile.am (prelink_LDFLAGS, prelink_rtld_LDFLAGS): Do not
+	use static linking.
+	* src/Makefile.in: Regenerate.
+	* testsuite/movelibs.sh: Use correct environment variables for
+	prelink-rtld.
+
+2008-09-03  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* src/plarches.h (plarch_mips64): New declaration.
+	(__start_pl_arch): Add plarch_mips64.
+	* src/prelink.h (Elf64_Byte): New definition.
+	(R_MIPS_TLS_DTPMOD64): New macro.
+	(R_MIPS_TLS_DTPREL64): Likewise.
+	(R_MIPS_TLS_TPREL64): Likewise.
+	(RSS_UNDEF): Likewise.
+	(PL_ARCH): Use plarch_##F as the name of the struct in all
+	variants.
+	* src/reloc-info.c: New file.
+	* src/reloc-info.h: Likewise.
+	* src/arch-mips.c (mips_buf_read_addr): New function.
+	(mips_buf_write_addr): Likewise.
+	(mips_arch_adjust): Replace calls to buf_read_une32() and
+	buf_write_ne32() with ones to mips_buf_read_addr() and
+	mips_buf_write_addr() respectively.
+	(mips_read_addend): Rename to...
+	(mips_read_32bit_addend): ... this.
+	(mips_write_addend): Rename to...
+	(mips_write_32bit_addend): ... this.
+	(mips_read_64bit_addend): New function.
+	(mips_write_64bit_addend): Likewise.
+	(mips_adjust_reloc): Handle 64-bit REL relocations.  Use
+	reloc_r_sym() and reloc_r_type() in place of GELF_R_SYM() and
+	GELF_R_TYPE() respectively.
+	(mips_prelink_64bit_reloc): New function.
+	(mips_prelink_reloc): Handle 64-bit REL and GLOB_DAT relocations.
+	Handle TLS_DTPMOD64, TLS_DTPREL64 and TLS_TPREL64 relocations.
+	Use reloc_r_sym() and reloc_r_type().
+	(mips_prelink_rel): Handle 64-bit REL relocations.  Use
+	reloc_r_sym(), reloc_r_type() and reloc_r_info_ext() (replacing
+	GELF_R_INFO()).
+	(mips_prelink_conflict_reloc): Handle 64-bit REL relocations.
+	Handle TLS_DTPMOD64, TLS_DTPREL64 and TLS_TPREL64 relocations.
+	Use reloc_r_sym(), reloc_r_type() and reloc_r_info_ext().
+	(mips_arch_prelink_conflict): Use mips_buf_read_addr().  Use
+	reloc_r_info_ext().
+	(mips_apply_conflict_rela): Handle 64-bit REL relocations.  Use
+	reloc_r_type().  Use mips_buf_read_addr() and
+	mips_buf_write_addr().
+	(mips_apply_reloc): Handle 64-bit REL relocations.  Use
+	reloc_r_sym() and reloc_r_type().
+	(mips_rel_to_rela): Handle 64-bit REL relocations.  Handle
+	TLS_DTPMOD64, TLS_DTPREL64 and TLS_TPREL64 relocations.  Use
+	reloc_r_sym() and reloc_r_type().
+	(mips_rela_to_rel): Handle 64-bit REL and GLOB_DAT relocations.
+	Handle TLS_DTPMOD64, TLS_DTPREL64 and TLS_TPREL64 relocations.
+	Use reloc_r_sym() and reloc_r_type().
+	(mips_need_rel_to_rela): Use data obtained with gelfx_getshdr() to
+	determine the size of a relocation entry.  Use gelfx_getrel() to
+	retrieve them.  Handle 64-bit REL relocations.  Handle
+	TLS_DTPMOD64, TLS_DTPREL64 and TLS_TPREL64 relocations.  Use
+	reloc_r_sym() and reloc_r_type() instead of ELF32_R_SYM() and
+	ELF32_R_TYPE() respectively.
+	(mips_reloc_class): Handle TLS_DTPMOD64, TLS_DTPREL64 and
+	TLS_TPREL64 relocations.
+	(mips_arch_prelink): Use mips_buf_read_addr() and
+	mips_buf_write_addr().
+	(mips_arch_undo_prelink): Likewise.
+	(mips_undo_prelink_rel): Handle 64-bit GLOB_DAT relocations.  Use
+	reloc_r_sym(), reloc_r_type() and reloc_r_info_ext().
+	(mips64): New PL_ARCH.
+	* src/prelink.c (prelink_prepare): Handle SHT_MIPS_OPTIONS.
+	* src/conflict.c (conflict_rela_cmp_dso): New variable.
+	(conflict_rela_cmp): Use conflict_rela_cmp_dso and reloc_r_sym().
+	(get_relocated_mem): Use reloc_r_type().
+	(prelink_add_copy_rel): Use reloc_r_sym() and reloc_r_type().
+	(prelink_build_conflicts): Use reloc_r_sym(), reloc_r_type() and
+	reloc_r_info().  Pass dso to conflict_rela_cmp() through
+	conflict_rela_cmp_dso.
+	(prelink_find_copy_rela): Use reloc_r_type().
+	* src/cxx.c (remove_redundant_cxx_conflicts): Use reloc_r_sym(),
+	reloc_r_type() and reloc_r_info().
+	* src/ld-libs.c (do_rel_section): Use reloc_r_sym() and
+	reloc_r_type().
+	* src/Makefile.am (common_SOURCES): Add reloc-info.c and
+	reloc-info.h.
+	(prelink_rtld_SOURCES): Likewise.
+	* src/Makefile.in: Regenerate.
+	* configure.in: Check for the Elf64_Byte type.  Require autoconf
+	2.50.
+	* configure: Regenerate.
+
+2008-09-03  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* src/arch-mips.c (mips_undo_prelink_rel): Fix formatting.
+
+2008-09-03  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* src/arch-mips.c (mips_init_local_got_iterator): Use ELF_T_ADDR
+	to determine the width of GOT entries.
+	(mips_init_global_got_iterator): Likewise.
+
+2008-09-03  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* src/data.c (buf_read_une##nn): Fix the width of the data
+	transfer used.
+
+2008-08-05  Julian Brown  <julian@codesourcery.com>
+
+	* src/crc32.c (stdint.h): Include on Mac OS X.
+	* src/prelink.h (sys/kernel_types.h, missing.h, elf-macosx.h):
+	Include on Mac OS X.
+	* stub-include-macosx/missing.h: New.
+	* stub-include-macosx/error.h: New.
+	* stub-include-macosx/elf-macosx.h: New.
+	* stub-include-macosx/byteswap.h: New.
+	* stub-include-macosx/endian.h: New.
+	* configure.in: Support Darwin host.
+	* configure: Regenerate.
+
+2008-07-08  Mark Hatle  <mark.hatle@windriver.com>
+            Joseph Myers  <joseph@codesourcery.com>
+
+	* src/ld-libs.c: Use argp for argument parsing.  Support
+	pkgversion and bugurl.
+
+2008-07-08  Mark Hatle  <mark.hatle@windriver.com>
+
+	* src/arch-mips.c (PL_ARCH(mips)): Add dynamic_linker_alt.
+	* src/ld-libs.c (load_ld_so_conf): Add use_mipsn32 argument.
+	(main): Update call to load_ld_so_conf.
+
+2008-07-08  Mark Hatle  <mark.hatle@windriver.com>
+
+	* src/ld-libs.c (main): Handle --root option.
+
+2008-06-13  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* src/arch-arm.c (arm_prelink_conflict_rela): Remove duplicate line.
+
+	* testsuite/tls1.sh, testsuite/tls2.sh, testsuite/tls3.sh,
+	testsuite/tls4.sh, testsuite/tls5.sh, testsuite/tls6.sh,
+	testsuite/tls7.sh: Support cross-testing.
+
+2008-03-06  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* src/prelink.h (DT_MIPS_PLTNO): Delete.
+
+2008-03-06  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* src/ld-do-lookup.h: Check for STO_MIPS_PLT on MIPS.
+	* src/ld-libs.c (reloc_type_class): Handle copy and PLT relocs.
+	* src/prelink.h (R_MIPS_TLS_DTPMOD32, R_MIPS_TLS_DTPREL32)
+	(R_MIPS_TLS_TPREL32, R_MIPS_GLOB_DAT): Remove duplicate definitions.
+	(R_MIPS_COPY, R_MIPS_JUMP_SLOT, STO_MIPS_PLT, DT_MIPS_PLTGOT)
+	(DT_MIPS_PLTNO, DT_MIPS_RWPLT): Define.
+	(DSO): Add info_DT_MIPS_PLTGOT.
+	* src/arch-mips.c (mips_prelink_reloc): Handle R_MIPS_JUMP_SLOT and
+	R_MIPS_COPY.
+	(mips_prelink_conflict_reloc): Handle R_MIPS_COPY.
+	(mips_apply_conflict_rela): Handle R_MIPS_JUMP_SLOT.
+	(mips_apply_reloc): Handle R_MIPS_JUMP_SLOT and R_MIPS_COPY.
+	(mips_rel_to_rela, mips_rela_to_rel): Handle R_MIPS_COPY.
+	(mips_need_rel_to_rela): Handle R_MIPS_COPY and R_MIPS_JUMP_SLOT.
+	Correct error message.
+	(mips_reloc_class): Handle R_MIPS_COPY and R_MIPS_JUMP_SLOT.  Use
+	RTYPE_CLASS_VALID by default.
+	(mips_arch_prelink): Save .plt in gotplt[1].
+	(mips_arch_undo_prelink): Clear gotplt[1].
+	(mips_undo_prelink_rel): Undo R_MIPS_JUMP_SLOT relocations.
+	(PL_ARCH): Set R_COPY and R_JMP_SLOT.
+	* src/dso.c (read_dynamic): Save DT_MIPS_PLTGOT.
+	* config.guess, config.sub: Update.
+
+2008-01-25  Joseph Myers  <joseph@codesourcery.com>
+
+	* src/canonicalize.c: Include <libiberty.h> and <filenames.h> on
+	Windows; otherwise define IS_ABSOLUTE_PATH.
+	(canon_filename): Convert \ to / and pass filenames through
+	cygpath on Windows.  Use IS_ABSOLUTE_PATH.  Bypass most
+	canonicalization here if full path accepted by cygpath.
+	* src/main.c (get_ctime, checkinit): Disable for non-Linux.
+	(main): Do not call get_ctime or checkinit for non-Linux.  Do not
+	check /proc/sys/kernel/exec-shield for non-Linux.
+	* src/prelink-win32.c (stat64): Use cygpath on non-Cygwin.
+	* src/prelink-win32.h (struct stat64): Correct type of st_size.
+	* src/stubs.c (canonicalize_file_name): Use cygpath and convert \
+	to / on Windows.
+	* src/undoall.c (undo_one): Do not compare st_dev or st_ino on
+	Windows.
+	* src/verify.c: Include <io.h> on Windows.
+	(send_file): Set outfd to binary on Windows.
+	(prelink_verify): Do not compare st_dev or st_ino on Windows.
+	* testsuite/Makefile.am (RUN_HOST): Define.
+	(TESTS_ENVIRONMENT): Include RUN_HOST.
+	* testsuite/Makefile.in: Regenerate.
+	* testsuite/functions.sh (RUN_HOST): Define.
+	* testsuite/movelibs.sh: Use $READELF.
+	* testsuite/cxx1.sh, testsuite/cycle1.sh, testsuite/cycle2.sh,
+	testsuite/deps1.sh, testsuite/deps2.sh, testsuite/functions.sh,
+	testsuite/layout1.sh, testsuite/layout2.sh, testsuite/movelibs.sh,
+	testsuite/quick1.sh, testsuite/quick2.sh, testsuite/quick3.sh,
+	testsuite/reloc1.sh, testsuite/reloc10.sh, testsuite/reloc11.sh,
+	testsuite/reloc2.sh, testsuite/reloc3.sh, testsuite/reloc4.sh,
+	testsuite/reloc5.sh, testsuite/reloc6.sh, testsuite/reloc7.sh,
+	testsuite/reloc8.sh, testsuite/reloc9.sh, testsuite/shuffle1.sh,
+	testsuite/shuffle2.sh, testsuite/shuffle3.sh,
+	testsuite/shuffle4.sh, testsuite/shuffle5.sh,
+	testsuite/shuffle6.sh, testsuite/shuffle7.sh,
+	testsuite/shuffle8.sh, testsuite/tls1.sh, testsuite/tls2.sh,
+	testsuite/tls3.sh, testsuite/tls4.sh, testsuite/tls5.sh,
+	testsuite/tls6.sh, testsuite/tls7.sh, testsuite/undo1.sh: Use
+	$RUN_HOST.
+
+2007-07-10  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* release-notes-csl.xml: Document last change.
+
+2007-07-09  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	Issue #1816
+	* src/wrap-file.c (chroot_canon): Delete.
+	(sysroot_file_name): Use canon_filename.
+	(unsysroot_file_name): Make global.
+	(wrap_canonicalize_file_name): Delete.
+	* src/ld-libs.c (load_dsos): Use prelink_canonicalize.
+	* src/canonicalize.c (canon_filename): Make global.  Add chroot,
+	allow_last_link, allow_missing arguments.  Handle links inside
+	a chroot.  Handle canonicalizing the current directory.  Remove
+	debugging output.
+	(prelink_canonicalize): Update.  Use unsysroot_file_name.
+	* src/prelink.h (wrap_canonicalize_file_name): Delete prototype.
+
+2007-06-28  Richard Sandiford  <richard@codesourcery.com>
+
+	* testsuite/quick3.sh: Add file that was missing from last merge.
+	* testsuite/shuffle8.c, testsuite/shuffle8.sh: Likewise.
+	* testsuite/tls7.c, testsuite/tls7.sh: Likewise.
+
+2007-06-19  Joseph Myers  <joseph@codesourcery.com>
+
+	* release-notes-csl.xml: New, from getting-started.
+
+2007-03-02  Sandra Loosemore  <sandra@codesourcery.com>
+
+	* doc/prelink.8: Copy edit.  Add entry for --root option.  Update
+	list of unsupported systems.
+
+2007-02-16  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* src/mapfile.c: Remove sysroot_file_name declaration.
+	* src/prelink.h (sysroot_file_name): Declare.
+	* src/ld-libs.c (load_dsos): Take host_paths argument.  Do not attempt
+	to canonicalize host filenames within the sysroot.  Always set
+	canon_filename.
+	(process_one_dso): Update call to load_dsos.  Do not redo call to
+	wrap_canonicalize_file_name.
+
+2007-02-16  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/dso.c (adjust_dso): Remove duplicated code.
+	* src/dso-readonly.c (adjust_dso): Likewise.
+
+2006-12-08  Mark Shinwell  <shinwell@codesourcery.com>
+
+	* src/main.c (main): Use LIBEXECDIR to locate prelink-rtld.
+	* src/Makefile.am: Move prelink-rtld to libexec_PROGRAMS.
+	Define LIBEXECDIR for compilations.
+	* src/Makefile.in: Regenerate.
+
+2006-11-30  Mark Shinwell  <shinwell@codesourcery.com>
+
+	* configure.in: Recognize --with-pkgversion and ---with-bugurl.
+	* configure: Regenerate.
+	* Makefile.am (SUBDIRS): Add "doc".
+	* Makefile.in: Regenerate.
+	* doc/Makefile.in: Likewise.
+	* gelf/Makefile.in: Likewise.
+	* gelfx/Makefile.in: Likewise.
+	* gelfx32/Makefile.in: Likewise.
+	* m4/Makefile.in: Likewise.
+	* patches/Makefile.in: Likewise.
+	* src/Makefile.in: Likewise.
+	* testsuite/Makefile.in: Likewise.
+	* src/Makefile.am: Pass package version and bug URL through
+	AM_CFLAGS, together with the new EXECSTACK_PROG.
+	* src/main.c: Use PKGVERSION and REPORT_BUGS_TO.
+	* src/execstack.c: Likewise.  Also use EXECSTACK_PROG.
+
+2006-11-30  Mark Shinwell  <shinwell@codesourcery.com>
+
+	* src/prelink-win32.c (readlink): New.
+	* wrap-file.c (wrap_stat_body): New.
+	(wrap_lstat64, wrap_stat64): Use wrap_stat_body.
+
+2006-11-28  Mark Shinwell  <shinwell@codesourcery.com>
+
+	* src/layout.c (layout_libs): Add assertion to check for buffer
+	overflow.
+	* src/ld-libs.c (find_lib_in_path): Add "machine" argument.
+	Skip libraries whose ELF machine type field does not match
+	that argument.
+	(find_lib_by_soname): Add "machine" argument.  Pass it to
+	find_lib_in_path.
+	(load_dsos): Determine machine type of input DSO.  Pass it
+	to find_lib_by_soname.
+
+2006-11-28  Mark Shinwell  <shinwell@codesourcery.com>
+
+	* src/space.c (find_readonly_space): Fix bug in search for
+        PT_NULL segments.
+
+2006-11-28  Mark Shinwell  <shinwell@codesourcery.com>
+
+	* src/gather.c (maybe_pie): New.
+	(gather_func): Use it.
+
+2006-11-28  Mark Shinwell  <shinwell@codesourcery.com>
+
+	* Merge from //mirrors/prelink/trunk, revision 155266
+	(svn://sourceware.org/svn/prelink revision 150),
+	together with the following required as a consequence.
+
+	* src/canonicalize.c: Add prelink.h include directive.
+	Use wrap_readlink and wrap_lstat64.
+	* src/prelink.h: Declare wrap_readlink.
+	* src/prelink-win32.h (MAXSYMLINKS): New.
+	* src/wrap-file.c (wrap_readlink): New.
+	* src/Makefile.am: Add canonicalize.c entries.
+	* src/Makefile.in: Regenerate.
+	* testsuite/Makefile.in: Regenerate.
+
+2006-11-07  Richard Sandiford  <richard@codesourcery.com>
+
+	Merge from mips-prelinker branch:
+
+	2006-10-31  Richard Sandiford  <richard@codesourcery.com>
+
+	Resync with mainline submission:
+
+	* src/arch-mips.c (mips_write_addend): Convert addend to int32_t
+	before storing it in r_addend.
+	(mips_prelink_32bit_reloc): Replace struct prelink_info * with a
+	DSO *.  Do not add the symbol value here.
+	(mips_prelink_reloc): Call info->resolve before calling
+	mips_prelink_32bit_reloc, and before using info->resolvetls.
+	Do not expect info->resolvetls to be null.
+	(mips_prelink_conflict_reloc): Convert addend to int32_t
+	before storing it in r_addend.
+	(mips_arch_prelink_conflict, mips_rel_to_rela): Likewise.
+	* src/space.c (find_readonly_space): Reuse PT_NULL segments
+	if possible.
+
+2006-10-24  Paul Brook  <paul@codesourcery.com>
+
+	* testsuite/shuffle2.c: Use %nobits instead of @nobits
+	* testsuite/reloc5.c: Ditto.
+
+2006-10-24  Paul Brook  <paul@codesourcery.com>
+
+	* stub-include-solaris/elf-solaris.h: Add R_MIPS and DT_MIPS defies.
+
+2006-10-13  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* src/execle_open.c (execve_open): Add an error message if execve
+	fails.
+
+2006-10-13  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* src/arch-arm.c (arm_adjust_dyn, arm_adjust_rel)
+	(arm_adjust_rela, arm_prelink_rel, arm_prelink_rela)
+	(arm_apply_conflict_rela, arm_apply_rel, arm_apply_rela)
+	(arm_prelink_conflict_rel, arm_prelink_conflict_rela)
+	(arm_rel_to_rela, arm_rela_to_rel, arm_need_rel_to_rela)
+	(arm_arch_prelink, arm_arch_undo_prelink, arm_undo_prelink_rel): Use
+	endian-neutral functions.
+
+2006-10-13  Richard Sandiford  <richard@codesourcery.com>
+
+	Merge from mips-prelinker branch:
+
+	2006-10-11  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/arch-mips.c (mips_undo_prelink_rel): New function.
+	(PL_ARCH(mips)): Use it as the undo_prelink_rel callback.
+
+	2006-10-09  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (R_MIPS_GLOB_DAT): Define.
+	* src/arch-mips.c (mips_prelink_reloc): Handle R_MIPS_GLOB_DAT.
+	(mips_prelink_rel): Convert R_MIPS_REL32 relocations against global
+	symbols into R_MIPS_GLOB_DAT if the addend is zero.
+	(mips_prelink_conflict_reloc): Handle R_MIPS_GLOB_DAT.
+	(mips_rel_to_rela, mips_rela_to_rel): Likewise.
+	(mips_need_rel_to_rela): Do not return 1 for R_MIPS_REL32
+	relocations against global symbols if the addend is zero.
+
+	2006-10-06  Richard Sandiford  <richard@codesourcery.com>
+
+	* testsuite/reloc4.sh: Use -mxgot when compiling for MIPS targets.
+	* testsuite/reloc5.c (main): Make the printed inline asm globalize
+	testzero.
+
+	2006-10-05  Richard Sandiford  <richard@codesourcery.com>
+
+	* testsuite/shuffle2.c (testzero): Globalize asm definition.
+
+	2006-10-05  Richard Sandiford  <richard@codesourcery.com>
+
+	* testsuite/Makefile.am (PRELINK_PROG, PRELINK_RTLD, BUILD_CC)
+	(CC_FOR_TARGET, CXX_FOR_TARGET, STRIP_FOR_TARGET, READELF_FOR_TARGET)
+	(RUN): New macros.
+	(TESTS_ENVIRONMENT): Use $(PRELINK_PROG) to derive PRELINK,
+	$(CC_FOR_TARGET) to derive CC and CCLINK, and $(CXX_FOR_TARGET)
+	to derive CXX and CXXLINK.  Set PRELINK_RTLD, BUILD_CC, STRIP,
+	READELF and RUN.
+	* testsuite/Makefile.in: Regenerate.
+	* testsuite/movelibs.sh: Use $PRELINK_RTLD to get a list of
+	dependent libraries.
+	* testsuite/functions.sh (BUILD_CC, STRIP, READELF, RUN): Define.
+	(PRELINK_RTLD): Define.
+	* testsuite/cxx1.sh, testsuite/cycle1.sh, testsuite/cycle2.sh,
+	* testsuite/deps1.sh, testsuite/deps2.sh, testsuite/layout1.sh,
+	* testsuite/layout2.sh, testsuite/quick1.sh, testsuite/quick2.sh,
+	* testsuite/reloc1.sh, testsuite/reloc2.sh, testsuite/reloc3.sh,
+	* testsuite/reloc4.sh, testsuite/reloc5.sh, testsuite/reloc6.sh,
+	* testsuite/reloc7.sh, testsuite/reloc8.sh, testsuite/reloc9.sh,
+	* testsuite/reloc10.sh, testsuite/reloc11.sh, testsuite/shuffle1.sh,
+	* testsuite/shuffle2.sh, testsuite/shuffle3.sh, testsuite/shuffle4.sh,
+	* testsuite/shuffle5.sh, testsuite/shuffle6.sh, testsuite/shuffle7.sh,
+	* testsuite/tls1.sh, testsuite/tls2.sh, testsuite/tls3.sh,
+	* testsuite/tls4.sh, testsuite/tls5.sh, testsuite/tls6.sh,
+	* testsuite/undo1.sh: Use $BUILD_CC to compile programs for the
+	local machine.	Use $RUN to run uname and target programs.
+	Use $READELF and $STRIP instead of readelf and strip.
+
+	2006-10-05  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/space.c (find_readonly_space): Don't place the new section
+	in the PT_PHDR segment.
+
+2006-10-03  Richard Sandiford  <richard@codesourcery.com>
+
+	Merge from mips-prelinker branch:
+
+	2006-10-03  Richard Sandiford  <richard@codesourcery.com>
+
+	* configure.in (AC_CANONICAL_HOST): Remove in favour of...
+	(AC_CANONICAL_SYSTEM): ...this new directive.
+	(AC_ARG_PROGRAM): New directive.
+	* configure: Regenerate.
+	* Makefile.in: Likewise
+	* doc/Makefile.in: Likewise.
+	* gelf/Makefile.in: Likewise.
+	* gelfx/Makefile.in: Likewise.
+	* gelfx32/Makefile.in: Likewise.
+	* m4/Makefile.in: Likewise.
+	* patches/Makefile.in: Likewise.
+	* src/Makefile.am (AM_CFLAGS): Define PRELINK_PROG, PRELINK_RTLD_PROG
+	and EXEEXT.
+	(execstack_LDADD): Add -liberty.
+	* src/Makefile.in: Regenerate.
+	* src/execstack.c (program_path, prelink_path): New variables.
+	(execstack_make_rdwr): Initialize prelink_path if it has not
+	been set yet.  Use make_relative_prefix, PRELINK_PROG and EXEEXT
+	to get the full pathname of the prelink executable.  Pass this path
+	to execl() and pex_one() as the name of executable file.  Use
+	PRELINK_PROG as the program name in pex_one() error messages.
+	(main): Initialize program_path.
+	* src/stubs.c (error): Use PRELINK_PROG as the program name in
+	error messages.
+	* src/execle_open.c (execve_open): Use PRELINK_PROG as the program
+	name in pex_one() error messages.
+	* src/main.c (argp_program_version, argp_doc): Use PRELINK_PROG as
+	the program name.
+	(main): Handle empty --rtld= arguments first.  Always use
+	make_relative_prefix to work out the path of the defalt rtld
+	executable.  Also use PRELINK_RTLD and EXEEXT for this purpose.
+	Use the same code for Windows.
+	* testsuite/Makefile.in: Regenerate.
+
+	2006-10-03  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (DT_MIPS_RLD_VERSION, DT_MIPS_TIME_STAMP): Delete.
+	(DT_MIPS_ICHECKSUM, DT_MIPS_IVERSION, DT_MIPS_FLAGS): Likewise.
+	(DT_MIPS_BASE_ADDRESS, DT_MIPS_CONFLICT, DT_MIPS_LIBLIST): Likewise
+	(DT_MIPS_LOCAL_GOTNO, DT_MIPS_CONFLICTNO, DT_MIPS_LIBLISTNO): Likewise.
+	(DT_MIPS_SYMTABNO, DT_MIPS_UNREFEXTNO, DT_MIPS_GOTSYM): Likewise.
+	(DT_MIPS_HIPAGENO, DT_MIPS_RLD_MAP): Likewise.
+	* src/prelink-win32.h (R_MIPS_NONE): Import from glibc's elf.h.
+	(R_MIPS_16, R_MIPS_32, R_MIPS_REL32, R_MIPS_26, R_MIPS_HI16): Likewise.
+	(R_MIPS_LO16, R_MIPS_GPREL16, R_MIPS_LITERAL, R_MIPS_GOT16): Likewise.
+	(R_MIPS_PC16, R_MIPS_CALL16, R_MIPS_GPREL32, R_MIPS_SHIFT5): Likewise.
+	(R_MIPS_SHIFT6, R_MIPS_64, R_MIPS_GOT_DISP, R_MIPS_GOT_PAGE): Likewise.
+	(R_MIPS_GOT_OFST, R_MIPS_GOT_HI16, R_MIPS_GOT_LO16): Likewise.
+	(R_MIPS_SUB, R_MIPS_INSERT_A, R_MIPS_INSERT_B): Likewise.
+	(R_MIPS_DELETE, R_MIPS_HIGHER, R_MIPS_HIGHEST): Likewise.
+	(R_MIPS_CALL_HI16, R_MIPS_CALL_LO16, R_MIPS_SCN_DISP): Likewise.
+	(R_MIPS_REL16, R_MIPS_ADD_IMMEDIATE, R_MIPS_PJUMP): Likewise.
+	(R_MIPS_RELGOT, R_MIPS_JALR, R_MIPS_TLS_DTPMOD32): Likewise.
+	(R_MIPS_TLS_DTPREL32, R_MIPS_TLS_DTPMOD64): Likewise.
+	(R_MIPS_TLS_DTPREL64, R_MIPS_TLS_GD, R_MIPS_TLS_LDM): Likewise.
+	(R_MIPS_TLS_DTPREL_HI16, R_MIPS_TLS_DTPREL_LO16): Likewise.
+	(R_MIPS_TLS_GOTTPREL, R_MIPS_TLS_TPREL32): Likewise.
+	(R_MIPS_TLS_TPREL64, R_MIPS_TLS_TPREL_HI16): Likewise.
+	(R_MIPS_TLS_TPREL_LO16, R_MIPS_NUM, DT_MIPS_RLD_VERSION): Likewise.
+	(DT_MIPS_TIME_STAMP, DT_MIPS_ICHECKSUM, DT_MIPS_IVERSION): Likewise.
+	(DT_MIPS_FLAGS, DT_MIPS_BASE_ADDRESS, DT_MIPS_MSYM): Likewise.
+	(DT_MIPS_CONFLICT, DT_MIPS_LIBLIST, DT_MIPS_LOCAL_GOTNO): Likewise.
+	(DT_MIPS_CONFLICTNO, DT_MIPS_LIBLISTNO, DT_MIPS_SYMTABNO): Likewise.
+	(DT_MIPS_UNREFEXTNO, DT_MIPS_GOTSYM, DT_MIPS_HIPAGENO): Likewise.
+	(DT_MIPS_RLD_MAP, DT_MIPS_DELTA_CLASS): Likewise.
+	(DT_MIPS_DELTA_CLASS_NO, DT_MIPS_DELTA_INSTANCE): Likewise.
+	(DT_MIPS_DELTA_INSTANCE_NO, DT_MIPS_DELTA_RELOC): Likewise.
+	(DT_MIPS_DELTA_RELOC_NO, DT_MIPS_DELTA_SYM): Likewise.
+	(DT_MIPS_DELTA_SYM_NO, DT_MIPS_DELTA_CLASSSYM): Likewise.
+	(DT_MIPS_DELTA_CLASSSYM_NO, DT_MIPS_CXX_FLAGS): Likewise.
+	(DT_MIPS_PIXIE_INIT, DT_MIPS_SYMBOL_LIB): Likewise.
+	(DT_MIPS_LOCALPAGE_GOTIDX, DT_MIPS_LOCAL_GOTIDX): Likewise.
+	(DT_MIPS_HIDDEN_GOTIDX, DT_MIPS_PROTECTED_GOTIDX): Likewise.
+	(DT_MIPS_OPTIONS, DT_MIPS_INTERFACE, DT_MIPS_DYNSTR_ALIGN): Likewise.
+	(DT_MIPS_INTERFACE_SIZE, DT_MIPS_RLD_TEXT_RESOLVE_ADDR): Likewise.
+	(DT_MIPS_PERF_SUFFIX, DT_MIPS_COMPACT_SIZE): Likewise.
+	(DT_MIPS_GP_VALUE, DT_MIPS_AUX_DYNAMIC, DT_MIPS_NUM): Likewise.
+
+	2006-09-28  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/Makefile.am (AM_CPPFLAGS): Delete.
+	(sbin_PROGRAMS): Delete.
+	(bin_PROGRAMS): Add prelink and prelink-rtld here instead.
+	* src/Makefile.in: Regenerated.
+	* src/execstack.c (execstack_make_rdwr): Use BINDIR instead of SBINDIR.
+
+	2006-09-28  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/Makefile.am (arch_SOURCES): Add arch-mips.c
+	* src/Makefile.in: Regenerate.
+	* src/plarches.h (plarch_mips): Declare.
+	(__start_pl_arch): Add a pointer to it.
+	* src/arch-mips.c: New file.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (DT_MIPS_RLD_VERSION): Define.
+	(DT_MIPS_TIME_STAMP): Likewise.
+	(DT_MIPS_ICHECKSUM): Likewise.
+	(DT_MIPS_IVERSION): Likewise.
+	(DT_MIPS_FLAGS): Likewise.
+	(DT_MIPS_BASE_ADDRESS): Likewise.
+	(DT_MIPS_CONFLICT): Likewise.
+	(DT_MIPS_LIBLIST): Likewise.
+	(DT_MIPS_LOCAL_GOTNO): Likewise.
+	(DT_MIPS_CONFLICTNO): Likewise.
+	(DT_MIPS_LIBLISTNO): Likewise.
+	(DT_MIPS_SYMTABNO): Likewise.
+	(DT_MIPS_UNREFEXTNO): Likewise.
+	(DT_MIPS_GOTSYM): Likewise.
+	(DT_MIPS_HIPAGENO): Likewise.
+	(DT_MIPS_RLD_MAP): Likewise.
+	(R_MIPS_TLS_DTPMOD): Likewise.
+	(R_MIPS_TLS_DTPREL): Likewise.
+	(R_MIPS_TLS_TPREL): Likewise.
+	(DSO): Add info_DT_MIPS_LOCAL_GOTNO, info_DT_MIPS_GOTSYM,
+	and info_DT_MIPS_SYMTABNO.
+	* src/dso.c (read_dynamic): Initialize the new DSO fields.
+	(adjust_symbol_p): Handle stub values on MIPS.
+	* src/dso-readonly.c: As for src/dso.c.
+	* src/ld-libs.c (reloc_type_class): Handle EM_MIPS.
+	(do_mips_global_relocs): New function.
+	(handle_relocs_in_entry): Call it.
+	(determine_tlsoffsets): Handle EM_MIPS.
+	* src/prelink.c (prelink_prepare): Handle SHT_DYNAMIC and
+	SHT_MIPS_REGINFO on MIPS.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (data_iterator): New structure.
+	(init_data_iterator): Declare.
+	(get_data_from_iterator): Likewise.
+	(get_sym_from_iterator): Likewise.
+	* src/data.c (init_data_iterator): New function.
+	(get_data_from_iterator): Likewise.
+	(get_sym_from_iterator): Likewise.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (PLArch): Add an arch_prelink_conflict callback.
+	* src/conflict.c (prelink_build_conflicts): If defined, call it
+	for each dependency.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (PLArch): Add an arch_adjust callback.
+	* src/dso.c (adjust_dso): Use it, if defined.
+	* src/dso-readonly.c: As for src/dso.c.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/dso.c (adjust_dso): Fix condition for memsz adjustment.
+	* src/dso-readonly.c: As for src/dso.c
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/cache.c (prelink_load_entry): Remove second insertion into
+	prelink_devino_htab.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (adjust_symbol_p): Declare.
+	* src/dso.c (adjust_symbol_p): New function, extracted from...
+	(adjust_symtab): ...here.
+	* src/dso-readonly.c: As for src/dso.c.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/ld-libs.c (do_reloc): New function, split out from
+	do_rel_section.  Take the symbol and relocation type as arguments.
+	(do_rel_section): Call it.
+	(handle_relocs_in_entry): New function.
+	(handle_relocs): Call it.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (READWRITEPROTOSIZE): New macro.  Instantiate
+	READWRITEPROTO for big and little endian.  Add prototypes for
+	native-endian functions (buf_read_uneNN, read_uneNN, buf_write_neNN
+	and write_neNN).  Replace uses of READWRITEPROTO with uses of
+	this macro.
+	* src/data.c (BUFREADUNE, READUNE, WRITENE, BUFWRITENE): New macros.
+	(READWRITESIZE): New macro.  Instantiate READWRITE for big and
+	little endian.  Instantiate BUFREADUNE, READUNE, WRITENE
+	and BUFWRITENE.  Replace uses of READWRITE with uses of this macro.
+	* src/arch-sh.c (read_une32, write_ne32, buf_write_ne32): Delete.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* src/prelink.h (PLArch): Make the arch_prelink callback take
+	a "struct prelink_info *" argument, not a "DSO *" argument.
+	* src/prelink.c (prelink): Adjust call accordingly.
+	* src/arch-alpha.c (alpha_arch_prelink): Adjust definition accordingly.
+	* src/arch-arm.c (arm_arch_prelink): Likewise.
+	* src/arch-cris.c (cris_arch_prelink): Likewise.
+	* src/arch-i386.c (i386_arch_prelink): Likewise.
+	* src/arch-ia64.c (ia64_arch_prelink): Likewise.
+	* src/arch-ppc.c (ppc_arch_prelink): Likewise.
+	* src/arch-s390.c (s390_arch_prelink): Likewise
+	* src/arch-s390x.c (s390x_arch_prelink): Likewise
+	* src/arch-sh.c (sh_arch_prelink): Likewise.
+	* src/arch-sparc64.c (sparc64_arch_prelink): Likewise.
+	* src/arch-sparc.c (sparc_arch_prelink): Likewise
+	* src/arch-x86_64.c (x86_64_arch_prelink): Likewise.
+
+
+Local Variables:
+mode: change-log
+change-log-default-name: "ChangeLog.csl"
+End:

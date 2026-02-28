@@ -1,0 +1,26 @@
+/* Define a MXU3.1 MIPS_BUILTIN_DIRECT function __builtin_mxu3_<INSN>
+   for instruction CODE_FOR_mxu3_<INSN>.  FUNCTION_TYPE is a
+   builtin_description field.  */
+#define MXU3_1_BUILTIN(INSN, FUNCTION_TYPE)				\
+    { CODE_FOR_mxu3_ ## INSN, MIPS_FP_COND_f,				\
+    "__builtin_mxu3_" #INSN,  MIPS_BUILTIN_DIRECT,			\
+    FUNCTION_TYPE, mips_builtin_avail_mxu3_1 }
+
+/* Define a MXU3.1 MIPS_BUILTIN_DIRECT_NO_TARGET function __builtin_mxu3_<INSN>
+   for instruction CODE_FOR_mxu3_<INSN>.  FUNCTION_TYPE is a
+   builtin_description field.  */
+#define MXU3_1_NO_TARGET_BUILTIN(INSN, FUNCTION_TYPE)			\
+    { CODE_FOR_mxu3_ ## INSN, MIPS_FP_COND_f,				\
+    "__builtin_mxu3_" #INSN,  MIPS_BUILTIN_DIRECT_NO_TARGET,		\
+    FUNCTION_TYPE, mips_builtin_avail_mxu3_1 }
+
+/* For ingenic MXU3.1 instructions.  */
+MXU3_1_BUILTIN (gshufwb_1, MIPS_UV64QI_FTYPE_UV64QI_UV16SI_UV64QI_SI),
+MXU3_1_BUILTIN (gshufwb_2, MIPS_UV64QI_FTYPE_UV64QI_UV16SI_UV64QI_SI),
+MXU3_1_BUILTIN (gshufvb,  MIPS_UV64QI_FTYPE_UV64QI_UV64QI_UV64QI),
+//MXU3_BUILTIN (gshufb,  MIPS_UV64QI_FTYPE_UV64QI_UV64QI_UV64QI),
+//MXU3_BUILTIN (gshufwh, MIPS_UV32HI_FTYPE_UV32HI_UV16SI_UV32HI),
+//MXU3_BUILTIN (gshufh,  MIPS_UV32HI_FTYPE_UV32HI_UV32HI_UV32HI),
+
+/***************************************************************************/
+

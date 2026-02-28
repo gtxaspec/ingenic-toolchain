@@ -1,0 +1,4 @@
+2012-05-29  Julian Brown  <julian@codesourcery.com>
+
+	* conftools/config.guess: Import new upstream version.
+	* conftools/config.sub: Likewise.

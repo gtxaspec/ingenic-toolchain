@@ -1,0 +1,491 @@
+<!-- This file contains a series of release note fragments processed
+     by gnu-notes.  To add a note to it, use "gnu-notes -a
+     $release_config newlib".  The TARGET line should contain a
+     list of shell glob patterns for target names to which the note is
+     relevant; it may be removed if it is relevant to all targets.
+ -->
+
+      <!-- UUID: 445caead-13f0-4124-b520-e80417c84531 -->
+      <!-- TARGET: * -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: CBMR-498 -->
+      <formalpara components="license">
+        <title>Switch from CSLIBC to Newlib</title>
+        <para>
+	  &csl_prod; now uses Newlib instead of CSLIBC.  Refer to
+	  <xref linkend="sec-cslibc"/> for more information about
+	  this change.
+        </para>
+      </formalpara>
+
+      <!-- UUID: a2b564ba-2c64-4f6d-8605-0dd5dae234c1 -->
+      <!-- TARGET: * -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: -->
+      <formalpara>
+        <title>Newlib update</title>
+        <para>
+          The Newlib package has been updated to version 2.2.0.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 4c528e49-c09a-4552-ad8c-ab37584f0780 -->
+      <!-- TARGET: mips*-sde* -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: 16670 -->
+      <formalpara>
+        <title>Optimized <function>strcmp</function></title>
+        <para>
+          <function>strcmp</function> has now been optimized for speed.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 2f8c667e-bacc-43c5-9aba-270c97304730 -->
+      <!-- TARGET: * -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: -->
+      <formalpara>
+        <title>Newlib update</title>
+        <para>
+          The Newlib package has been updated to version 2.1.0, with
+          additions from the community CVS trunk as of 2014-06-03.
+        </para>
+      </formalpara>
+
+      <!-- UUID: b1f35778-e3b3-4e11-87ba-8925d7786867 -->
+      <!-- TARGET: mips-sde* -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: 15627 -->
+      <formalpara>
+        <title>New macros to access <literal>TCOpt</literal></title>
+        <para>
+	  The header file
+	  <filename class="headerfile">mips/mt.h</filename>
+	  now defines the macros
+	  <function>mips32_gettcopt</function>,
+	  <function>mips32_settcopt</function> and
+	  <function>mips32_xchtcopt</function> 
+	  to access the <literal>CP0</literal> register
+	  <literal>TCOpt</literal>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: f8690a7f-3c58-441a-9ac8-5c26d67ea481 -->
+      <!-- TARGET: mips-sde* -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: 15521 -->
+      <formalpara>
+        <title>Optimized <function>memset</function></title>
+        <para>
+          <function>memset</function> has now been optimized for speed.
+        </para>
+      </formalpara>
+
+      <!-- UUID: c0a90e86-70be-41aa-9c42-fb23d9475c44 -->
+      <!-- TARGET: * -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: issue15300 -->
+      <formalpara>
+        <title>Newlib crash fix</title>
+        <para>
+          A bug that caused Newlib to sometimes crash when used
+          with a C++ program that has more than 31 static objects
+          has been fixed.
+        </para>
+      </formalpara>
+
+      <!-- UUID: c5e58730-558c-41eb-9835-daf614471cf9 -->
+      <!-- TARGET: * -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: -->
+      <formalpara>
+        <title>Newlib update</title>
+        <para>
+          The Newlib package has been updated to version 2.0.0, with
+          additions from the community CVS trunk as of 2013-07-06.
+          This update provides various C99/POSIX cleanups
+          along with other bug fixes and enhancements.
+        </para>
+      </formalpara>
+
+      <!-- UUID: bd37e4e7-919b-4959-95f8-cbae5718da91 -->
+      <!-- TARGET: mips-sde* -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: 13860 -->
+      <formalpara>
+        <title><type>ssize_t</type> type definition bug fix</title>
+        <para>
+          The definition of the POSIX <type>ssize_t</type> data type has
+          been corrected for 64-bit targets to match the width of the ISO
+          C <type>size_t</type> type.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 3347719c-e5f6-4482-84bb-41b6301b5c1f -->
+      <!-- TARGET: powerpc* -->
+      <!-- SORT: glibc -->
+      <!-- ISSUE: -->
+      <formalpara>
+        <title>E500 <function>strcmp</function> bug fix</title>
+        <para>
+          A bug has been fixed in the E500 version of
+          the <function>strcmp</function> function.  This caused
+          unequal strings to compare as equal in some circumstances.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 02911eee-2913-42a8-b2b8-8c7f12c2f787 -->
+      <!-- TARGET: powerpc-eabi -->
+      <!-- SORT: newlib -->
+      <!-- ISSUE: 11325 -->
+      <formalpara>
+        <title><function>sqrt</function> bug fix</title>
+        <para>
+          A bug has been fixed in <function>sqrt</function> that
+          caused <code>frsqrte</code> instructions to be
+          used in multilibs for processors that do not support
+          that instruction.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 638f463a-f93b-4c0b-b887-f0ef5097725d -->
+      <!-- TARGET: powerpc-eabi powerpc-elf -->
+      <formalpara>
+        <title>Optimized square root functions</title>
+        <para>
+          The performance of the functions <function>sqrt</function>
+          and <function>sqrtf</function> has been improved
+          <phrase target-os="eabi">for the
+            following runtime libraries:
+            <itemizedlist>
+              <listitem>603 - 32-bit</listitem>
+              <listitem>e600 (Altivec) - 32-bit</listitem>
+            </itemizedlist>
+          </phrase>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 41545cdf-625f-4be7-b1eb-180a34f23cfa -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Newlib update</title>
+        <para>
+          The Newlib package has been updated to version 1.18.0, with
+          additions from the community CVS trunk as of 2010-08-12.
+          This update provides additional wide-character functions,
+          along with other bug fixes and enhancements.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 7a9982a8-a418-491a-b51c-add24500bc01 -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title><function>malloc</function> fix</title>
+        <para>
+          A bug that sometimes caused <function>free</function> to
+          dereference an invalid address has been fixed.  The bug was
+          caused by incorrect handling
+          within <function>malloc</function> of calls
+          to <function>sbrk</function> from outside
+          of <function>malloc</function>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 9a93ce68-bf80-4481-a985-a39c0dd0d268 -->
+      <!-- TARGET: powerpc-eabi -->
+      <formalpara>
+        <title>Optimized math functions for E500 cores</title>
+        <para>
+          Optimized implementations of <function>log10</function>,
+          <function>atan</function>, <function>scalbn</function>,
+          <function>modf</function>, <function>log</function>,
+          <function>ceil</function>, <function>abs</function>,
+          <function>floor</function>, and <function>atan2</function>
+          have been added for Freescale CPUs containing E500 cores, such
+          as the 8540 and the 8548.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 3f78ee0a-f082-4525-bc38-e766f3050064 -->
+      <!-- TARGET: powerpc-eabi -->
+      <formalpara>
+        <title>Optimized library functions for E500 cores</title>
+        <para>
+          Optimized implementations of <function>memcpy</function>,
+          <function>memmove</function>, <function>memset</function>,
+          <function>bzero</function>, <function>strlen</function>,
+          <function>strcmp</function>, and <function>strcpy</function>
+          have been added for Freescale CPUs containing E500 cores, such
+          as the 8540 and the 8548.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 19117d75-3b8e-454e-8289-a38c325c9271 -->
+      <!-- TARGET: arm*-*-*eabi -->
+      <formalpara>
+        <title>Optimized <function>memcpy</function></title>
+        <para>
+          The Newlib implementation of <function>memcpy</function> has
+          been optimized to increase performance on ARM targets that
+          support prefetch instructions.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 5f6211bc-5b75-46a5-be83-9fe2dbf2fb2c -->
+      <!-- TARGET: * -->
+      <formalpara features="newlib_function_sections">
+        <title>Support for controlling placement of library functions in memory</title>
+        <para>
+          Newlib is now built with
+          <option>-ffunction-sections</option> to allow you to place a
+          specific set of functions into an output section of your
+          choice.  For additional information, refer to <xref
+          linkend="fido-function-sections"/>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 6f2fc7da-04ff-4d36-8665-27f9f1f406b7 -->
+      <!-- TARGET: arm*-*-*eabi -->
+      <formalpara>
+        <title>Optimized <function>memcpy</function> and
+	  <function>memset</function> routines</title>
+        <para>
+          The Newlib implementations of <function>memcpy</function> and
+          <function>memset</function> have been optimized to increase
+          performance on ARM targets.
+          <phrase components="license" features="armfloat">
+            The NEON-enabled libraries available to Professional Edition
+            subscribers also make use of vector instructions for
+            additional performance improvements.
+          </phrase>
+        </para>
+      </formalpara>
+
+      <!-- UUID: 8720d6b5-ae4a-4cae-88df-451301194b31 -->
+      <!-- TARGET: mips-sde* -->
+      <formalpara>
+        <title>Optimized string and memory functions</title>
+        <para>
+	  The Newlib implementations of
+	  <function>memcpy</function>, <function>memcmp</function>,
+	  <function>bzero</function>, <function>strcmp</function>,
+	  <function>strcpy</function>, <function>strlen</function>
+	  and <function>memset</function> have been replaced with the
+	  versions of these functions that were formerly included with
+	  the SDE C library, and are optimized specifically for MIPS targets.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 05190f27-49be-45d4-9c12-46fabee0557f -->
+      <!-- TARGET: mips-sde* -->
+      <formalpara>
+	<title>Optimized math routines</title>
+	<para>
+	  The Newlib implementations of
+	  <function>rint</function>, <function>drem</function>,
+	  <function>sqrtf</function> and <function>sqrt</function>
+	  have been replaced with the versions of these functions that were
+	  formerly included with the SDE math library, and are
+	  optimized specifically for MIPS targets.
+	</para>
+      </formalpara> 
+
+      <!-- UUID: 72cb3cc4-040d-4404-a126-883bd01bb929 -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Newlib update</title>
+        <para>
+	  The Newlib package has been updated to version 1.17.0, with
+	  additions from the community CVS trunk as of 2009-02-24.  This
+	  update provides new C99 wide-character functions; POSIX regex
+	  functions; string-function performance improvements; an
+	  improved <function>sprintf</function> implementation that no
+	  longer requires I/O functions like <function>_open</function>,
+	  <function>_write</function>, and <function>_close</function>;
+	  and other bug fixes and improvements. For more information,
+	  refer to the Newlib C Library and Math Library manuals, and to
+	  the Newlib web site at
+	  <uri>http://sourceware.org/newlib/</uri>.
+	</para>
+      </formalpara>
+
+      <!-- UUID: eda44c0c-b5d5-4546-b411-a670f005eb45 -->
+      <!-- TARGET: powerpc*-eabi arm*-*-*eabi -->
+      <formalpara>
+        <title>Portable object file fixes</title>
+        <para>
+	  Bugs in the <filename>limits.h</filename>,
+	  <filename>stdlib.h</filename>, <filename>time.h</filename>,
+	  and <filename>setjmp.h</filename> headers have been fixed.
+	  These bugs caused compilation errors when
+	  using <option>-D_AEABI_PORTABILITY_LEVEL=1</option>, as
+	  described in <xref linkend="portable-objects"/>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 5caedfac-2b5b-47bb-bc51-586f1aca5563 -->
+      <!-- TARGET: mips-*-elf -->
+      <formalpara>
+        <title>Newlib</title>
+        <para>
+	  The MIPS SDE Library has been replaced by the Newlib C
+	  library.  This change should be transparent for applications
+	  not using SDE-specific features.  Note that the related SDE
+	  toolkit, examples, and documentation have also been removed
+	  from this release.
+        </para>
+      </formalpara>
+
+      <!-- UUID: af03fb0c-cc0f-4038-9329-60b4b1197e35 -->
+      <!-- TARGET: powerpc*-eabi arm*-*-*eabi -->
+      <formalpara>
+        <title>Object file portability</title>
+        <para>
+          &csl_sgxx; for &csl_target_arch_name; EABI can now produce object files that
+          are link-compatible with the GNU C Library included with
+          &csl_sgxx; for &csl_target_arch_name; GNU/Linux.
+          <phrase target-arch="arm">
+            These object files are additionally link-compatible with
+            other ARM C Library ABI-compliant static linking environments
+            and toolchains.
+          </phrase>
+          For additional information, refer to <xref linkend="portable-objects"/>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 83289b99-f135-44a3-b169-ca67171c4dbe -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Newlib manuals</title>
+        <para>
+	  The documentation packaged with &csl_prod; now includes the
+	  Newlib C Library and Math Library manuals.
+        </para>
+      </formalpara>
+
+      <!-- UUID: f33df69e-9036-4e24-a3af-0224045d80d4 -->
+      <!-- TARGET: fido*-* -->
+      <formalpara>
+        <title>C library reentrancy</title>
+        <para>
+          The C library is now reentrant.
+        </para>
+      </formalpara>
+
+      <!-- UUID: eb4fae0e-613a-42b3-a772-35a053525c8b -->
+      <formalpara>
+       <title><constant>SIZE_MIN</constant> and <constant>SIZE_MAX</constant></title>
+       <para>
+	<constant>SIZE_MAX</constant> is now correctly defined in
+	<filename class="headerfile">stdint.h</filename> to be an
+	unsigned quantity equal to the maximum possible value of a
+	<type>size_t</type>, as required by the C standard.  In
+	addition, the definition of <constant>SIZE_MIN</constant> has
+	been removed, as this constant is not prescribed by the C
+	standard.
+       </para>
+      </formalpara>
+
+      <!-- UUID: cf25c17d-5cdc-4f81-980e-823a7f17efde -->
+      <!-- TARGET: m68k-* -->
+      <formalpara>
+        <title>ColdFire ROM script error</title>
+        <para>
+          A syntax error is fixed that prevented the ColdFire ROM
+          scripts working for systems with ColdFire Flash Modules.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 9628f4dd-e7f2-4374-9a8c-7b097c176cb2 -->
+      <!-- TARGET: arm*-eabi -->
+      <formalpara>
+        <title>VFP initialization code</title>
+        <para>
+	  &csl_sgxx; now includes startup code to enable VFP coprocessors.
+	  This can be selected with <option>-T rdimonvfp-ram.ld</option>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: c7e347e7-5800-4b59-95ba-ecef3a356b9b -->
+      <!-- TARGET: fido*-* m68k-*elf -->
+      <formalpara>
+        <title>Improved memcpy and memset</title>
+        <para>
+          <function>memcpy</function> and <function>memset</function>
+          have been optimized for better performance.
+        </para>
+      </formalpara>
+
+      <!-- UUID: b130e2ab-430e-4e1d-ad8e-73c3c4ca88d5 -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>
+         Execution order of <code>.fini_array</code> entries
+        </title>
+        <para>
+          For ELF targets using <code>.init_array</code> and
+          <code>.fini_array</code> sections, the functions whose
+          addresses are stored in <code>.fini_array</code> are
+          now run in reverse order (i.e., the last function in the
+          array is run first), as required by the ELF specification.
+          Previous releases ran the entries in forward order (i.e.,
+          the first function in the array was run first).
+        </para>
+      </formalpara>
+
+      <!-- UUID: 4d2029cf-f2a4-452d-b660-7b678f52a911 -->
+      <!-- TARGET: m68k-* -->
+      <formalpara>
+        <title>Using internal SRAM</title>
+        <para>The linker scripts now define additional memory regions
+        such as <literal>.RAMBAR</literal>.  Objects can be placed in
+        these regions by using the
+        <code>__attribute__ ((section(".RAMBAR")))</code>
+        attribute. Program start up initializes the contents of these
+        regions.</para>
+      </formalpara>
+      <formalpara>
+        <title>Linker scripts</title>
+        <para>Board linker scripts are now only placed in the default
+        multilib directory, or the multilib directory for the board in
+        question.  Therefore if you use an incorrect
+        <option>-mcpu</option> option when compiling, you will get a link
+        error rather than a program that will not run on your target
+        board.</para>
+      </formalpara>
+
+      <!-- UUID: 0c1af18a-2ece-4763-9149-8253d5baf73e -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>
+         Handling of out-of-range values by <function>strtof</function>
+        </title>
+        <para>
+          The <function>strtof</function> function now sets
+          <varname>errno</varname> to <constant>ERANGE</constant> when
+          the input is not representable as a <type>float</type>, as
+          required by the ISO C standard.
+        </para>
+      </formalpara>
+
+      <!-- UUID: ca29af14-84a0-4eff-9883-4ea217fe3d88 -->
+      <!-- TARGET: m68k-* -->
+      <formalpara>
+        <title>New board support</title>
+        <para>
+          Support has been added for Cobra52235, Cobra5272, Cobra5282, Cobra5329,
+          Cobra5475 and Cobra5485 boards.
+        </para>
+      </formalpara>
+
+      <!-- UUID: fae7043e-71df-4a57-89e1-158c65741a34 -->
+      <!-- TARGET: arm-* -->
+      <formalpara>
+        <title>Semihosting compatibility improvements</title>
+        <para>
+          The semihosting I/O implementation has been improved to 
+          work with a wider range of simulators and host implementations.
+        </para>
+      </formalpara>
+
+<!-- Release notes end here.  -->

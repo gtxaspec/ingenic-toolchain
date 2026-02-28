@@ -1,0 +1,48 @@
+2016-02-19 ChengLulu  <lulu.cheng@ingenic.com>
+	Add two buildshells.
+
+	* mipslinuxmingw.sh : Buildshell for mips linux mingw32.
+	* mipssdeelfmingw.sh : Buildshell for mips sdeelf mingw32.
+
+2015-12-15 LiuQian	<qian.liu@ingenic.com>
+	* 201505: Merge sourcery 201505 elf/linux release
+
+2015-11-25 LiuQian	<qian.liu@ingenic.com>
+	* mipslinux.sh : build gdb and gdbserver from binutils source
+	* mipssdeelf.sh : likewise.
+
+2015-11-25 LiuQian	<qian.liu@ingenic.com>
+	* mipslinux.sh : remove --with-tune=m4k for gcc because of m4k
+	enable branch-likely
+	* mipssdeelf.sh : likewise.
+
+2015-11-11  LiuQian	<qian.liu@ingenic.com>
+	* mipslinux.sh : add finalize_libc_installation, remove and strip tasks.
+	* mipslinux-4.9.2.sh : Add file. likewise mipslinux.sh
+
+2015-11-03  LiuQian	<qian.liu@ingenic.com>
+	Reset mipsLinux_r2.0.sh to tag MIPS-Linux_R2.1(1be03e8)
+	Add mipslinux.sh and mipssdeelf.sh for development.
+
+	* mipslinux.sh: merge all update since tag MIPS-Linux_R2.1.
+	Because of gcc update to 4.9.2, specify gcc --with-tune=m4k for optimize.
+	* mipssdeelf.sh: merge all update since tag MIPS-Elf_R2.1. likewise.
+	* jz-mips-4.7.2-build31* : remove to lagecy
+
+2015-01-19  LiuQian    <qian.liu@ingenic.com>
+	Add mips-sde-elf-* build script
+
+	* mips-sde-elf-201209.98.sh: mips-sde-elf toolchains default build script
+
+2015-01-14  ChengLulu  <lulu.cheng@ingenic.com>
+
+	Add these buildshells.
+
+	* 32-def-arch-MIPS32.sh:Default arch is mips32, not mips32r2.Used on 32bit host.
+	* 64-def-arch-MIPS32.sh:Default arch is mips32, not mips32r2.Used on 64bit host.
+	* 32-uclibc-necessary-config.sh (UCLIBC_HAS_FENV=y,UCLIBC_HAS_IPV6=y)
+	(UCLIBC_HAS_FULL_RPC=y,UCLIBC_HAS_FOPEN_EXCLUSIVE_MODE=y):On the base of
+	32-defEL-uclibc-jz-mips-4.7.2.sh, add some configs for uclibc.
+	* 64-uclibc-necessary-config.sh (UCLIBC_HAS_FENV=y,UCLIBC_HAS_IPV6=y)
+	(UCLIBC_HAS_FULL_RPC=y,UCLIBC_HAS_FOPEN_EXCLUSIVE_MODE=y):On the base of
+	64-defEL-uclibc-jz-mips-4.7.2.sh, add some configs for uclibc.

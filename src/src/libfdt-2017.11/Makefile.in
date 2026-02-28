@@ -1,0 +1,55 @@
+# -*- mode: Makefile -*-
+
+bindir = @bindir@
+srcdir = @srcdir@
+host = @host@
+build = @build@
+exec_prefix = @exec_prefix@
+includedir = @includedir@
+libdir = @libdir@
+prefix = @prefix@
+
+CC = @CC@
+AR = @AR@
+RANLIB = @RANLIB@
+CFLAGS = @CFLAGS@
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+CDEFINES = -DPKGVERSION="\"@PKGVERSION@\"" \
+	$(if @BUGURL@,-DBUG_URL="\"@BUGURL@\"")
+ALL_CFLAGS = $(CFLAGS) $(CPPFLAGS) $(CDEFINES)
+
+VPATH = @srcdir@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+
+EXEEXT = @EXEEXT@
+OBJEXT = @OBJEXT@
+
+# Makefile.libfdt
+#
+# This is not a complete Makefile of itself.  Instead, it is designed to
+# be easily embeddable into other systems of Makefiles.
+#
+LIBFDT_INCLUDES = fdt.h libfdt.h libfdt_env.h
+LIBFDT_SRCS = fdt.c fdt_ro.c fdt_wip.c fdt_sw.c fdt_rw.c fdt_strerror.c
+LIBFDT_OBJS = $(LIBFDT_SRCS:%.c=%.o)
+
+LIBFDT_A = libfdt.a
+
+all:: $(LIBFDT_A)
+
+install::
+	$(INSTALL) -d $(DESTDIR)$(libdir)
+	$(INSTALL) -d $(DESTDIR)$(includedir)
+	$(INSTALL_DATA) $(LIBFDT_A) $(DESTDIR)$(libdir)
+	$(INSTALL_DATA) $(addprefix $(srcdir)/,$(LIBFDT_INCLUDES)) $(DESTDIR)$(includedir)
+
+$(LIBFDT_A): $(LIBFDT_OBJS)
+	$(AR) rc $@ $(LIBFDT_OBJS)
+	$(RANLIB) $@
+
+%.o: %.c
+	$(CC) -I$(srcdir) $(ALL_CFLAGS) -o $@ -c $<

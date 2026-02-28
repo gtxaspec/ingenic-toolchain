@@ -1,0 +1,19 @@
+2015-08-13  Catherine Moore  <clm@codesourcery.com>
+
+	* gcc-fbench/fbench.c: Fix warnings introduced in GCC 5.x.
+
+2009-08-14  Catherine Moore  <clm@codesourcery.com>
+
+	* gcc-fbench/fbench.exp: Fix directory.
+
+2009-07-28  Catherine Moore  <clm@codesourcery.com>
+
+	* fbench.c: Delete.
+	* Makefile: Delete.
+	* gcc-fbench: New directory.
+	* gcc-fbench/fbench.exp: New.
+	* gcc-fbench/fbench.c: New.
+
+2009-07-24  Catherine Moore  <clm@codesourcery.com>
+
+	* fbench.c: New.

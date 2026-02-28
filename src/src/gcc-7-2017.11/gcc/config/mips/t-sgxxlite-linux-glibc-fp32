@@ -1,0 +1,13 @@
+MULTILIB_OPTIONS = muclibc/mglibc msoft-float/mfp64
+MULTILIB_DIRNAMES = uclibc glibc
+MULTILIB_DIRNAMES += soft-float fp64
+MULTILIB_MATCHES = EL=mel EB=meb mfp64=mmsa
+
+MULTILIB_OSDIRNAMES  = muclibc=!uclibc
+MULTILIB_OSDIRNAMES += mglibc=!glibc
+MULTILIB_OSDIRNAMES += muclibc/mfp64=!uclibc/fp64
+MULTILIB_OSDIRNAMES += muclibc/msoft-float=!uclibc/soft-float
+MULTILIB_OSDIRNAMES += mglibc/mfp64=!glibc/fp64
+MULTILIB_OSDIRNAMES += mglibc/msoft-float=!glibc/soft-float
+MULTILIB_OSDIRNAMES += msoft-float=!glibc/soft-float
+MULTILIB_OSDIRNAMES += mfp64=!glibc/fp64

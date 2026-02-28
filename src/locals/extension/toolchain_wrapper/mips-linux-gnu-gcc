@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Copyright (C) 2020 Ingenic Semiconductor CO.,LTD.
+# Liu Tianyang <rick.tyliu@ingenic.com>
+
+FP_DFT="x"
+LIB_DFT="x"
+
+NAME=$(basename "$0")
+DIR="$(cd "$(dirname "$0")" && pwd)"
+
+if [ "$NAME" != "mips-linux-gnu-gcc"       ] && 
+   [ "$NAME" != "mips-linux-gnu-gcc-7.2.0" ] &&
+   [ "$NAME" != "mips-linux-gnu-g++"       ] &&
+   [ "$NAME" != "mips-linux-gnu-cpp"       ] &&
+   [ "$NAME" != "mips-linux-gnu-gfortran"  ]; then
+    $DIR/../$NAME $*
+else
+    for param in "$@"
+    do 
+        if [ "$param" == "-mfp32" ] || [ "$param" == "-mfp64" ]; then
+            FP_DFT=""
+        elif [ "$param" == "-muclibc" ] || [ "$param" == "-mglibc" ]; then
+            LIB_DFT=""
+        fi
+    done
+    
+    if [ $FP_DFT == "x" ]; then
+        FP_DFT=""
+    fi
+    if [ $LIB_DFT == "x" ]; then
+        LIB_DFT=""
+    fi
+    $DIR/../$NAME $FP_DFT $LIB_DFT $*
+fi

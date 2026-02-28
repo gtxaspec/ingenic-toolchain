@@ -1,0 +1,15 @@
+load_generic_config "unix"
+
+process_multilib_options ""
+
+set_board_info compiler "/home/toolchains/r2.1/install/bin/mips-linux-gnu-gcc"
+set_board_info c++compiler "/home/toolchains/r2.1/install/bin/mips-linux-gnu-g++"
+
+set_board_info rsh_prog /usr/bin/ssh
+set_board_info rcp_prog /usr/bin/scp
+set_board_info protocol standard
+
+set_board_info hostname 192.168.4.167
+set_board_info sockethost "192.168.4.167:"
+set_board_info username root
+

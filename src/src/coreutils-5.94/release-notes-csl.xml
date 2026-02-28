@@ -1,0 +1,22 @@
+<!-- This file contains a series of release note fragments processed
+     by gnu-notes.  To add a note to it, use "gnu-notes -a
+     $release_config coreutils".  The TARGET line should contain a
+     list of shell glob patterns for target names to which the note is
+     relevant; it may be removed if it is relevant to all targets.
+ -->
+
+      <!-- UUID: cd703bbf-f51a-4289-aedd-88ea39973c1a -->
+      <!-- TARGET: * -->
+      <!-- SORT: none -->
+      <!-- ISSUE: issue15027 -->
+      <formalpara hosts="windows">
+        <title><literal>cs-rm -f</literal> bug fix</title>
+        <para>
+          A bug that caused <literal>cs-rm -f</literal> on
+          Windows hosts to incorrectly issue an error when
+          passed a glob pattern that matched nothing has been
+          fixed.
+        </para>
+      </formalpara>
+
+<!-- Release notes end here.  -->

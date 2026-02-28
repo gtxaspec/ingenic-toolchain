@@ -1,0 +1,123 @@
+From bd03fcc925d8969a41d1d640f2029664914d5153 Mon Sep 17 00:00:00 2001
+From: Liu Qian <qian.liu@ingenic.com>
+Date: Mon, 27 Nov 2017 15:14:49 +0800
+Subject: [PATCH] Uboot build patch for gcc-7.2
+
+---
+ arch/mips/config.mk           |  2 +-
+ include/configs/dorado.h      |  8 +++---
+ include/linux/compiler-gcc5.h | 65 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 70 insertions(+), 5 deletions(-)
+ create mode 100644 include/linux/compiler-gcc5.h
+
+diff --git a/arch/mips/config.mk b/arch/mips/config.mk
+index 586fc67..1f27268 100644
+--- a/arch/mips/config.mk
++++ b/arch/mips/config.mk
+@@ -63,7 +63,7 @@ PLATFORM_CPPFLAGS += -DCONFIG_MIPS -D__MIPS__
+ # used as gp.
+ #
+ PLATFORM_CPPFLAGS		+= -G 0 $(ENDIANNESS)
+-PLATFORM_CPPFLAGS		+= -msoft-float
++PLATFORM_CPPFLAGS		+= -msoft-float -std=gnu89
+ PLATFORM_LDFLAGS		+= -G 0 -static -n -nostdlib $(ENDIANNESS)
+ PLATFORM_RELFLAGS		+= -ffunction-sections -fdata-sections
+ LDFLAGS_FINAL			+= --gc-sections
+diff --git a/include/configs/dorado.h b/include/configs/dorado.h
+index 9f024d9..96e5f83 100644
+--- a/include/configs/dorado.h
++++ b/include/configs/dorado.h
+@@ -129,16 +129,16 @@
+ #endif
+ 
+ #ifdef CONFIG_BOOT_ANDROID
+-  #define CONFIG_BOOTARGS BOOTARGS_COMMON " ip=off root=/dev/ram0 rw rdinit=/init"
++#define CONFIG_BOOTARGS BOOTARGS_COMMON " ip=192.168.4.168:192.168.4.13:192.168.4.1:255.255.255.0 nfsroot=192.168.4.13:/home/nfsroot/fpga/user/qianliu/rootfs/test rw"
+ #else
+   #ifdef CONFIG_SPL_MMC_SUPPORT
+ /*    #define CONFIG_BOOTARGS BOOTARGS_COMMON " ip=192.168.10.205:192.168.10.1:192.168.10.1:255.255.255.0 nfsroot=192.168.8.3:/home/nfsroot/bliu/buildroot rw" */
+ /*	#define CONFIG_BOOTARGS BOOTARGS_COMMON " ip=off root=/dev/ram0 rw rdinit=/linuxrc" */
+-	#define CONFIG_BOOTARGS BOOTARGS_COMMON " rootdelay=2 init=/linuxrc root=/dev/mmcblk0p7 rw"
++#define CONFIG_BOOTARGS BOOTARGS_COMMON " ip=192.168.4.168:192.168.4.13:192.168.4.1:255.255.255.0 nfsroot=192.168.4.13:/home/nfsroot/fpga/user/qianliu/rootfs/test rw"
+   #elif defined(CONFIG_JZ_NAND_MGR)
+-        #define CONFIG_BOOTARGS BOOTARGS_COMMON " root=/dev/ram0 rw rdinit=/linuxrc"
++#define CONFIG_BOOTARGS BOOTARGS_COMMON " ip=192.168.4.168:192.168.4.13:192.168.4.1:255.255.255.0 nfsroot=192.168.4.13:/home/nfsroot/fpga/user/qianliu/rootfs/test rw"
+   #else
+-	#define CONFIG_BOOTARGS BOOTARGS_COMMON " ubi.mtd=2 root=ubi0:ndsystem rootfstype=ubifs rw"
++#define CONFIG_BOOTARGS BOOTARGS_COMMON " ip=192.168.4.168:192.168.4.13:192.168.4.1:255.255.255.0 nfsroot=192.168.4.13:/home/nfsroot/fpga/user/qianliu/rootfs/test rw"
+   #endif
+ #endif
+ 
+diff --git a/include/linux/compiler-gcc5.h b/include/linux/compiler-gcc5.h
+new file mode 100644
+index 0000000..c8c5659
+--- /dev/null
++++ b/include/linux/compiler-gcc5.h
+@@ -0,0 +1,65 @@
++#ifndef __LINUX_COMPILER_H
++#error "Please don't include <linux/compiler-gcc5.h> directly, include <linux/compiler.h> instead."
++#endif
++
++#define __used				__attribute__((__used__))
++#define __must_check			__attribute__((warn_unused_result))
++#define __compiler_offsetof(a, b)	__builtin_offsetof(a, b)
++
++/* Mark functions as cold. gcc will assume any path leading to a call
++   to them will be unlikely.  This means a lot of manual unlikely()s
++   are unnecessary now for any paths leading to the usual suspects
++   like BUG(), printk(), panic() etc. [but let's keep them for now for
++   older compilers]
++
++   Early snapshots of gcc 4.3 don't support this and we can't detect this
++   in the preprocessor, but we can live with this because they're unreleased.
++   Maketime probing would be overkill here.
++
++   gcc also has a __attribute__((__hot__)) to move hot functions into
++   a special section, but I don't see any sense in this right now in
++   the kernel context */
++#define __cold			__attribute__((__cold__))
++
++#define __UNIQUE_ID(prefix) __PASTE(__PASTE(__UNIQUE_ID_, prefix), __COUNTER__)
++
++#ifndef __CHECKER__
++# define __compiletime_warning(message) __attribute__((warning(message)))
++# define __compiletime_error(message) __attribute__((error(message)))
++#endif /* __CHECKER__ */
++
++/*
++ * Mark a position in code as unreachable.  This can be used to
++ * suppress control flow warnings after asm blocks that transfer
++ * control elsewhere.
++ *
++ * Early snapshots of gcc 4.5 don't support this and we can't detect
++ * this in the preprocessor, but we can live with this because they're
++ * unreleased.  Really, we need to have autoconf for the kernel.
++ */
++#define unreachable() __builtin_unreachable()
++
++/* Mark a function definition as prohibited from being cloned. */
++#define __noclone	__attribute__((__noclone__))
++
++/*
++ * Tell the optimizer that something else uses this function or variable.
++ */
++#define __visible __attribute__((externally_visible))
++
++/*
++ * GCC 'asm goto' miscompiles certain code sequences:
++ *
++ *   http://gcc.gnu.org/bugzilla/show_bug.cgi?id=58670
++ *
++ * Work it around via a compiler barrier quirk suggested by Jakub Jelinek.
++ *
++ * (asm goto is automatically volatile - the naming reflects this.)
++ */
++#define asm_volatile_goto(x...)	do { asm goto(x); asm (""); } while (0)
++
++#ifdef CONFIG_ARCH_USE_BUILTIN_BSWAP
++#define __HAVE_BUILTIN_BSWAP32__
++#define __HAVE_BUILTIN_BSWAP64__
++#define __HAVE_BUILTIN_BSWAP16__
++#endif /* CONFIG_ARCH_USE_BUILTIN_BSWAP */
+-- 
+1.7.12.4

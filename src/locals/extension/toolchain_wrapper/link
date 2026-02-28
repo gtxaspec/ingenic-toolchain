@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Copyright (C) 2020 Ingenic Semiconductor CO.,LTD.
+# Liu Tianyang <rick.tyliu@ingenic.com>
+
+link_tool()
+{
+    DIR=$1
+    mkdir $DIR
+    cp -rf ../../../../locals/extension/toolchain_wrapper/mips-linux-gnu-gcc ./$DIR
+    cd $DIR
+    if [ $2 != "x" ]; then
+        eval sed -i 's/FP_DFT=\"x\"/FP_DFT=\"-m$2\"/g' ./mips-linux-gnu-gcc
+    fi
+    if [ $3 != "x" ]; then
+        eval sed -i 's/LIB_DFT=\"x\"/LIB_DFT=\"-m$3\"/g' ./mips-linux-gnu-gcc
+    fi
+
+    for tool in $FILE
+    do
+        case "$tool" in
+        mips-linux-gnu*)
+            if [ "$tool" != "mips-linux-gnu-gcc" ]; then
+                ln -sf mips-linux-gnu-gcc $tool
+            fi
+            ;;
+        esac;
+    done
+    cd -
+}
+
+build()
+{
+    if [ -d $1 ]; then
+        rm -rf $1
+    fi
+    link_tool $1 $2 $3
+}
+
+FILE=`ls .`
+build "fp64_glibc" "fp64" "x"
+build "fp32_uclibc" "x" "uclibc"
+build "fp64_uclibc" "fp64" "uclibc"

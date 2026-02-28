@@ -1,0 +1,4 @@
+2012-05-29  Julian Brown  <julian@codesourcery.com>
+
+	* config.sub: Import new upstream version.
+	* config.guess: Likewise.

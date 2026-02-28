@@ -1,0 +1,19 @@
+2014-05-20  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Import FSF version 5049811e672698aa2337bb27ede94e54c9174154
+	(2014-05-01) of config files from git://git.sv.gnu.org/config.git
+	for Aarch64 support.
+
+	* config.guess, config.sub: Update.
+
+2013-08-21  Meador Inge  <meadori@codesourcery.com>
+
+	Backport upstream 8716901d2215a314504b7df6282aedfcf89da1ea
+	from git://git.jdl.com/software/dtc.git.
+
+	* Makefile.in (LIBFDT_INCLUDES): Add 'libfdt_env.h'.
+
+2010-04-07  Nathan Froyd  <froydnj@codesourcery.com>
+
+	Initial commit.
+

@@ -1,0 +1,59 @@
+2012-05-29  Julian Brown  <julian@codesourcery.com>
+
+	* config.sub: Import new upstream version.
+	* config.guess: Likewise.
+
+2009-06-17  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* lib/64.xlatetof.c (copy_ghash_e_io): Rewrite mask word count
+	retrieval to work with in-place copying.
+
+2009-06-02  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* lib/64.xlatetof.c (copy_ghash_e_io): Fix section truncation
+	check in size calculation.  Handle any trailing truncated word
+	consistently.
+
+2009-06-01  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	* lib/libelf.h (ELF_T_GHASH): New enum value.
+	* lib/32.xlatetof.c (ghash_32L__tom, ghash_32L__tof): New macros.
+	(ghash_32M__tom, ghash_32M__tof): Likewise.
+	(xlate32_11): Handle ELF_T_GHASH.
+	* lib/64.xlatetof.c (copy_ghash_e_io): New macro.
+	(copy_ghash_e, copy_ghash): Likewise.
+	(ghash_64): New instantiation.
+	* lib/elf_repl.h (SHT_GNU_HASH): New macro.
+	* lib/sys_elf.h.in (SHT_GNU_HASH): Likewise.
+	* lib/cook.c (_elf_scn_type): Handle SHT_GNU_HASH.
+
+2008-07-18  Joseph Myers  <joseph@codesourcery.com>
+
+	* lib/64.xlatetof.c (copy_type_e_io): Declare a temporary variable
+	of type __libelf_u64_t.
+	(copy_scalar_tof, copy_tof): Use it to store the source value
+	before modifying the destination.
+
+2006-10-24  Paul Brook  <paul@codesourcery.com>
+
+	* lib/sys_elf.h.in: Provide definition of SHT_GNU_LIBLIST.
+
+2006-10-03  Richard Sandiford  <richard@codesourcery.com>
+
+	Merge from mips-prelinker branch:
+
+	2006-10-03  Richard Sandiford  <richard@codesourcery.com>
+
+	* lib/elf_repl.h (SHT_GNU_LIBLIST): Define.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* lib/cook.c (_elf_scn_type): Return ELF_T_WORD for SHT_GNU_LIBLIST.
+
+	2006-09-27  Richard Sandiford  <richard@codesourcery.com>
+
+	* lib/32.xlatetof.c (copy_type_e_io): Declare a temporary variable
+	of type __libelf_u32_t.
+	(copy_scalar_tof, copy_tof): Use it to store the source value before
+	modifying the destination.
+

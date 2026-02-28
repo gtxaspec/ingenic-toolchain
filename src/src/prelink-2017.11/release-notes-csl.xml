@@ -1,0 +1,166 @@
+<!-- This file contains a series of release note fragments processed
+     by gnu-notes.  To add a note to it, use "gnu-notes -a
+     $release_config prelink".  The TARGET line should contain a
+     list of shell glob patterns for target names to which the note is
+     relevant; it may be removed if it is relevant to all targets.
+ -->
+
+      <!-- UUID: 384eb3cf-056e-4427-b25e-3d107955a622 -->
+      <!-- TARGET: arm*-linux* -->
+      <!-- SORT: none -->
+      <!-- ISSUE: 16150 -->
+      <formalpara>
+        <title>Prelinker indirect function support</title>
+        <para>
+          The prelinker now supports indirect functions using the ELF
+          <property>STT_GNU_IFUNC</property> symbol type extension on
+          ARM GNU/Linux targets.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 8219a5ef-152c-438e-805a-9e9119b360eb -->
+      <!-- TARGET: mips-linux* -->
+      <!-- SORT: important -->
+      <!-- ISSUE: -->
+      <formalpara components="no-license">
+        <title>Prelinker</title>
+        <para>
+          The prelinker package is now included in &csl_prod; for &csl_target_name;.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 76e2dc4f-9762-4ce7-ab54-cb17ec52515f -->
+      <!-- TARGET: * -->
+      <!-- SORT: none -->
+      <!-- ISSUE: 13054 -->
+      <formalpara>
+        <title>Prelinker bug fix</title>
+        <para>
+	  A bug that caused the prelinker to fail to process some binaries
+	  has been fixed.  The bug caused prelink to fail with a
+	  <literal>DT_JMPREL tag not adjacent to DT_REL relocations</literal> error.
+        </para>
+      </formalpara>
+
+      <!-- UUID: ba4ee3ae-9926-4efc-8960-dfc1812192e9 -->
+      <!-- TARGET: arm* -->
+      <!-- SORT: none -->
+      <!-- ISSUE: 10231 -->
+      <formalpara>
+        <title>Prelinker new thread-local storage ABI support</title>
+        <para>
+          The prelinker has been improved to support the new optimized
+          thread-local storage ABI recently introduced.  This fixes a bug
+          that caused the prelinker to fail with the error
+          <literal>Unknown arm relocation type 13</literal>.
+        </para>
+      </formalpara>
+
+      <!-- UUID: e9a8bd26-b210-436c-84c1-403de8d68a25 -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Prelinker bug fix</title>
+        <para>
+	  A bug that caused the prelinker to fail with an
+	  <literal>Unknown DWARF DW_OP_158</literal> error has been fixed.
+        </para>
+      </formalpara>
+
+      <!-- UUID: e2677222-a122-40a5-a661-34727fe565e2 -->
+      <!-- TARGET: *-linux* -->
+      <formalpara>
+        <title>Prelinker bug fix</title>
+        <para>
+	  A bug that caused the prelinker to fail to process some binaries
+	  has been fixed.  The bug caused prelink to fail with a
+	  <literal>.debug_frame unhandled augmentation "S"</literal> error.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 77493bfc-be01-4c04-b92d-5be554cb74f1 -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Prelinker update</title>
+        <para>
+          The prelinker package has been updated from the upstream trunk.
+          This update includes support for version 3 of the DWARF
+          debugging format as well as numerous bug fixes.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 296d3fd5-a9fb-465c-be57-15ad097ae8d5 -->
+      <!-- TARGET: mips* powerpc* -->
+      <formalpara>
+        <title>Prelinker bug fix</title>
+        <para>
+          A bug that caused the prelinker to crash or fail on some
+          programs has been fixed.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 362a0c4b-3335-460f-87b6-3a36d8c6a598 -->
+      <!-- TARGET: arm* -->
+      <formalpara>
+        <title>Prelinker bugs with thread-local storage</title>
+        <para>
+          Some bugs affecting the use of the prelinker for programs
+          using thread-local storage have been fixed.  These bugs
+          caused the prelinker and prelinked programs to crash.
+        </para>
+      </formalpara>
+
+      <!-- UUID: c017bc0c-1e74-41aa-92a3-6c207194a2a8 -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Prelinker fix</title>
+        <para>
+          A buffer overrun bug when reading <filename>ld.so.conf</filename>
+          has been fixed.  The buffer overrun would cause a dependency
+          tracing failure to be reported.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 86a06300-5873-41fa-a426-679a9c1e64dd -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Prelinker support for the GNU hash algorithm</title>
+        <para>
+          The prelinker now correctly handles binaries that use the GNU hash
+          algorithm, selected by the <option>--hash-style=gnu</option> linker
+          option.  Such binaries formerly caused the prelinker to crash.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 66ded1fa-aaf7-400b-9273-5b6d95454905 -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Prelinker bugs on Windows hosts</title>
+        <para>
+          Several bugs affecting the use of the prelinker on Windows
+          hosts have been fixed.  The problems addressed by these
+          fixes include path handling issues and a buffer overrun bug.
+        </para>
+      </formalpara>
+
+      <!-- UUID: 401e821c-2d76-45ab-9a99-e59922258e9f -->
+      <!-- TARGET: * -->
+      <formalpara>
+        <title>Prelinking relative paths</title>
+        <para>
+          The prelinker's <option>--root</option> option now works correctly
+          with relative paths on the <command>prelink</command>
+          command line and with relative paths in library dependencies
+          (in ELF <literal>DT_NEEDED</literal> tags).
+        </para>
+      </formalpara>
+
+      <!-- UUID: c365e09f-60f8-4b07-8e86-0b4f37ec6a58 -->
+      <!-- TARGET: *-linux* -->
+      <formalpara>
+        <title>Prelinker</title>
+        <para>
+          This release includes the GNU/Linux Object Prelinker.
+        </para>
+      </formalpara>
+
+<!-- Release notes end here.  -->

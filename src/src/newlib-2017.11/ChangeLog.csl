@@ -1,0 +1,2119 @@
+2015-10-23  Sandra Loosemore  <sandra@codesourcery.com>
+
+	newlib/
+
+	Backport from upstream:
+
+	2015-01-08  Renlin Li  <renlin.li@arm.com>
+
+	* testsuite/newlib.wctype/twctrans.c (main): Use towlower and towupper.
+
+	2015-01-12  Renlin Li  <renlin.li@arm.com>
+
+	* testsuite/newlib.wctype/tiswctype.c (main): Use wide character type
+	function.
+
+2015-10-23  Sandra Loosemore  <sandra@codesourcery.com>
+
+	newlib/
+	* libc/include/wctype.h (_AEABI_PORTABLE): Fix GCC version logic.
+
+2015-10-19  Zachary T Welch  <zwelch@codesourcery.com>
+
+	* release-notes-csl.xml: New note.
+
+2015-09-14  Zachary T Welch  <zwelch@codesourcery.com>
+
+	CB-5349
+
+	newlib/libc/machine/arm/:
+	* memcpy.c: Rename as memcpx.c.
+	* memcpx.c, memcpx-asm.S: Import latest versions from cslibc.
+	* Makefile.am: Build memcpx.c and memcpx-asm.S.
+	* Makefile.in, configure: Regenerate.
+
+2015-09-10  Zachary T Welch  <zwelch@codesourcery.com>
+
+	CB-5407
+
+	newlib/libc/:
+	* include/sys/reent.h (_global_impure_ptr): Remove _CONST keyword.
+	* reent/impure.c (_global_impure_ptr): Likewise.
+
+2015-08-19  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* libm/machine/mips/aclocal.m4: Regenerate.
+	* libm/machine/mips/configure: Regenerate.
+	* libm/machine/mips/Makefile.in: Regenerate.
+
+2015-08-19  Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* libc/include/sys/config.h [__i386__] (_READ_WRITE_RETURN_TYPE):
+	Define to _ssize_t.
+
+2015-08-18  Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* libc/stdio/gets.c (_gets_r): Call CHECK_STD_INIT before
+	_newlib_flockfile_start.
+	* libc/stdio/puts.c (_puts_r): Call CHECK_STD_INIT instead of
+	_REENT_SMALL_CHECK_INIT.
+
+	newlib/
+	* libc/include/sys/lock.h [__NEWLIB_GTHR_GENERIC] (__LOCK_INIT,
+	__LOCK_INIT_RECURSIVE): Use constructor priority 0.
+	* libc/stdlib/__call_atexit.c (REGISTER_FINI_PRIORITY): New macro.
+	(register_fini): Use REGISTER_FINI_PRIORITY as priority.
+
+2015-08-07  Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* libc/include/sys/config.h [__NEWLIB_GTHR_GENERIC]
+	(__DYNAMIC_REENT__): Define.
+	* libc/include/sys/lock.h [__NEWLIB_GTHR_GENERIC]: Include
+	<gthr-generic.h>.  Define types and macros in terms of
+	gthr-generic interfaces.
+
+2015-06-24  James Lemke  <jwlemke@codesourcery.com>
+
+	Complete update to newlib-2.2.0 with missing files.
+	* newlib/libc/stdlib/itoa.c: New
+	* newlib/libc/stdlib/utoa.c: New
+	* newlib/libc/stdio/fputc_u.c: New
+	* newlib/libc/stdio/fflush_u.c: New
+	* newlib/libc/stdio/fgetc_u.c: New
+	* newlib/libc/stdio/putwchar_u.c: New
+	* newlib/libc/stdio/fputs_u.c: New
+	* newlib/libc/stdio/fgets_u.c: New
+	* newlib/libc/stdio/fgetwc_u.c: New
+	* newlib/libc/stdio/fgetws_u.c: New
+	* newlib/libc/stdio/fputwc_u.c: New
+	* newlib/libc/stdio/fread_u.c: New
+	* newlib/libc/stdio/fputws_u.c: New
+	* newlib/libc/stdio/fileno_u.c: New
+	* newlib/libc/stdio/clearerr_u.c: New
+	* newlib/libc/stdio/fwrite_u.c: New
+	* newlib/libc/stdio/getwc_u.c: New
+	* newlib/libc/stdio/ferror_u.c: New
+	* newlib/libc/stdio/putwc_u.c: New
+	* newlib/libc/stdio/getwchar_u.c: New
+	* newlib/libc/stdio/feof_u.c: New
+
+2015-06-17  James Lemke  <jwlemke@codesourcery.com>
+
+	Revert the following as fido is a dead target.
+	2008-07-01  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* configure.host (fido): Add -D__DYNAMIC_REENT__.
+
+2015-04-21  Catherine Moore  <clm@codesourcery.com>
+
+	Port from cslibc:
+
+	2015-04-10  Meador Inge  <meadori@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/machine/asm.h (LOAD_GP): New macro.
+	* libc/machine/mips/include/mips/asm.h (LOAD_GP): Likewise.
+
+2014-12-11  Jonathan Roelofs  <jonathan@codesourcery.com>
+
+	* libc/include/stdio.h: Fix type signature of feof and ferror in c++.
+
+2014-12-02  Jonathan Roelofs  <jonathan@codesourcery.com>
+
+	* libc/include/math.h: Add log2l,logbl,nexttowardf,
+	nexttoward,nexttowardl
+	* libm/common/Makefile.am: Reference new files
+	* libm/common/Makefile.in: Reference new files
+	* libm/common/log2l.c: New File
+	* libm/common/logbl.c: Likewise
+	* libm/common/nexttowardf.c: Likewise
+	* libm/common/nexttoward.c: Likewise
+	* libm/common/nexttowardl.c: Likewise
+
+2014-10-22  Catherine Moore  <clm@codesourcery.com>
+
+	Issue #16670
+
+	* release-notes-csl.xml: Document.
+	
+	Backport from mainline:
+
+	2014-10-08  Steve Ellcey  <sellcey@mips.com>
+	newlib/
+	* libc/machine/mips/strcmp.S: New version.
+
+2014-10-01  Jonathan Roelofs  <jonathan@codesourcery.com>
+
+	newlib/
+	* libc/include/stdlib.h: Allow _Exit,atoll,llabs, and lldiv
+	in C++ mode.
+
+2014-08-18  Meador Inge  <meadori@codesourcery.com>
+
+	newlib/
+
+	* libc/machine/arm/strlen.c (strlen): Allow compilation with
+	Clang which always uses unified assembly.
+	* libc/machine/arm/strcpy.c (strcpy): Likewise.
+
+2014-03-19  Sandra Loosemore  <sandra@codesourcery.com>
+
+	Issue #16082
+
+	* configure.ac (target_makefile_frag): Set for nios2-*-elf*.
+	* configure: Regenerated.
+
+	config/
+	* mt-nios2-elf: New file.
+
+2013-11-08  Catherine Moore  <clm@codesourcery.com>
+
+	Issue #15627
+
+	newlib/
+	* libc/machine/mips/include/mips/mt.h (mips32_gettcopt): New.
+	(mips32_settcopt): New.
+	(mips32_xchtcopt): New.
+
+	* release-notes-csl.xml: New note.
+
+2013-10-21  Catherine Moore  <clm@codesourcery.com>
+
+	Issue #15521
+
+	release-notes-csl.xml: Document.
+
+	Backport from mainline:
+
+	2013-10-03  Steve Ellcey  <sellcey@mips.com>
+        * libc/machine/mips/memset.S: New.
+
+2013-10-16  Catherine Moore  <clm@codesourcery.com>
+
+	* release-notes-csl.xml: Correct whitespace error from last note.
+
+2013-08-21  Meador Inge  <meadori@codesourcery.com>
+
+	* release-notes-csl.xml: New note.
+
+	Backport from mainline:
+
+	newlib/
+	2013-08-19  Meador Inge  <meadori@codesourcery.com>
+
+	* libc/stdlib/__atexit.c (__register_exitproc): NULL-ify
+	_on_exit_args_ptr when creating a new _atexit structure while
+	_REENT_SMALL is defined.
+
+2013-07-14  Sandra Loosemore  <sandra@codesourcery.com>
+
+	* release-notes-csl.xml (Newlib update): New note.
+
+2013-06-22  Sandra Loosemore  <sandra@codesourcery.com>
+
+	Revert local patches for optimized e500 library functions.
+
+	newlib/
+	* libc/machine/powerpc/bzero.S: Delete.
+	* libc/machine/powerpc/include/powerpc/asm.h: Delete.
+	* libc/machine/powerpc/memcpy.S: Delete.
+	* libc/machine/powerpc/memmove.S: Delete.
+	* libc/machine/powerpc/memset.S: Delete.
+	* libc/machine/powerpc/strcmp.S: Delete.
+	* libc/machine/powerpc/strcpy.S: Delete.
+	* libc/machine/powerpc/strlen.S: Delete.
+	* libc/machine/powerpc/configure.in: Revert changes to support
+	detecting SPE support dynamically.
+	* libc/machine/powerpc/configure: Regenerated.
+	* libc/machine/powerpc/Makefile.am: Revert changes to build
+	now-deleted files.
+	* libc/machine/powerpc/Makefile.in: Regenerated.
+	* libm/machine/powerpc: Delete directory and contents.
+	* libm/machine/configure.in: Revert changes to build now-deleted
+	directory.
+	* libm/machine/configure: Regenerated.
+	* configure.host: Revert changes referring to now-deleted directory.
+
+2013-06-19  Sandra Loosemore  <sandra@codesourcery.com>
+
+	Revert Octeon patches.
+
+	newlib/
+	* configure.host: Remove all references to mips64octeon*.
+	* libc/machine/configure.in: Remove references to octeon subdir.
+	* libc/machine/configure: Regenerated.
+	* libc/machine/octeon: Delete directory and contents.
+	* libc/sys/configure.in: Remove references to octeon subdir.
+	* libc/sys/configure: Regenerated.
+	* libc/sys/octeon: Delete directory and contents.
+
+2013-04-10  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	newlib/
+	* libc/stdlib/gd_qnan.h (f_QNAN, d_QNAN0, d_QNAN1): Add MIPS
+	versions.
+	(ld_QNAN0, ld_QNAN1, ld_QNAN2, ld_QNAN3): Don't define for MIPS.
+	(ldus_QNAN0, ldus_QNAN1, ldus_QNAN2, ldus_QNAN3, ldus_QNAN4):
+	Likewise.
+	* libc/stdlib/ldtoa.c (nan113, nan64, nan53, nan24): Add MIPS
+	versions.
+	(enan): Handle legacy MIPS payloads.
+	* libm/common/s_nan.c (nan): Use __builtin_nan if supported by
+	the compiler.
+	* libm/common/sf_nan.c (nanf): Likewise.
+
+2013-04-10  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/include/mips/m32c1.h (FPA_CSR_NAN2008): New
+	macro.
+	(FPA_CSR_ABS2008, FPA_FIR_HAS2008): Likewise.
+	(fpa_setsr): Handle FPA_CSR_NAN2008.
+	(fpa_xchsr, fpa_bissr, fpa_bicsr): Likewise.
+
+2013-04-08  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	newlib/
+	* libm/machine/mips/libm.patch: Remove file.
+
+2012-10-29  Meador Inge  <meadori@codesourcery.com>
+
+	CB-1663
+
+	newlib/
+	* libc/machine/mips/include/mips/asm.h: Add PTR_LA macro.
+
+2012-10-24  Maciej W. Rozycki  <macro@codesourcery.com>
+
+	Issue #13860
+
+	newlib/
+	* libc/include/sys/_types.h (_ssize_t): Match the typedef to the
+	size of size_t if possible.
+	* libc/include/sys/config.h [__SDE_MIPS__]
+	(_READ_WRITE_RETURN_TYPE): New macro.
+
+	* release-notes-csl.xml (ssize_t type definition bug fix): New.
+
+2012-08-30  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* newlib/libc/include/machine/regdef.h: New file.
+
+2012-02-23  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	Port from CSLIBC:
+
+	newlib/
+	* libc/machine/mips/include/mips/r4ktlb.h (IS_KVA, IS_UVA): Fix
+	to account for supervisor segments.
+
+2012-02-22  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	Port from CSLIBC:
+
+	Add versions of *KVA* macros compatible with N64 and O64 ABIs.
+
+	newlib/
+	* libc/machine/mips/include/mips/r4ktlb.h (stdint.h): Include.
+	(KSEG[0123]_BASE, PA_TO_KVA[01], KVA0_TO_KVA1, KVA1_TO_KVA0,)
+	(IS_KVA, IS_KVA0, IS_KVA1, IS_KVA01, IS_KVAS, IS_KVA2, IS_UVA): Define
+	64-bit versions.
+
+2012-02-21  Maxim Kuvyrkov  <maxim@codesourcery.com>
+
+	Port from CSLIBC:
+
+	Fix MIPS strcmp return result for 64-bit little-endian.
+
+	newlib/
+	* libc/machine/mips/strcmp.S (strcmp): Shift result to 'int' bits.
+
+2011-11-11  Joseph Myers  <joseph@codesourcery.com>
+
+	Issue #12452
+
+	newlib/
+	* libc/machine/powerpc/strcmp.S (unaligned_last_was_first): Only
+	check for NULs in low part of r7.
+	* release-notes-csl.xml (E500 <function>strcmp</function> bug
+	fix): New.
+
+2011-08-08  Paul Brook  <paul@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/include/mips/m32c0.h: Add CFG3_ISAONEXC.
+
+2011-07-29  Meador Inge  <meadori@codesourcery.com>
+
+	Issue #11325
+
+	* release-notes-csl.xml: New note.
+
+	newlib/
+	* libm/machine/powerpc/configure.in (ppcgraphics, GRAPHICS): Define.
+	* libm/machine/powerpc/configure: Regenerate.
+	* libm/machine/powerpc/Makefile.am (lib_a_SOURCES): Add new files
+	if 'HARDFLOAT' *and* 'GRAPHICS' are defined.
+	* libm/machine/powerpc/Makefile.in: Regenerate.
+
+2010-10-20  Nathan Froyd  <froydnj@codesourcery.com>
+
+	Backport from mainline:
+
+	newlib/
+	2010-09-21  Craig Howland <howland@LGSInnovations.com>
+
+        * libc/string/memcpy.c: Do not assign size_t parameter to int (use
+	parameter directly, instead).
+        * libc/string/memccpy.c:  Likewise.
+        * libc/string/mempcpy.c:  Likewise.
+        * libc/string/memmove.c:  Likewise.
+
+2010-10-13  Nathan Froyd  <froydnj@codesourcery.com>
+
+	Issue #9382
+
+	* release-notes-csl.xml: New note.
+
+	newlib/
+	* libm/machine/powerpc/e_sqrt.c: New file.
+	* libm/machine/powerpc/ef_sqrt.c: New file.
+	* libm/machine/powerpc/configure.in (extra_objs): Delete.
+	(extra_sources): Delete.
+	(ppcfloat, HARDFLOAT): Define.
+	* libm/machine/powerpc/configure: Regenerate.
+	* libm/machine/powerpc/Makefile.am (lib_a_SOURCES): Add new files
+	if HARDFLOAT.
+	* libm/machine/powerpc/Makefile.in: Regenerate.
+
+2010-08-30  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	newlib/
+	* libc/include/math.h (frexpl): Remove parameter name.
+
+2010-08-30  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	Merge from FSF, version 1.18.0 (2010-08-12).
+
+	* release-notes-csl.xml (Newlib update): New note.
+
+2010-06-04  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* libc/misc/fini.c: Merge from upstream to eliminate meaningless
+	differences.
+
+2010-05-31  Kazu Hirata  <kazu@codesourcery.com>
+
+	Backport:
+	newlib/
+	2010-05-31  Kazu Hirata  <kazu@codesourcery.com>
+	* libc/stdlib/mallocr.c (malloc_extend_top): Backport the
+	difference between versions 2.6.4 and 2.6.5.
+
+2010-04-21  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libm/machine/powerpc/e_log10.S: New file.
+	* libm/machine/powerpc/Makefile.am (lib_a_SOURCES): Add it.
+	* libm/machine/powerpc/Makefile.in: Regenerate.
+	* libm/machine/powerpc/s_atan.S: Remove .file directive.
+	* libm/machine/powerpc/s_ceil.S: Likewise.
+	* libm/machine/powerpc/s_fabs.S: Likewise.
+	* libm/machine/powerpc/s_modf.S: Likewise.
+	* libm/machine/powerpc/s_scalbn.S: Likewise.
+	* libm/machine/powerpc/e_log.S: Likewise.
+	(log): Rename to __ieee754_log.
+	* libm/machine/powerpc/e_atan2.S: Likewise.
+	(atan2): Rename to __ieee754_atan2.
+
+2010-04-20  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libm/machine/powerpc/e_log10.S: Remove.
+	* libm/machine/powerpc/Makefile.am (lib_a_SOURCES): Remove e_log10.S.
+	* libm/machine/powerpc/dummy.S: Remove.
+	* libm/machine/powerpc/e_atan2.S: Convert @plt references to JUMP_TARGET.
+	* libm/machine/powerpc/e_log.S: Likewise.
+	* libm/machine/powerpc/s_atan.S: Likewise.
+	* libm/machine/powerpc/s_scalbn.S: Likewise.
+
+2010-04-16  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libm/machine/powerpc/Makefile.am (lib_a_SOURCES): Use s_fabs.S.
+	* libm/machine/powerpc/Makefile.in: Regenerate.
+
+2010-04-16  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libm/machine/powerpc/e_log.S (___ieee754_log): Rename to...
+	(log): ...this.
+	* libm/machine/powerpc/e_log10.S (__ieee754_log10): Rename to...
+	(log10): ...this.
+	* libm/machine/powerpc/s_abs.S: Move to...
+	* libm/machine/powerpc/s_fabs.S: ...here.
+	(__fabs): Rename to...
+	(fabs): ...this.
+	* libm/machine/powerpc/s_ceil.S (__floor): Rename to...
+	(floor): ...this.
+	* libm/machine/powerpc/s_modf.S (__modf): Rename to...
+	(modf): ...this.
+	* libm/machine/powerpc/e_atan2.S (__ieee754_atan2): Rename to...
+	(atan2): ...this.
+
+2010-04-12  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libc/machine/powerpc/configure.in (ppcspe): New variable.
+	(extra_objs): Delete.
+	(extra_sources): Delete.
+	(SPE): New conditional.
+	* libc/machine/powerpc/configure: Regenerate.
+	* libc/machine/powerpc/Makefile.am (lib_a_SOURCES): Add SPE sources
+	if SPE.
+	(lib_a_LIBADD): Delete.
+	(lib_a_DEPENDENCIES): Delete.
+	* libc/machine/powerpc/Makefile.in: Regenerate.
+
+2010-04-12  Nathan Froyd  <froydnj@codesourcery.com>
+
+	Issue #7937
+
+	* release-notes-csl.xml (Optimized library functions for E500 cores):
+	New note.
+
+	newlib/
+	* libm/machine/configure.in: Add AC_CONFIG_SUBDIR for powerpc if
+	libm_machine_dir set appropriately.
+	* libm/machine/configure: Regenerate.
+	* libm/machine/powerpc/: New directory.
+
+	newlib/
+	* configure.host (powerpc-*): Set libm_machine_dir.
+	* libc/machine/powerpc/include/powerpc/asm.h (ENTRY): Define.
+
+2010-03-26  Andrew Jenner  <andrew@codesourcery.com>
+
+	newlib/
+	* libc/sys/octeon/include/octeon-app-init.h: New (copied from
+	libc/sys/octeon/include).
+
+2010-03-08  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libc/machine/powerpc/configure.in: Use a simplistic AC_TRY_COMMAND
+	insted of AC_PREPROC_IFELSE.
+	* libc/machine/powerpc/configure: Regenerate.
+
+2010-03-03  Nathan Sidwell  <nathan@codesourcery.com>
+
+	newlib/
+	* configure.host (*-*-nucleus*): Disable unsupported posix items.
+	* libc/search/hash_bigkey.c (MIN, MAX): Provide definitions.
+	* libc/search/hash_page.c (open_temp): Only use sigset functions
+	if they are available.
+
+2010-03-02  Nathan Froyd  <froydnj@codesourcery.com>
+
+	Issue #7738
+
+	* release-notes-csl.xml: New note.
+
+	newlib/
+	* libc/machine/powerpc/configure.in: Base inclusion of files on
+	preprocessor conditionals instead of host triplet.  Include
+	assembly files for SPE.
+	* libc/machine/powerpc/configure: Regenerate.
+	* libc/machine/powerpc/bzero.S: New file.
+	* libc/machine/powerpc/memcpy.S: New file.
+	* libc/machine/powerpc/memmove.S: New file.
+	* libc/machine/powerpc/memcmp.S: New file.
+	* libc/machine/powerpc/strlen.S: New file.
+	* libc/machine/powerpc/strcmp.S: New file.
+	* libc/machine/powerpc/strcpy.S: New file.
+	* libc/machine/powerpc/include/powerpc/asm.h: New file.
+
+2010-03-02  Nathan Sidwell  <nathan@codesourcery.com>
+
+	* libtool.m4 (nucleus*): Restrict shared library support to
+	Samsung's implementation.
+
+	newlib/
+	* configure: Rebuilt.
+	* libm/configure: Rebuilt.
+	* libc/configure: Rebuilt.
+
+2010-02-04  Nathan Sidwell  <nathan@codesourcery.com>
+
+	* libtool.m4 (nucleus*): Add support.
+
+	newlib/
+	* configure: Rebuilt.
+	* libm/configure: Rebuilt.
+	* libc/configure: Rebuilt.
+
+2010-02-03  Daniel Gutson  <dgutson@codesourcery.com>
+
+	Issue #6472
+
+	newlib/
+	* libc/machine/arm/arm_asm.h (_ISA_THUMB_2): __ARM_ARCH_7EM__
+	added to the preprocessor condition.
+
+2010-01-05  Joseph Myers  <joseph@codesourcery.com>
+
+	* configure.ac: Handle arm*-*-nucleuseabi.
+	* configure: Regenerate.
+	* libtool.m4: Handle *-nucleuseabi* instead of *-eabi*.  Don't
+	condition that handling on --enable-shared.
+
+	newlib/
+	* configure.host: Handle arm*-*-nucleuseabi* instead of
+	arm*-*eabi.  Don't condition that handling on --enable-shared.
+	Set ldflags in that case.
+	* configure, iconvdata/configure, libc/configure,
+	libc/machine/arm/configure, libc/machine/configure,
+	libc/machine/i386/configure, libc/machine/mips/configure,
+	libc/machine/octeon/configure, libc/sys/arm/configure,
+	libc/sys/configure, libc/sys/linux/configure,
+	libc/sys/linux/linuxthreads/configure,
+	libc/sys/linux/linuxthreads/machine/configure,
+	libc/sys/linux/linuxthreads/machine/i386/configure,
+	libc/sys/linux/machine/configure,
+	libc/sys/linux/machine/i386/configure, libc/sys/octeon/configure,
+	libm/configure, libm/machine/configure,
+	libm/machine/i386/configure: Regenerate.
+
+2009-12-31  Joseph Myers  <joseph@codesourcery.com>
+
+	* libtool.m4: Support shared libraries for *-eabi* if explicit
+	--enable-shared passed.
+
+	newlib/
+	* configure, iconvdata/configure, libc/configure,
+	libc/machine/arm/configure, libc/machine/configure,
+	libc/machine/i386/configure, libc/machine/mips/configure,
+	libc/machine/octeon/configure, libc/sys/arm/configure,
+	libc/sys/configure, libc/sys/linux/configure,
+	libc/sys/linux/linuxthreads/configure,
+	libc/sys/linux/linuxthreads/machine/configure,
+	libc/sys/linux/linuxthreads/machine/i386/configure,
+	libc/sys/linux/machine/configure,
+	libc/sys/linux/machine/i386/configure, libc/sys/octeon/configure,
+	libm/configure, libm/machine/configure,
+	libm/machine/i386/configure: Regenerate.
+
+2009-12-20  Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/Makefile.am: Add libtool code.  Include
+	Makefile.shared.
+	* libc/machine/arm/configure.in: Add libtool code.
+	* libc/machine/arm/Makefile.in, libc/machine/arm/aclocal.m4,
+	libc/machine/arm/configure: Regenerate.
+	* libc/sys/arm/Makefile.am: Add libtool code.  Include
+	Makefile.shared.
+	* libc/sys/arm/configure.in: Add libtool code.
+	* libc/sys/arm/Makefile.in, libc/sys/arm/aclocal.m4,
+	libc/sys/arm/configure: Regenerate.
+
+2009-12-20  Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* Makefile.shared: Touch objectlist.awk.in to ensure it is always
+	created.
+
+2009-12-20  Nathan Sidwell  <nathan@codesourcery.com>
+            Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* configure.host (arm-*eabi): Use libtool if --enable-shared.
+
+2009-09-21  Daniel Gutson  <dgutson@codesourcery.com>
+
+	Issue #3768.
+
+	newlib/
+	* configure.host (case arm-*-*): -DHAVE_RENAME and -DHAVE_SYSTEM
+	added to the newlib cflags.
+
+2009-07-22  Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* libc/sys/octeon/cvmx-access-native.h,
+	libc/sys/octeon/cvmx-access.h, libc/sys/octeon/cvmx-address.h,
+	libc/sys/octeon/cvmx-utils.h: New.  From SDK 1.9.0.
+	* libc/sys/octeon/cvmx-abi.h, libc/sys/octeon/cvmx-app-init.h,
+	libc/sys/octeon/cvmx-asm.h, libc/sys/octeon/cvmx-csr-addresses.h,
+	libc/sys/octeon/cvmx-csr-enums.h,
+	libc/sys/octeon/cvmx-csr-typedefs.h, libc/sys/octeon/cvmx-csr.h,
+	libc/sys/octeon/cvmx-packet.h, libc/sys/octeon/cvmx-platform.h,
+	libc/sys/octeon/cvmx-spinlock.h, libc/sys/octeon/cvmx-sysinfo.h,
+	libc/sys/octeon/cvmx-warn.h, libc/sys/octeon/cvmx.h,
+	libc/sys/octeon/octeon-feature.h, libc/sys/octeon/octeon-model.h:
+	Update from SDK 1.9.0, with __OCTEON__ conditional removed.
+	* libc/sys/octeon/octeon-app-init.c, libc/sys/octeon/octeon-bt.c,
+	libc/sys/octeon/octeon-os.c, libc/sys/octeon/octeon-uart.c,
+	libc/sys/octeon/octeon-uart.h: Update from SDK 1.9.0 newlib
+	patches.
+	* libc/sys/octeon/octeon-app-init.h: Update from
+	<https://intranet.codesourcery.com/ml/gnu-wrs-linux/2009-07/msg00045.html>.
+
+2009-07-14  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/signal.c (sigexit): Avoid infinite loops in
+	abort().
+
+2009-06-26  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/include/mips.asm.h (LEAF): Align the function
+	being defined to a four byte boundary.
+	(SLEAF, WLEAF, ALEAF, AENT, SAENT, NESTED, WNESTED, ANESTED): Likewise.
+
+2009-06-19  Joseph Myers  <joseph@codesourcery.com>
+
+	libgloss/
+	* Makefile.in (html, pdf): New.
+	* doc/Makefile.in (html, pdf, porting.pdf, porting.html): New.
+	* doc/porting.texi: Fix section structure.
+
+2009-05-06  Kazu Hirata  <kazu@codesourcery.com>
+
+	Revert:
+	2008-01-30  Nathan Sidwell  <nathan@codesourcery.com>
+	* config-ml.in: Avoid double spaces in CC, CXX, F77, GCJ and
+	GFORTRAN values.
+
+2009-05-05  Kazu Hirata  <kazu@codesourcery.com>
+
+	Backport:
+	newlib/
+	2009-03-23  Richard Earnshaw  <rearnsha@arm.com>
+	* libc/machine/arm/strcmp.c (strcmp): Treat char as unsigned.
+
+	Revert:
+	2009-03-22  Mark Mitchell  <mark@codesourcery.com>
+	newlib/
+	* libc/machine/arm/strcmp.c (strcmp): Correct computation of
+	return value in little-endian mode.
+
+2009-04-24  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* libc/stdlib/__call_atexit.c: Move a comment for __call_exitprocs
+	immediately before the definition of __call_exitprocs.
+
+2009-04-24  Kazu Hirata  <kazu@codesourcery.com>
+
+	Revert:
+	2007-04-26  Julian Brown  <julian@codesourcery.com>
+	libc/sys/arm/
+	* swi.h (AngelSWIInsn, AngelSWIAsm): Use bkpt for ARMv6-M.
+
+	Revert:
+	2007-01-09  Mark Mitchell  <mark@codesourcery.com>
+		    Paul Brook  <paul@codesourcery.com>
+	newlib/
+	* libc/sys/arm/syscalls.c (CHECK_INIT): Remove.
+	(findslot): Call initialise_monitor_handles.
+	(remap_handle): Don't call CHECK_INIT.
+	(initialise_monitor_handles): Make sure to run only once.  Fix
+	multithreaded locking.
+
+	Revert:
+	2007-01-09  Kazu Hirata  <kazu@codesourcery.com>
+	newlib/
+	* libc/sys/arm/Makefile.am (extra_objs): Add $(lpfx)_exit.o
+	$(lpfx)_kill.o.
+	(EXTRA_lib_a_SOURCES): Add _exit.c and _kill.c.
+	* libc/sys/arm/Makefile.in: Regenerate.
+	* libc/sys/arm/_exit.c, libc/sys/arm/_kill.c: New.
+	* libc/sys/arm/libcfunc.c (do_AngelSWI): Remove.
+	* libc/sys/arm/swi.h (do_AngelSWI): New.
+	* libc/sys/arm/syscalls.c (do_AngelSWI): Remove.
+	(_unlink, _system, _rename): Cast arguments to do_AngelSWI to
+	int.
+
+2009-04-23  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* acconfig.h (_ATEXIT_DYNAMIC_ALLOC): New.
+	* newlib.hin: Regenerate.
+
+2009-04-23  Kazu Hirata  <kazu@codesourcery.com>
+
+	* configure.ac (--enable-libgloss): Remove.
+	* configure: Regenerate.
+
+2009-04-23  Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue #2468
+	newlib/
+	* configure.in (--disable-newlib-atexit-dynamic-alloc): New.
+	* configure: Regenerate.
+	* libc/stdlib/__atexit.c, libc/stdlib/__call_atexit.c: Honor
+	_ATEXIT_DYNAMIC_ALLOC.  Eliminate stray differences between our
+	branch and FSF mainline.
+
+2009-04-21  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* libc/include/_ansi.h: Synch with upstream.
+
+2009-04-21  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* libc/reent/impure.c (__sf_fake_stdin, __sf_fake_stdout,
+	__sf_fake_stderr): Use _ATTRIBUTE instead of __attribute__.
+
+2009-04-21  Mark Mitchell  <mark@codesourcery.com>
+
+	* configure.ac (libgloss): Correct syntax used for AC_ARG_ENABLE.
+	* configure: Regenerated.
+
+2009-04-21  Kazu Hirata  <kazu@codesourcery.com>
+
+	libgloss/
+	* configure.in, mcore/pe-cmb.ld, rs6000/Makefile.in,
+	rs6000/uboot-align.c, rs6000/uboot-crt0.S, rs6000/uboot-read.c,
+	rs6000/uboot-sbrk.c, rs6000/uboot-write.c, rs6000/uboot.ld: Remove
+	local changes.
+
+2009-04-09  Brooks Moses  <brooks@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/memcpy.c: Add prefetch instructions.
+
+2009-04-07  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/include/mips: New directory.
+	* libc/machine/mips/include/mips/r36100.h: Moved from...
+	* libc/machine/mips/include/r36100.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/tr4102.h: Moved from...
+	* libc/machine/mips/include/tr4102.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/regdef.h: Moved from...
+	* libc/machine/mips/include/regdef.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r3kxcpt.h: Moved from...
+	* libc/machine/mips/include/r3kxcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/l64360.h: Moved from...
+	* libc/machine/mips/include/l64360.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/endian.h: Moved from...
+	* libc/machine/mips/include/endian.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/m32xcpt.h: Moved from...
+	* libc/machine/mips/include/m32xcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r3ktlb.h: Moved from...
+	* libc/machine/mips/include/r3ktlb.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/lr33000.h: Moved from...
+	* libc/machine/mips/include/lr33000.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/rc32364.h: Moved from...
+	* libc/machine/mips/include/rc32364.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/ruby.h: Moved from...
+	* libc/machine/mips/include/ruby.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/lr33300.h: Moved from...
+	* libc/machine/mips/include/lr33300.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/xcpt.h: Moved from...
+	* libc/machine/mips/include/xcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/instrdef.h: Moved from...
+	* libc/machine/mips/include/instrdef.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/watchpoint.h: Moved from...
+	* libc/machine/mips/include/watchpoint.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/mt.h: Moved from...
+	* libc/machine/mips/include/mt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r4kc0.h: Moved from...
+	* libc/machine/mips/include/r4kc0.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/cw400x.h: Moved from...
+	* libc/machine/mips/include/cw400x.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/cop2.h: Moved from...
+	* libc/machine/mips/include/cop2.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r3041.h: Moved from...
+	* libc/machine/mips/include/r3041.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/atomic.h: Moved from...
+	* libc/machine/mips/include/atomic.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r3081.h: Moved from...
+	* libc/machine/mips/include/r3081.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/mips32.h: Moved from...
+	* libc/machine/mips/include/mips32.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/smartmips.h: Moved from...
+	* libc/machine/mips/include/smartmips.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/rm7kxcpt.h: Moved from...
+	* libc/machine/mips/include/rm7kxcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r4650xcpt.h: Moved from...
+	* libc/machine/mips/include/r4650xcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/rc6457x.h: Moved from...
+	* libc/machine/mips/include/rc6457x.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r3kc1.h: Moved from...
+	* libc/machine/mips/include/r3kc1.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r5kc0.h: Moved from...
+	* libc/machine/mips/include/r5kc0.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/m32c1.h: Moved from...
+	* libc/machine/mips/include/m32c1.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/xcptcpu.h: Moved from...
+	* libc/machine/mips/include/xcptcpu.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/dsp.h: Moved from...
+	* libc/machine/mips/include/dsp.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/tr4101.h: Moved from...
+	* libc/machine/mips/include/tr4101.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/opal.h: Moved from...
+	* libc/machine/mips/include/opal.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r5kxcpt.h: Moved from...
+	* libc/machine/mips/include/r5kxcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r4ktlb.h: Moved from...
+	* libc/machine/mips/include/r4ktlb.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/m32tlb.h: Moved from...
+	* libc/machine/mips/include/m32tlb.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/lr33020.h: Moved from...
+	* libc/machine/mips/include/lr33020.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/fpa.h: Moved from...
+	* libc/machine/mips/include/fpa.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/cwxcpt.h: Moved from...
+	* libc/machine/mips/include/cwxcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/notlb.h: Moved from...
+	* libc/machine/mips/include/notlb.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/cw4002.h: Moved from...
+	* libc/machine/mips/include/cw4002.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/udi.h: Moved from...
+	* libc/machine/mips/include/udi.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/mips64.h: Moved from...
+	* libc/machine/mips/include/mips64.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r4kc1.h: Moved from...
+	* libc/machine/mips/include/r4kc1.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/cpu.h: Moved from...
+	* libc/machine/mips/include/cpu.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/m64c0.h: Moved from...
+	* libc/machine/mips/include/m64c0.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/mips24k.h: Moved from...
+	* libc/machine/mips/include/mips24k.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/mips34k.h: Moved from...
+	* libc/machine/mips/include/mips34k.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/prid.h: Moved from...
+	* libc/machine/mips/include/prid.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/amethyst.h: Moved from...
+	* libc/machine/mips/include/amethyst.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/mips74k.h: Moved from...
+	* libc/machine/mips/include/mips74k.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r4kxcpt.h: Moved from...
+	* libc/machine/mips/include/r4kxcpt.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/rm7kc0.h: Moved from...
+	* libc/machine/mips/include/rm7kc0.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/jade.h: Moved from...
+	* libc/machine/mips/include/jade.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/kit_impl.h: Moved from...
+	* libc/machine/mips/include/kit_impl.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r4650.h: Moved from...
+	* libc/machine/mips/include/r4650.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/asm.h: Moved from...
+	* libc/machine/mips/include/asm.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r3kc0.h: Moved from...
+	* libc/machine/mips/include/r3kc0.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/m32c0.h: Moved from...
+	* libc/machine/mips/include/m32c0.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/r5kc1.h: Moved from...
+	* libc/machine/mips/include/r5kc1.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/instr16def.h: Moved from...
+	* libc/machine/mips/include/instr16def.h: ...here.  Removed.
+	* libc/machine/mips/include/mips/m16c1.h: Moved from...
+	* libc/machine/mips/include/m16c1.h: ...here.  Removed.
+	* libc/machine/mips/memcmp.S: Include files from new location.
+	* libc/machine/mips/strcpy.S: Likewise.
+	* libc/machine/mips/memset.S: Likewise.
+	* libc/machine/mips/memcpy.S: Likewise.
+	* libc/machine/mips/signal.c: Likewise.
+	* libc/machine/mips/strlen.S: Likewise.
+	* libc/machine/mips/strcmp.S: Likewise.
+
+2009-04-07  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* Makefile.am (stmp-targ-include): Copy headers from
+	machine/include/$(machine_dir).
+	(install-data-local): Install headers to
+	include/$(machine_dir).
+	* Makefile.in: Regenerated.
+
+2009-04-02  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/include/kit_impl.h: Remove unused functions.
+
+2009-03-31  Kazu Hirata  <kazu@codesourcery.com>
+
+	* release-notes-csl.xml: Mention that newlib is now built with
+	-ffunction-sections on fido.
+
+2009-03-27  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/ffsll.c: New.
+	* libc/machine/mips/signal.c: New.
+	* libc/machine/mips/machine/signal.h: New.
+	* libc/machine/mips/Makefile.am: Add newfiles.
+	* libc/machine/mips/include/r36100.h: Regenerated.
+	* libc/machine/mips/Makefile.in: Regenerated.
+	* libc/machine/mips/include/regdef.h: Add copyright.
+	* libc/machine/mips/include/mips32.h: Likewise.
+	* libc/machine/mips/include/r4ktlb.h: Likewise.
+	* libc/machine/mips/include/m32tlb.h: Likewise.
+	* libc/machine/mips/include/asm.h: Likewise.
+	* libc/machine/mips/include/m32c0.h: Likewise.
+	* libc/machine/mips/include/tr4102.h: New.
+	* libc/machine/mips/include/endian.h: New.
+	* libc/machine/mips/include/l64360.h: New.
+	* libc/machine/mips/include/r3kxcpt.h: New.
+	* libc/machine/mips/include/m32xcpt.h: New.
+	* libc/machine/mips/include/r3ktlb.h: New.
+	* libc/machine/mips/include/lr33000.h: New.
+	* libc/machine/mips/include/lr33300.h: New.
+	* libc/machine/mips/include/rc32364.h: New.
+	* libc/machine/mips/include/instrdef.h: New.
+	* libc/machine/mips/include/xcpt.h: New.
+	* libc/machine/mips/include/mt.h: New.
+	* libc/machine/mips/include/watchpoint.h: New.
+	* libc/machine/mips/include/r4kc0.h: New.
+	* libc/machine/mips/include/cw400x.h: New.
+	* libc/machine/mips/include/cop2.h: New.
+	* libc/machine/mips/include/r3041.h: New.
+	* libc/machine/mips/include/atomic.h: New.
+	* libc/machine/mips/include/r3081.h: New.
+	* libc/machine/mips/include/smartmips.h: New.
+	* libc/machine/mips/include/rm7kxcpt.h: New.
+	* libc/machine/mips/include/r4650xcpt.h: New.
+	* libc/machine/mips/include/rc6457x.h: New.
+	* libc/machine/mips/include/r3kc1.h: New.
+	* libc/machine/mips/include/r5kc0.h: New.
+	* libc/machine/mips/include/m32c1.h: New.
+	* libc/machine/mips/include/xcptcpu.h: New.
+	* libc/machine/mips/include/dsp.h: New.
+	* libc/machine/mips/include/opal.h: New.
+	* libc/machine/mips/include/tr4101.h: New.
+	* libc/machine/mips/include/r5kxcpt.h: New.
+	* libc/machine/mips/include/lr33020.h: New.
+	* libc/machine/mips/include/fpa.h: New.
+	* libc/machine/mips/include/cwxcpt.h: New.
+	* libc/machine/mips/include/notlb.h: New.
+	* libc/machine/mips/include/cw4002.h: New.
+	* libc/machine/mips/include/udi.h: New.
+	* libc/machine/mips/include/ruby.h: New.
+	* libc/machine/mips/include/mips64.h: New.
+	* libc/machine/mips/include/r4kc1.h: New.
+	* libc/machine/mips/include/cpu.h: New.
+	* libc/machine/mips/include/mips24k.h: New.
+	* libc/machine/mips/include/m64c0.h: New.
+	* libc/machine/mips/include/mips34k.h: New.
+	* libc/machine/mips/include/mips74k.h: New.
+	* libc/machine/mips/include/amethyst.h: New.
+	* libc/machine/mips/include/prid.h: New.
+	* libc/machine/mips/include/r4kxcpt.h: New.
+	* libc/machine/mips/include/jade.h: New.
+	* libc/machine/mips/include/rm7kc0.h: New.
+	* libc/machine/mips/include/kit_impl.h: New.
+	* libc/machine/mips/include/r4650.h: New.
+	* libc/machine/mips/include/r3kc0.h: New.
+	* libc/machine/mips/include/instr16def.h: New.
+	* libc/machine/mips/include/r5kc1.h: New.
+	* libc/machine/mips/include/m16c1.h: New.
+
+2009-03-23  Brooks Moses  <brooks@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/aeabi/aeabi_memcpy.c (__aeabi_memcpy): Save
+	and restore Neon registers in cases where we might clobber them.
+	* libc/machine/arm/aeabi/aeabi_memset.c (__aeabi_memset):
+	Likewise.
+	* libc/machine/arm/aeabi/aeabi_memclr.c (__aeabi_memclr): Call
+	__aeabi_memset to save Neon registers if needed.
+
+2009-03-22  Mark Mitchell  <mark@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/strcmp.c (strcmp): Correct computation of
+	return value in little-endian mode.
+
+2009-03-18  Brooks Moses  <brooks@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/memcpy.c: New file.
+	* libc/machine/arm/memset.c: New file.
+	* libc/machine/arm/Makefile.am (lib_a_SOURCES): Add
+	  memcpy.c and memset.c.
+	* libc/machine/arm/Makefile.in: Regenerate.
+
+	* release-notes-csl.xml: Document optimizations.
+
+2009-03-16  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/include/regdef.h: Moved from...
+	* libc/machine/mips/machine/regdef.h: ...here.  Removed.
+	* libc/machine/mips/include/mips32.h: New.
+	* libc/machine/mips/include/asm.h: New.
+	* libc/machine/mips/include/r4ktlb.h: New.
+	* libc/machine/mips/include/m32tlb.h: New.
+	* libc/machine/mips/include/m32c0.h: New.
+
+2009-03-16  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* libc/machine/mips/memcmp.S: New.
+	* libc/machine/mips/Makefile.am: Add new files.
+	* libc/machine/mips/Makefile.in: Regenerated.
+	* libc/machine/mips/strcpy.S: New.
+	* libc/machine/mips/strlen.c: Removed.
+	* libc/machine/mips/strlen.S: New.
+	* libc/machine/mips/strcmp.c: Removed.
+	* libc/machine/mips/strcmp.S: New.
+	* libc/machine/mips/memset.c: Removed.
+	* libc/machine/mips/memset.S: New.
+	* libc/machine/mips/memcpy.c: Removed.
+	* libc/machine/mips/memcpy.S: New.
+
+	* release-notes-csl.xml: Document.
+
+2009-03-12  Catherine Moore  <clm@codesourcery.com>
+
+	newlib/
+	* libm/machine/mips: New directory.
+	* libm/machine/mips/s_rint.S: New.
+	* libm/machine/mips/w_sqrt.S: New.
+	* libm/machine/mips/wf_sqrt.S: New.
+	* libm/machine/mips/configure.in: New.
+	* libm/machine/mips/Makefile.am: New.
+	* libm/machine/mips/r3kc1.h: New.
+	* libm/machine/mips/w_drem.S: New.
+	* libm/machine/mips/configure: Regenerated.
+	* libm/machine/mips/aclocal.m4: Regenerated.
+	* libm/machine/mips/Makefile.in: Regenerated.
+	
+	* release-note-csl.xml: Document.
+
+2009-03-14  Mark Mitchell  <mark@codesourcery.com>
+
+	Incorporate:
+
+	2009-03-14  Richard Earnshaw  <rearnsha@arm.com>
+	* libc/machine/arm/strcmp.c (strcmp_unaligned): Fix bugs in
+	big-endian mode.
+	
+	Revert:
+
+	2009-03-13  Mark Mitchell  <mark@codesourcery.com>
+	newlib/
+	* libc/machine/arm/strcmp.c (strcmp_unaligned): Correct bug in
+	big-endian mode.
+
+2009-03-13  Catherine Moore  <clm@codesourcery.com>
+
+	* COPYING.NEWLIB:  Added copyright notices for MIPS
+	and CodeSourcery.
+
+2009-03-13  Mark Mitchell  <mark@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/strcmp.c (strcmp_unaligned): Correct bug in
+	big-endian mode.
+
+2009-03-12  Mark Mitchell  <mark@codesourcery.com>
+
+	Backport:
+	
+	newlib/
+	2009-03-12  Richard Earnshaw  <rearnsha@arm.com>
+	* libc/machine/arm/strlen.c (strlen): Correctly detect
+	end-of-string.
+	* libc/machine/arm/strcpy.c (strcpy): Likewise.
+	* libc/machine/arm/strcmp.c (strcmp, strcmp_unaligned): Likewise.
+
+2009-03-11  Mark Mitchell  <mark@codesourcery.com>
+
+	Incorporate:
+	
+	newlib/
+	2009-03-10  Richard Earnshaw  <richard.earnshaw@arm.com>
+	* libc/machine/arm/strcpy.c (strcpy): Correct handling of strings
+	with 0x80 characters.
+	* libc/machine/arm/strlen.c (strlen): Likewise.
+	* libc/machine/arm/strcmp.c (strcmp): Likewise.
+
+2009-03-09  Mark Mitchell  <mark@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/strlen.c (strlen): Fix defect in Thumb-2 mode.
+
+2009-02-26  Brooks Moses  <brooks@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/strcpy.c: Add missing comma.
+
+2009-02-25  Brooks Moses  <brooks@codesourcery.com>
+
+	newlib/
+	* libc/stdlib/Makefile.am (CHEWOUT_FILES): Add
+	  mbsnrtowcs.def, wcsnrtombs.def.
+	* libc/stdlib/Makefile.in: Regenerate.
+	* libc/stdlib/stdlib.tex (@menu): Use correct section
+	  names for mbsrtowcs, wcsrtombs.
+	* libc/stdlib/wcstod.c: Remove stray character in
+	  documentation.
+
+2009-02-25  Brooks Moses  <brooks@codesourcery.com>
+
+	Merged from //mirrors/newlib/trunk revision 237632.
+
+2008-11-03  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	* release-notes-csl.xml: Document portable object fixes.
+
+	* newlib/testsuite/newlib.aeabi/aeabi.exp: Also compile and
+	assemble each test.
+	* newlib/libc/include/limits.h: Include "_ansi.h".
+	* newlib/libc/include/stdlib.h, newlib/libc/include/time.h: Add
+	missing semicolons.
+	* newlib/libc/include/machine/setjmp.h: Include <sys/_types.h> and
+	use __int64_t.
+
+2008-10-23  Nathan Sidwell  <nathan@codesourcery.com>
+
+	* release-notes-csl.xml: Document addition of newlib to mips-elf
+	config.
+
+2008-09-16  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* configure.host (newlib_flags): Remove -mrelocatable-lib for
+	various powerpc bare-metal targets.
+
+2008-09-11  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* testsuite/newlib.aeabi/aeabi.exp: XFAIL compile-stdio.c test.
+
+2008-08-28  Sandra Loosemore  <sandra@codesourcery.com>
+
+	newlib/
+	* libm/libm.texinfo (Library Index): Renamed from "Index" to prevent
+	conflict with index.html on case-insensitive file systems.
+
+2008-08-27  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libc/aeabi/clibabi_setjmp.c (__aeabi_JMP_BUF_SIZE): Handle
+	architectures that don't define _JBTYPE.
+
+2008-08-27  Nathan Froyd  <froydnj@codesourcery.com>
+
+	Compile-time support for portable objects.
+
+	* release-notes-csl.xml (Object file portability): New.
+
+	newlib/
+	* libc/include/assert.h: Add _AEABI_PORTABILITY_LEVEL support along
+	with appropriate #defines to use __aeabi_XXX symbols.  Convert
+	#ifndef __STRICT_ANSI__ stanzas to consult _AEABI_PORTABLE to
+	avoid polluting the environment where necessary.
+	* libc/include/ctype.h: Likewise.
+	* libc/include/errno.h: Likewise.
+	* libc/include/limits.h: Likewise.
+	* libc/include/locale.h: Likewise.
+	* libc/include/machine/setjmp.h: Likewise.
+	* libc/include/math.h: Likewise.
+	* libc/include/setjmp.h: Likewise.
+	* libc/include/signal.h: Likewise.
+	* libc/include/stdio.h: Likewise.
+	* libc/include/stdlib.h: Likewise
+	* libc/include/sys/errno.h: Likewise.
+	* libc/include/sys/reent.h: Likewise.
+	* libc/include/sys/signal.h: Likewise.
+	* libc/include/time.h: Likewise.
+	* libc/include/wctype.h: Likewise.
+
+	* libc/include/sys/errno.h: Hide definitions of non-standard errnos
+	when _AEABI_PORTABLE.
+	* libc/include/stdio.h: Make FILE an opqaue type when
+	_AEABI_PORTABILITY_LEVEL has an appropriate value.
+	* libc/aeabi/clibabi_setjmp.c (__aeabi_JMP_BUF_SIZE): Handle
+	systems where _JBTYPE is larger than a word.
+
+	* testsuite/newlib.aebi: New test directory.
+
+2008-08-26  Sandra Loosemore  <sandra@codesourcery.com>
+
+	Issue #1302
+
+	newlib/
+	* libc/libc.texinfo: Remove "LOCAL KLUGE" that prevents it from
+	building.
+	* libm/libm.texinfo: Likewise.
+	* libc/aeabi/Makefile.am (doc): Add empty target.
+	* libc/aeabi/Makefile.in: Regenerated.
+
+	* release-notes-csl.xml:  Document that we have manuals now.
+
+2008-07-24  Joseph Myers  <joseph@codesourcery.com>
+
+	newlib/
+	* libc/sys/octeon/octeon-os.c (isatty): Rename to _isatty.
+
+2008-07-24  Joseph Myers  <joseph@codesourcery.com>
+
+	* config.sub: Allow mips64octeon* targets.
+
+	newlib/
+	* libc/machine/octeon, libc/sys/octeon: New.  From Cavium newlib.
+	* configure.host: Apply changes from Cavium newlib.
+	* libc/include/inttypes.h: Apply changes from Cavium newlib.
+	* configure.host: Handle mips64octeon* as target name for Octeon.
+	* libc/machine/configure.in: Handle octeon subdir.
+	* libc/machine/configure: Regenerate.
+	* libc/sys/configure.in: Handle octeon subdir.
+	* libc/sys/configure: Regenerate.
+
+	* libc/include/ctype.h (_ctype_): Restore declaration.
+	* libc/machine/octeon/aclocal.m4,
+	libc/machine/octeon/configure.in, libc/sys/octeon/aclocal.m4,
+	libc/sys/octeon/configure.in: Update to match other newlib
+	changes.
+	* libc/machine/octeon/configure, libc/sys/octeon/configure:
+	Regenerate.
+	* libc/machine/octeon/Makefile.in, libc/sys/octeon/Makefile.in:
+	Regenerate.
+	* libc/sys/octeon/Makefile.am (INCLUDES): Do not use
+	$(top_srcdir)/../../../../../sdk/executive.
+	* libc/sys/octeon/Makefile.in: Regenerate.
+	* libc/sys/octeon/cvmx-abi.h, libc/sys/octeon/cvmx-app-init.h,
+	libc/sys/octeon/cvmx-asm.h, libc/sys/octeon/cvmx-csr-addresses.h,
+	libc/sys/octeon/cvmx-csr-enums.h,
+	libc/sys/octeon/cvmx-csr-typedefs.h, libc/sys/octeon/cvmx-csr.h,
+	libc/sys/octeon/cvmx-packet.h, libc/sys/octeon/cvmx-platform.h,
+	libc/sys/octeon/cvmx-spinlock.h, libc/sys/octeon/cvmx-sysinfo.h,
+	libc/sys/octeon/cvmx-warn.h, libc/sys/octeon/cvmx.h,
+	libc/sys/octeon/octeon-feature.h, libc/sys/octeon/octeon-model.h:
+	New.  From Cavium SDK 1.7.2, with licenses from SDK173lic.txt and
+	__OCTEON__ conditional removed.
+
+2008-07-23  Joseph Myers  <joseph@codesourcery.com>
+
+	Backport:
+
+	2008-07-21  Jeff Johnston  <jjohnstn@redhat.com>
+	* libc/ctype/ctype_.c: Add new pointer __ctype_ptr__ which is one
+	less than the old __ctype_ptr.
+	* libc/ctype/isalnum.c: Use __ctype_ptr__.
+	* libc/ctype/isalpha.c: Ditto.
+	* libc/ctype/iscntrl.c: Ditto.
+	* libc/ctype/isdigit.c: Ditto.
+	* libc/ctype/islower.c: Ditto.
+	* libc/ctype/isprint.c: Ditto.
+	* libc/ctype/ispunct.c: Ditto.
+	* libc/ctype/isspace.c: Ditto.
+	* libc/ctype/isupper.c: Ditto.
+	* libc/ctype/isxdigit.c: Ditto.
+	* libc/include/ctype.h: Change ctype macros to use new __ctype_ptr__
+	and add declaration of __ctype_ptr__.  Remove older ctype table pointers
+	from here even though they can still work.
+
+2008-07-08  Kazu Hirata  <kazu@codesourcery.com>
+
+	* release-notes-csl.xml: Add a release note about reentrancy.
+
+2008-07-01  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* configure.host (fido): Add -D__DYNAMIC_REENT__.
+
+2008-06-10  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libc/sys/arm/Makefile.in: Regenerate.
+
+2008-06-06  Nathan Froyd  <froydnj@codesourcery.com>
+
+	Link-time support for PowerPC portable objects.
+
+	newlib/
+	* configure.host (aeabi_dir): New variable.
+	(arm-*-*, powerpc-*): Set it.
+	* configure.in: Set up AEABI_OBJECTLIST.
+	* libc/sys/arm/Makefile.am (lib_a_SOURCES): Remove files.
+	* libc/sys/arm/clibabi_math.c,
+	libc/sys/arm/aeabi.h,
+	libc/sys/arm/aeabi_atexit.c,
+	libc/sys/arm/aeabi_memclr.c,
+	libc/sys/arm/aeabi_memcpy.c,
+	libc/sys/arm/aeabi_memmove.c,
+	libc/sys/arm/aeabi_memset.c,
+	libc/sys/arm/clibabi_assert.c,
+	libc/sys/arm/clibabi_ctype.c,
+	libc/sys/arm/clibabi_ctype-gen.c,
+	libc/sys/arm/clibabi_errno.c,
+	libc/sys/arm/clibabi_limits.c,
+	libc/sys/arm/clibabi_locale.c,
+	libc/sys/arm/clibabi_setjmp.c,
+	libc/sys/arm/clibabi_signal.c,
+	libc/sys/arm/clibabi_signal_fns.S,
+	libc/sys/arm/clibabi_stdio.c,
+	libc/sys/arm/clibabi_time.c,
+	libc/sys/arm/clibabi_stdlib.c,
+	libc/sys/arm/hidden.h: Move to...
+	* libc/aeabi: ...here.  New directory.
+	* libc/configure.in (LIBC_AEABI_LIBC): New variable.
+	(HAVE_AEABI_DIR): Set if necessary.
+	Configure aeabi/Makefile.
+	* libc/configure: Regenerate.
+	* libc/Makefile.am (AEABI_SUBDIR): New variable.
+	(SUBDIRS): Add $(AEABI_SUBDIR).
+	(SUBLIBS): Add $(LIBC_AEABI_LIB).
+	* libc/argz/Makefile.in,
+	libc/ctype/Makefile.in,
+	libc/errno/Makefile.in,
+	libc/iconv/ccs/binary/Makefile.in,
+	libc/iconv/ccs/Makefile.in,
+	libc/iconv/ces/Makefile.in,
+	libc/iconv/lib/Makefile.in,
+	libc/iconv/Makefile.in,
+	libc/locale/Makefile.in,
+	libc/Makefile.in,
+	libc/misc/Makefile.in,
+	libc/posix/Makefile.in,
+	libc/reent/Makefile.in,
+	libc/search/Makefile.in,
+	libc/signal/Makefile.in,
+	libc/stdio64/Makefile.in,
+	libc/stdio/Makefile.in,
+	libc/stdlib/Makefile.in,
+	libc/string/Makefile.in,
+	libc/syscalls/Makefile.in,
+	libc/time/Makefile.in,
+	libc/unix/Makefile.in: Regenerate.
+	
+2008-04-26  Mark Mitchell  <mark@codesourcery.com>
+
+	* release-notes-csl.xml: Fix typos in previous note, again.
+
+	* release-notes-csl.xml: Fix typos in previous note.
+	
+	Issue #2942
+	* release-notes-csl.xml: New note.
+	newlib/
+	* libc/include/stdint.h (SIZE_MIN): Remove.
+	(SIZE_MAX): Define.
+	* testsuite/newlib.stdlib/stdlib.exp: New.
+	* testsuite/newlib.stdlib/size_max.c: Likewise.
+
+2008-03-20  Julian Brown  <julian@codesourcery.com>
+
+	newlib/
+	* libc/sys/arm/Makefile.am (lib_a_SOURCES): Add clibabi_assert.c,
+	clibabi_ctype.c, clibabi_errno.c, clibabi_limits.c, clibabi_locale.c,
+	clibabi_math.c, clibabi_setjmp.c, clibabi_signal.c,
+	clibabi_signal_fns.S, clibabi_stdio.c, clibabi_stdlib.c,
+	clibabi_time.c.
+	* libc/sys/arm/Makefile.in: Regenerate.
+	* libc/sys/arm/hidden.h: New file.
+	* libc/sys/arm/clibabi_assert.c: New file.
+	* libc/sys/arm/clibabi_ctype-gen.c: New file.
+	* libc/sys/arm/clibabi_ctype.c: New file.
+	* libc/sys/arm/clibabi_errno.c: New file.
+	* libc/sys/arm/clibabi_limits.c: New file.
+	* libc/sys/arm/clibabi_locale.c: New file.
+	* libc/sys/arm/clibabi_math.c: New file.
+	* libc/sys/arm/clibabi_setjmp.c: New file.
+	* libc/sys/arm/clibabi_signal.c: New file.
+	* libc/sys/arm/clibabi_signal_fns.S: New file.
+	* libc/sys/arm/clibabi_stdio.c: New file.
+	* libc/sys/arm/clibabi_stdlib.c: New file.
+	* libc/sys/arm/clibabi_time.c: New file.
+
+2008-02-02  Sandra Loosemore  <sandra@codesourcery.com>
+	
+	* release-notes-csl.xml: Fix mistaken uses of &csl_prod; to use
+	&csl_sgxx; instead.
+
+2008-01-30  Nathan Sidwell  <nathan@codesourcery.com>
+
+	* config-ml.in: Avoid double spaces in CC, CXX, F77, GCJ and
+	GFORTRAN values.
+
+2008-01-25  Kazu Hirata  <kazu@codesourcery.com>
+
+	* libgloss/arm/Makefile.in, libgloss/arm/arm.sc,
+	libgloss/arm/armv7m.specs, libgloss/arm/coff-redboot.ld,
+	libgloss/arm/crt0.S, libgloss/arm/elf-rdimon.specs,
+	libgloss/arm/elf-rdpmon.specs, libgloss/arm/elf-redboot.ld,
+	libgloss/arm/linux-crt0.c, libgloss/arm/redboot-crt0.S,
+	libgloss/arm/swi.h, libgloss/arm/syscalls.c, libgloss/arm/trap.S:
+	Revert all changes since the last merge from FSF mainline.
+
+2008-01-24  Kazu Hirata  <kazu@codesourcery.com>
+
+	Backport:
+	newlib/
+	2007-02-21  Patrick Mansfield <patmans@us.ibm.com>
+	* libc/reent/timer.c: Removed (split into two new files).
+	* libc/reent/timesr.c: New file for _times_r.
+	* libc/reent/gettimeofdayr.c: New file out _gettimeofday_r.
+	* reent/Makefile.in: Remove timer.c, add timesr.c and
+	gettimeofdayr.c.
+	* libc/reent/Makefile.am: Regenerate.
+
+	Revert:
+	2007-04-14  Nathan Sidwell  <nathan@codesourcery.com>
+	Bug 1389
+	newlib/
+	* libc/reent/timer.c: Split into ...
+	* libc/reent/times.c: ... this and ...
+	* libc/reent/gettimeofday.c: ... this.
+	* libc/reent/Makefile.am: Adjust.
+	* libc/reent/Makefile.in: Rebuilt.
+
+2008-01-23  Kazu Hirata  <kazu@codesourcery.com>
+
+	Revert:
+	2007-09-18  Nathan Sidwell  <nathan@codesourcery.com>
+	libgloss/
+	* m68k/cf-crt1.c (hardware_init): 51qe has no cache too.
+
+2008-01-22  Kazu Hirata  <kazu@codesourcery.com>
+
+	libgloss/
+	* m68k/io-_mcleanup.c, m68k/io-monconfig.c, m68k/io-moncontrol.c:
+	Remove.
+
+2007-10-12  Nathan Froyd  <froydnj@codesourcery.com>
+
+	newlib/
+	* libc/stdlib/wcsrtombs.c (_wcsrtombs_r): Fix off-by-one
+	error in comparison.
+
+2007-09-18  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/
+	* m68k/cf-crt1.c (hardware_init): 51qe has no cache too.
+
+2007-08-31  Kazu Hirata  <kazu@codesourcery.com>
+
+	Backport:
+	newlib/
+	2007-07-06  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* libc/include/sys/time.h (gettimeofday): Change to proper
+	prototype where second parameter is void *.
+	* libc/reent/gettimeofday.c (_gettimeofday_r): Change prototype
+	accordingly.
+	* libc/include/reent.h: Fix prototype for _gettimeofday_r.
+	* libc/sys/arm/syscalls.c: Fix gettimeofday function signature.
+	* libc/sys/rdos/gettod.c: Ditto.
+	* libc/sys/sh/syscalls.c: Ditto.
+	* libc/time/time.c (time): Change call to _gettimeofday_r
+	to pass NULL as 2nd argument.
+
+	libgloss/
+	2007-07-06  Jeff Johnston  <jjohnstn@redhat.com>
+	* arm/syscalls.c (gettimeofday): Change to POSIX signature
+	where second argument is passed as void *.
+	* bfin/syscalls.c (gettimeofday): Ditto.
+	* cris/gensyscalls (gettimeofday): Ditto.
+	* cris/linunistd.h (gettimeofday): Ditto.
+	* crx/time.c (gettimeofday): Ditto.
+	* frv/sim-time.c (gettimeofday): Ditto.
+	* i386/cygmon-salib.c (gettimeofday): Ditto.
+	* libnosys/gettod.c (gettimeofday): Ditto.
+	* m68k/io-gettimeofday.c (gettimeofday): Ditto.
+	* sparc/cygmon-salib.c (gettimeofday): Ditto.
+
+2007-08-31  Kazu Hirata  <kazu@codesourcery.com>
+
+	Revert:
+	2007-07-10  Vladimir Prus  <vladimir@codesourcery.com>
+		    Kazu Hirata  <kazu@codesourcery.com>
+	Issue 1777
+	* Makefile.in (FIDO_UNHOSTED_OBJS): New.
+	(UNHOSTED_OBJS): Include FIDO_UNHOSTED_OBJS.
+	(install_fido): Install fido_profiling.h
+	* fido_profiling.h: Change the return type of _mcleanup to
+	int.
+	* io-_mcleanup.c, io-monconfig.c, io-moncontrol.c: New.
+	* io.h (HOSTED_MONCONTROL, HOSTED_MONCONFIG, HOSTED_MCLEANUP):
+	New.
+
+2007-08-31  Kazu Hirata  <kazu@codesourcery.com>
+
+	libgloss/
+	* m68k/cf-crt1.c (__start1): Replace __INIT_SECTION__ and
+	__FINI_SECTION__ with _init and _fini, respectively.
+	* m68k/cf.sc: Likewise.
+
+2007-08-29  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* arm/syscalls.c (_stat): Use _close.
+
+2007-07-10  Vladimir Prus  <vladimir@codesourcery.com>
+	    Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue 1777
+	* Makefile.in (FIDO_UNHOSTED_OBJS): New.
+	(UNHOSTED_OBJS): Include FIDO_UNHOSTED_OBJS.
+	(install_fido): Install fido_profiling.h
+	* fido_profiling.h: Change the return type of _mcleanup to
+	int.
+	* io-_mcleanup.c, io-monconfig.c, io-moncontrol.c: New.
+	* io.h (HOSTED_MONCONTROL, HOSTED_MONCONFIG, HOSTED_MCLEANUP):
+	New.
+
+2007-06-06  Joseph Myers  <joseph@codesourcery.com>
+
+	* Makefile.tpl (DEBUG_PREFIX_CFLAGS_FOR_TARGET): New.
+	(CFLAGS_FOR_TARGET, CXXFLAGS_FOR_TARGET): Include it.
+	* Makefile.in: Regenerate.
+	* configure.in (--with-debug-prefix-map): New.
+	* configure: Regenerate.
+
+2007-06-06  Paul Brook  <paul@codesourcery.com>
+
+	newlib/
+	* libc/stdlib/__atexit.c (__register_exitproc): Avoid calling malloc
+	if not present.
+
+2007-06-04  Nathan Sidwell  <nathan@codesourcery.com>
+
+	Bug 1679
+	libgloss/
+	* m68k/cf.sc: Fix typo in hex number.
+	* release-notes-csl.xml: Document.
+
+2007-05-18  Kazu Hirata  <kazu@codesourcery.com>
+
+	* cf-crt1.c (__start1): Replace __INIT_SECTION__ and
+	__FINI_SECTION__ with _init and _fini, respectively.
+	* cf.sc: Likewise.
+
+2007-05-18  Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue 1626
+	libgloss/
+	* m68k/fido.sc: Replace __INIT_SECTION__ and __FINI_SECTION__ with
+	_init and _fini, respectively.
+	* m68k/fido-crt0.S: Likewise.
+
+2007-05-17  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* libc/misc/fini.c: Fix the last commit that caused the file
+	to contain two copies of what fini.c should be.
+
+2007-05-16  Mark Mitchell  <mark@codesourcery.com>
+
+	newlib/
+	* libc/stdlib/__call_atexit.c (__libc_fini): Declare.
+	(register_fini): New function.
+	* libc/misc/init.c (_fini): Remove.
+	(__libc_fini_array): Likewise.
+	* libc/misc/fini.c: New file.
+	* libc/misc/Makefile.am (LIB_SOURCES): Add fini.c.
+	* libc/misc/Makefile.in: Regenerate.
+
+2007-05-12  Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue 1596
+	libgloss/
+	* m68k/fido.sc (.data): Move .jcr to .text.  Catch .got.plt
+	and .got.
+
+2007-05-04  Mark Mitchell  <mark@codesourcery.com>
+
+	newlib/
+	* libc/include/stdlib.h (calloc): Declare with EXFUN_NOTHROW.
+	(free): Likewise.
+	(malloc): Likewise.
+	(realloc): Likewise.
+	(_malloc_r): Likewise.
+	(_callor_r): Likewise.
+	(_free_r): Likewise.
+	(_realloc_r): Likewise.
+	* libc/include/_ansi.h: Move C++ defines to top of file.
+	(_NOTHROW): New macro.
+	(_EXFUN_NOTHROW): Likewise.
+
+2007-05-04  Kazu Hirata  <kazu@codesourcery.com>
+
+	Backport from mainline:
+	2007-05-03  Kazu Hirata  <kazu@codesourcery.com>
+	* libc/machine/m68k/memcpy.S: Use sub.l followed by dbra.
+	* libc/machine/m68k/memset.S: Likewise.
+
+2007-05-02  Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue 1523
+	libgloss/
+	* m68k/fido-_exit.c (_exit): Use stop #0x700.
+
+2007-05-02  Nathan Sidwell  <nathan@codesourcery.com>
+
+	* configure.in: Add --enable-libgloss option.
+	* configure: Rebuilt.
+
+2007-04-29  Paul Brook  <paul@codesourcery.com>
+
+	libgloss/
+	* arm/Makefile.in: Add rdimon-vfp-crt0.o and rdimonvfp-ram.ld.
+	* arm/crt0.S: Add VFP init code.
+
+2007-04-26  Julian Brown  <julian@codesourcery.com>
+
+	libc/sys/arm/
+	* swi.h (AngelSWIInsn, AngelSWIAsm): Use bkpt for ARMv6-M.
+
+	libgloss/arm/
+	* swi.h (AngelSWIInsn, AngelSWIAsm): Likewise.
+
+2007-04-23  Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue 1254
+	newlib/
+	* libc/machine/m68k/Makefile.am (lib_a_SOURCES): Add memset.S.
+	* libc/machine/m68k/Makefile.in: Regenerate.
+	* libc/machine/m68k/memset.S: New.
+
+	/
+	* release-notes-csl.xml: Mention that memset has been
+	improved.
+
+2007-04-16  Paul Brook  <paul@codesourcery.com>
+
+	libgloss/
+	* arm/redboot-crt0.S: Disable for ARMV6-M.
+
+2007-04-14  Nathan Sidwell  <nathan@codesourcery.com>
+
+	Bug 1389
+	newlib/
+	* libc/reent/timer.c: Split into ...
+	* libc/reent/times.c: ... this and ...
+	* libc/reent/gettimeofday.c: ... this.
+	* libc/reent/Makefile.am: Adjust.
+	* libc/reent/Makefile.in: Rebuilt.
+
+2007-04-12  Kazu Hirata  <kazu@codesourcery.com>
+
+	* release-notes-csl.xml: Mention that memcpy has been
+	improved.
+
+2007-04-12  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/
+	* m68k/cf.sc: Add CFM config object if needed.
+	* m68k/Makefile.in (m5213evb, m52235evb, cobra52235): Add CFM
+	attribute to ROM region.
+	(cf_region): Process trailing attributes.
+
+2007-04-11  Nathan Sidwell  <nathan@codesourcery.com>
+	    Richard Sandiford  <richard@codesourcery.com>
+	    Kazu Hirata  <kazu@codesourcery.com>
+
+	Issue 1254
+	newlib/
+	* libc/machine/m68k/Makefile.am (lib_a_SOURCES): Add memcpy.S.
+	* libc/machine/m68k/Makefile.in: Regenerate.
+	* libc/machine/m68k/memcpy.S: New.
+
+2007-04-10  Paul Brook  <paul@codesourcery.com>
+
+	libgloss/
+	* arm/crt0.S: Move CommandLine info block to .data.
+
+2007-04-10  Paul Brook  <paul@codesourcery.com>
+
+	libgloss/
+	* arm/crt0.S: Define __heap_base__ and __heap_limit__.
+	* arm/syscalls.c (_sbrk): Use them.
+
+2007-04-04  Sandra Loosemore  <sandra@codesourcery.com>
+
+	* release-notes-csl.xml: Copy-edit.
+
+2007-03-31  Paul Brook  <paul@codesourcery.com>
+
+	newlib/
+	* libc/include/sys/reent.h (_REENT_INIT): Adjust to match struct
+	layout.
+
+2007-03-30  Mark Mitchell  <mark@codesourcery.com>
+
+	libgloss/
+	* libc/stdlib/__call_atexit.c (__call_exitprocs): Handle atexit
+	functions registering additional atexit functions.
+
+2007-03-30  Paul Brook  <paul@codesourcery.com>
+
+	newlib/
+	* libc/machine/arm/setjmp.S: Don't bother saving IP.  Copy SP to IP
+	before saving.  Likewise when restoring.
+
+2007-03-30  Mark Mitchell  <mark@codesourcery.com>
+
+	libgloss/
+	* arm/arm.sc (.init): KEEP it.
+	(.fini): Likewise.
+
+2007-03-29  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/
+	* rs6000/uboot-write.c: Rename __uart to __ns16550.
+
+2007-03-28  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/uboot-write.c (write_ns16550): New.
+	(struct buffer_descriptor, __smc_immr, DPRAM_OFFSET, DPRAM_SMC1)
+	(write_smc): New.
+	(write): Use write_ns16550 and write_smc.
+
+2007-03-28  Paul Brook  <paul@codesourcery.com>
+
+	Merge ARMv6-M support.
+	libgloss/
+	* arm/crt0.S: Add ARMv6-M support.
+	* arm/redboot-crt0.S: Ditto.
+	* arm/linux-crt0.c: Exclude ARM code on ARMv6-M.
+	* arm/trap.S: Disable for ARMv6-M.
+
+	newlib/
+	* libc/machine/arm/setjmp.S: Add ARMv6-M implementation.
+
+2007-03-26  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/uboot-align.c (struct regs, _trap_handler): New.
+	(_cs_alignment_c): Correct type of GPRS.  Only compile for
+	hard float.
+	* rs6000/uboot-crt0.S (.Lhandler, _handler, .Ltrap_handler): New.
+	(.Lalign_saved, __align_saved): Always include.  Expand save area.
+	(_start): Save and install more handlers.  Add missing syncs and
+	cache flushes.
+	(_exit): Always restore exception handlers.  Add missing syncs and
+	cache flushes.
+	(_DAR, _DSISR, _SRR0, _SRR1): New.
+	(STACK_SIZE): Increase.
+	(_handler): New.
+	(_cs_alignment_helper): Add missing sync.
+
+2007-03-22  Julian Brown  <julian@codesourcery.com>
+
+	libgloss/
+	* arm/arm.sc (SECTIONS): Add .vfp11_veneer.
+	* arm/coff-redboot.ld (SECTIONS): Likewise.
+	* arm/elf-redboot.ld (SECTIONS): Likewise.
+	* mcore/pe-cmb.ld (SECTIONS): Likewise.
+
+2007-03-22  Kazu Hirata  <kazu@codesourcery.com>
+
+	libgloss/
+	* m68k/fido.sc: Catch .ctors.* and .dtors.*.  Use KEEP for all
+	sections related to .ctor and .dtor.
+
+2007-03-22  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/Makefile.in (UBOOT_OBJS): Use uboot-sbrk.o instead of sbrk.o.
+	(UBOOT_SOURCES): Update.
+	* rs6000/uboot-crt0.S (__atexit): Delete.
+	* rs6000/uboot-sbrk.c: New file.
+
+2007-03-21  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/Makefile.in (UBOOT_OBJS): Add uboot-align.o.
+	(UBOOT_SOURCES): Add uboot-align.c.
+	(all, install): Limit to U-Boot and sim.
+	* rs6000/uboot-align.c: New file.
+	* rs6000/uboot-crt0.S: Correct .file.
+	(.Lalign_saved, .Lcs_alignment, .Lcs_alignment_helper): New got2
+	entries.
+	(__align_saved): New storage.
+	(_start): Install our alignment handler.
+	(_exit): Restore the alignment handler.
+	(_save_fp, _rest_fp, _cs_alignment, _cs_alignment_helper): New.
+
+2007-03-19  Mark Mitchell  <mark@codesourcery.com>
+
+	Issue #1338
+	newlib/
+	* libc/misc/init.c (__libc_fini_array): Iterate through
+	.fini_array in reverse order.
+
+2007-03-19  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/Makefile.in (UBOOT_SOURCES): New.
+	(install-uboot): Install them.
+
+2007-03-19  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/uboot.ld: Rewrite.  Do not set SEARCH_DIR or provide the
+	standard input files.  Do not mention sections specific to dynamic
+	linking.  Be more thorough supporting -ffunction-sections.  Remove
+	unused symbols and symbols defined in EABI crt files.  Align
+	__bss_end and __sbss_end.
+	* rs6000/uboot-crt0.S (_start): Save the MSR.  Disable interrupts.
+	(_exit): Restore the MSR.
+
+2007-03-16  Kazu Hirata  <kazu@codesourcery.com>
+
+	libgloss/
+	* m68k/fido.sc (.text): Catch .text.* and .rodata.*.
+	(.data): Catch .data.*.
+	(.bss): Catch .bss.*.
+
+2007-03-14  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/Makefile.in (UBOOT_OBJS): Add uboot-read.o.
+	(install-uboot): Fix whitespace.
+	* rs6000/uboot-read.c: New file.
+
+2007-03-14  Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* rs6000/uboot-crt0.S (_start): Handle __SPE__.
+
+2007-03-12  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/rs6000/
+	* uboot-crt0.S: Save and restore callee save registers.  Align
+	stack.
+
+2007-03-10  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/
+	* rs6000/Makefile.in (UBOOT_SCRIPTS, UBOOT_CRT0, UBOOT_BSP,
+	UBOOT_OBJS, UBOOT_INSTALL): New.
+	(UBOOT_BSP): New.
+	(install-uboot): New.
+	* uboot-write.c, uboot.ld, uboot-crt0.S: New.
+
+2007-03-10  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/m68k/
+	* Makefile.in (m5253evb, m5253evb_regions, m5253evb_labels): New.
+	(CF_BOARDS): Add m5253evb.
+
+2007-03-09  Kazu Hirata  <kazu@codesourcery.com>
+
+	* release-notes-csl.xml: Follow the case conventions.
+
+2007-03-06  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/m68k/
+	* Makefile.in (m5208evb, m5213evb, m52235evb, m5235evb, m5249c3,
+	m5272c3, m5275evb, m5282evb, m5329evb, m5485evb): Add cpu and
+	multilib columns.  Reformat ROM and RAM columns.
+	(m5208evb_regions, m5213evb_labels, m52235evb_labels,
+	m5249c3_regions, m5249c3_labels, m5272c3_regions,
+	m5275evb_regions, m5282evb_regions, m5329evb_regions,
+	m5485evb_regions, m5485evb_labels): New.
+	(cobra52235, cobra5272, cobra5282, cobra5329, cobra5475,
+	cobra5485):  Add cpu and multilib columns.  Reformat ROM and RAM
+	columns.
+	(cobra52235_labels, cobra5272_regions, cobra5282_regions,
+	cobra5329_regions, cobra5485_regions, cobra5485_labels): New.
+	(CF_MLIB): New.
+	(CF_BOARDS): Filter by multilib.
+	(CF_SCRIPTS): Append to it.
+	(CF_RAM_SCRIPTS, CF_ROM_SCRIPTS, CF_RAM_HOSTED_SCRIPTS,
+	CF_ROM_HOSTED_SCRIPTS): Move later.
+	(all_m68k, all_cf, all_fido): Move later in file.
+	(cf_region, cf_regions, cf_label, cf_labels): New.  Use them in
+	script generation.
+	(install_cf): Protect against there being no scripts.
+	* cf-crt0.S: Add SYM macros, add __early_hardware_init_hoot.
+	* cf-crt1.c (__start1): Iterate over regions array.
+	* cf-isv.S: Add SYM macros.
+	* cf.sc: Add EXTRA_REGIONS and EXTRA_LABELS processing.  Create
+	regions array.
+
+2007-02-21  Mark Mitchell  <mark@codesourcery.com>
+
+	newlib/
+	* libc/stdlib/strtod.c (strtof): Set errno to ERANGE for
+	out-of-range values.
+
+2007-02-14  Nathan Sidwell  <nathan@codesourcery.com>
+
+	libgloss/
+	* m68k/Makefile.in (CF_BOARDS): Adjust setting.
+	(CF_HOSTED_SCRIPTS): Replace with ...
+	(CF_RAM_HOSTED_SCRIPTS, CF_ROM_HOSTED_SCRIPTS): ... these.
+	(CF_SCRIPTS): Adjust.
+	(m%-ram.ld, m%-rom.ld, m%-ram-hosted.ld, m%-rom-hosted.ld): Adjust
+	with target specific rules.
+
+2007-02-02  Carlos O'Donell  <carlos@codesourcery.com>
+
+	* libgloss/arm/syscalls.c (struct poslog): Rename to...
+	(struct fdent): ... this.
+	(FILE_HANDLE_OFFSET): Remove.
+	(findslot): Return a struct fdent* if fd is valid, otherwise
+	return NULL. Call initialise_monitor_handles().
+	(newslot): New function.
+	(remap_handle): Remove.
+	(initialise_monitor_handles): Use stdout as fallback for
+	stderr.
+	(wrap): Rename to...
+	(checkerror): ... this.
+	(_swiread): Use checkerror() for the return of SWI calls.
+	Correct the use of r0.
+	(_read): Use findslot(). Return EBADF on bad handle.
+	(_swilseek): Call findslot(). Check for valid
+	whence. Check for negative offset when using SEEK_CUR,
+	and check for overflow. Use checkerror(). Check *_Flen
+	calls for errors.
+	(_swiwrite): Correct the use of r0.
+	(_write): Call findslot().
+	(_swiopen): Call findslot(). Check for valid flags. 
+	Use checkerror(). Call newslot(). Handle O_TRUNC,
+	and O_WRONLY. Return index into openfiles[] for fd.
+	(_swiclose): Correct the use of r0.
+	(_close): Handle stderr == stdout case. Only reclaim
+	handle if _swiclose succeeded.
+	(_getpid): Use __attribute__((unused)).
+	(_sbrk): Fix formatting.
+	(_swistat): New function.
+	(_stat): Call _swistat().
+	(_fstat): Call _swistat(). 
+	(_unlink): Correct the use of r0. 
+	(isatty): Call finslot(). Correct the use of r0. 
+	(_system): Call checkerror(). Correct the use of r0.
+	(_rename): Correct the use of r0.
+	* release-notes-csl.xml: Issue #1209. 
+
+2007-01-12  Joseph Myers  <joseph@codesourcery.com>
+	    Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* libc/machine/powerpc/setjmp.S (setjmp, longjmp): Add support
+	for E500V1 and E500V2.
+
+2007-01-10  Sandra Loosemore  <sandra@codesourcery.com>
+
+        newlib/
+        * libc/reent/impure.c (__sf_fake_stdin, __sf_fake_stdout)
+	(__sf_fake_stderr): Declare locally with weak attribute.
+
+2007-01-09  Mark Mitchell  <mark@codesourcery.com>
+	    Paul Brook  <paul@codesourcery.com>
+
+	newlib/
+	* libc/sys/arm/syscalls.c (CHECK_INIT): Remove.
+	(findslot): Call initialise_monitor_handles.
+	(remap_handle): Don't call CHECK_INIT.
+	(initialise_monitor_handles): Make sure to run only once.  Fix
+	multithreaded locking.
+
+2007-01-09  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* libc/sys/arm/Makefile.am (extra_objs): Add $(lpfx)_exit.o
+	$(lpfx)_kill.o.
+	(EXTRA_lib_a_SOURCES): Add _exit.c and _kill.c.
+	* libc/sys/arm/Makefile.in: Regenerate.
+	* libc/sys/arm/_exit.c, libc/sys/arm/_kill.c: New.
+	* libc/sys/arm/libcfunc.c (do_AngelSWI): Remove.
+	* libc/sys/arm/swi.h (do_AngelSWI): New.
+	* libc/sys/arm/syscalls.c (do_AngelSWI): Remove.
+	(_unlink, _system, _rename): Cast arguments to do_AngelSWI to
+	int.
+
+2007-01-08  Nathan Sidwell  <nathan@codesourcery.com>
+
+	CSL #1176
+	libgloss/
+	* m68k/cf-crt0.S (_start): Remove erroneous extra _.
+	* m68k/cf.sc (ENTRY): Adjust entry.
+	(__stack): Use ram memory region operators.
+
+2007-01-08  Kazu Hirata  <kazu@codesourcery.com>
+
+	newlib/
+	* testsuite/lib/flags.exp (newlib_include_flags): Drop
+	-I${newlib_dir}.
+
+2007-01-08  Paul Brook  <paul@codesourcery.com>
+
+	newlib/
+	* libc/sys/arm/Makefile.am (lib_a_SOURCES): Add aeabi_memclr.c,
+	aeabi_memcpy.c, aeabi_memmove.c and aeabi_memset.c.
+	* libc/sys/arm/Makefile.in: Regenerate.
+	* libc/sys/arm/aeabi.h: New file.
+	* libc/sys/arm/aeabi_memclr.c: New file.
+	* libc/sys/arm/aeabi_memcpy.c: New file.
+	* libc/sys/arm/aeabi_memmove.c: New file.
+	* libc/sys/arm/aeabi_memset.c: New file.
+
+	libgloss/
+	* configure.in: Add check for .init_array.
+	* configure: Regenerate.
+
+	newlib/
+	* libc/include/sys/reent.h (_reent): Adjust _REENT_SMALL to be binary
+	compatible with normal layout
+
+	newlib/
+	* acconfig.h (_ATEXIT_DYNAMIC_ALLOC): Remove.
+	* configure.in: Remove --disable-newlib-atexit-dynamic-alloc.
+	* libc/stdlib/__atexit.c (__register_exitproc): Use weak reference to
+	malloc.  Only allocate dynamically if it is present.
+	* libc/stdlib/__call_atexit.c (__call_exitprocs): Use weak reference
+	to free.
+	* configure: Regenerate.
+	* newlib.hin: Regenerate.
+
+2007-01-05  Mark Mitchell  <mark@codesourcery.com>
+	    Paul Brook  <paul@codesourcery.com>
+	    Daniel Jacobowitz  <dan@codesourcery.com>
+
+	libgloss/
+	* arm/Makefile.in (ARMV7M_OBJS, ARMV7M_SPECS, ARMV7M_INSTALL):
+	New.
+	(all): Add ${ARMV7M_OBJS}.
+	(armv7m-crt0.o, armv7m, lm3s10x, lm3s301, lm3s31x, lm3s6xx,
+	lm3s8xx): New.
+	(install): Add ${ARMV7M_INSTALL}
+	(install-armv7m): New.
+	* arm/armv7m.specs: New.
+	* arm/crt0.S: Add V7M support.
+	* arm/syscalls.c (CHECK_INIT): Remove.
+	(findslot): Call initialise_monitor_handles.
+	(remap_handle): Do not call initialise_monitor_handles.
+	(initialise_monitor_handles): Make sure to run only once.
+
+2007-01-05  Paul Brook  <paul@codesourcery.com>
+
+	libgloss/
+	* arm/Makefile.in (RDPMON_CRT0): Add rdpmon-ram.ld.
+	(RDIMON_CRT0): Add rdimon-ram.ld.
+	(RDPMON_SCRIPTS, RDIMON_SCRIPTS): Remove.
+	(rdimon, rdpmon, %-ram.ld, %-rom.ld): New.
+	(install-rdpmon, install-rdimon): Don't install spec files.
+	* arm/arm.sc: New.
+	* arm/elf-rdimon.specs, arm/elf-rdpmon.spec: Remove.
+
+	libgloss/
+	* arm/Makefile.in (ALL_CFLAGS): Define and use.
+
+	libgloss/
+	* arm/syscalls.c (isatty): New.
+
+Local Variables:
+mode: change-log
+change-log-default-name: "ChangeLog.csl"
+End:

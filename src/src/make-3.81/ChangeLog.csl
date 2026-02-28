@@ -1,0 +1,59 @@
+2012-09-24  Joseph Myers  <joseph@codesourcery.com>
+
+	Backport from upstream:
+
+	2009-08-01  Paul Smith  <psmith@gnu.org>
+
+	* job.c (new_job): Use memmove() instead of strcpy() since both
+	pointers are in the same memory block.  Fixes Savannah bug #27148.
+	Patch by Petr Machata.
+
+2012-09-24  Joseph Myers  <joseph@codesourcery.com>
+
+	Backport from upstream:
+
+	tests/
+
+	2010-07-01  Paul Smith  <psmith@gnu.org>
+
+	* scripts/features/recursion: Add a space to separate command-line
+	args.  Fixes Savannah bug #29968.
+
+2007-11-21  Paul Brook  <paul@codesourcery.com>
+
+	* remake.c (notice_finished_file): Avoid O(N) search in common case.
+
+2006-09-19  Vladimir Prus  <vladimir@codesourcery.com>
+
+	Apparently, automake 1.9.6 is required.
+	* Makefile.in: Regenerated.
+	* doc/Makefile.in: Regenerated.
+	* glob/Makefile.in: Regenerated.
+	* config/Makefile.in: Regenerated.
+	* configure: Regenerated.
+	* w32/Makefile.in: Regenerated.
+
+2006-07-18  Vladimir Prus  <vladimir@codesourcery.com>
+
+	* main.c (print_usage): Don't hardcode bug URL, use
+	PACKAGE_BUGREPORT.
+	(print_version): Use PKGVERSION.
+	* Makefile.am (DEFS): Set PKGVERSION.
+	* configure.in (AC_INIT): Change bug URL. Accept --with-pkgversion.
+	* Makefile.in: Regenerated.
+	* doc/Makefile.in: Regenerated.
+	* glob/Makefile.in: Regenerated.
+	* config/Makefile.in: Regenerated.
+	* configure: Regenerated.
+	* w32/Makefile.in: Regenerated.
+	* aclocal.m4: Regenerated.
+
+2006-09-06  Joseph Myers  <joseph@codesourcery.com>
+
+	* argv.c: New.  From libiberty.
+	* Makefile.am (make_SOURCES): Add argv.c.
+	* Makefile.in: Regenerate.
+	* doc/make.texi: Update.
+	* main.c (main): Call expandargv.
+	* make.h (buildargv, freeargv, dupargv, expandargv): Declare.
+

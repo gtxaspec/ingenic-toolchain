@@ -1,0 +1,135 @@
+From 12959ecf7746276fe84868fdd0b947ceb0c32a2c Mon Sep 17 00:00:00 2001
+From: Liu Qian <qian.liu@ingenic.com>
+Date: Tue, 5 Dec 2017 17:46:24 +0800
+Subject: [PATCH] Buildroot-build-for-gcc52
+
+---
+ .../0001-ltp-build-patch-for-gcc7.2.patch          | 41 ++++++++++++++++++++++
+ .../ncurses-01-fixup-pkg-config-handling.patch     | 13 +++++++
+ system/skeleton/etc/network/interfaces             |  9 +++--
+ system/skeleton/etc/profile                        |  1 +
+ system/skeleton/root/.sshfsconfig                  |  5 +++
+ toolchain/toolchain-external/toolchain-external.mk |  2 +-
+ 6 files changed, 67 insertions(+), 4 deletions(-)
+ create mode 100644 package/ltp-testsuite/0001-ltp-build-patch-for-gcc7.2.patch
+ create mode 100644 system/skeleton/root/.sshfsconfig
+
+diff --git a/package/ltp-testsuite/0001-ltp-build-patch-for-gcc7.2.patch b/package/ltp-testsuite/0001-ltp-build-patch-for-gcc7.2.patch
+new file mode 100644
+index 0000000..e3b96a0
+--- /dev/null
++++ b/package/ltp-testsuite/0001-ltp-build-patch-for-gcc7.2.patch
+@@ -0,0 +1,41 @@
++From a70b9a0a982378aaeabf16b9bb60f407148287ec Mon Sep 17 00:00:00 2001
++From: Liu Qian <qian.liu@ingenic.com>
++Date: Fri, 1 Dec 2017 11:29:06 +0800
++Subject: [PATCH] ltp build patch for gcc7.2
++
++---
++ testcases/kernel/sched/tool/trace_sched.c     | 4 ++--
++ testcases/kernel/syscalls/bdflush/bdflush01.c | 2 +-
++ 2 files changed, 3 insertions(+), 3 deletions(-)
++
++diff --git a/testcases/kernel/sched/tool/trace_sched.c b/testcases/kernel/sched/tool/trace_sched.c
++index 7815686..71caf23 100644
++--- a/testcases/kernel/sched/tool/trace_sched.c
+++++ b/testcases/kernel/sched/tool/trace_sched.c
++@@ -421,8 +421,8 @@ int main(int argc,		/* number of input parameters.                        */
++ 		} else {
++ 			if (status == (thread_sched_t *) - 1) {
++ 				fprintf(stderr,
++-					"thread [%d] - process exited with errors %d\n",
++-					thrd_ndx, WEXITSTATUS(status));
+++					"thread [%d] - process exited with exit code -1\n",
+++					thrd_ndx);
++ 				exit(-1);
++ 			} else {
++ 				exp_prio[thrd_ndx] = status->exp_prio;
++diff --git a/testcases/kernel/syscalls/bdflush/bdflush01.c b/testcases/kernel/syscalls/bdflush/bdflush01.c
++index e3a48b6..8a93c3d 100644
++--- a/testcases/kernel/syscalls/bdflush/bdflush01.c
+++++ b/testcases/kernel/syscalls/bdflush/bdflush01.c
++@@ -81,7 +81,7 @@
++ #include <unistd.h>
++ #include <errno.h>
++ #include <sys/stat.h>
++-#include <sys/kdaemon.h>
+++//#include <sys/kdaemon.h>
++ 
++ #include "test.h"
++ #include "usctest.h"
++-- 
++1.7.12.4
++
+diff --git a/package/ncurses/ncurses-01-fixup-pkg-config-handling.patch b/package/ncurses/ncurses-01-fixup-pkg-config-handling.patch
+index e1cfc75..f68c867 100644
+--- a/package/ncurses/ncurses-01-fixup-pkg-config-handling.patch
++++ b/package/ncurses/ncurses-01-fixup-pkg-config-handling.patch
+@@ -87,3 +87,16 @@ Index: b/configure.in
+  fi
+  AC_SUBST(PKG_CONFIG_LIBDIR)
+  
++Index: b/ncurses/Makefile.in
++===================================================================
++--- a/ncurses/Makefile.in	2016-08-05 17:25:05.359632505 +0800
+++++ b/ncurses/Makefile.in	2016-08-05 17:24:59.697664438 +0800
++@@ -93,7 +93,7 @@
++ CFLAGS		= @CFLAGS@
++ 
++ INCDIR		= $(srcdir)/../include
++-CPPFLAGS	= -DHAVE_CONFIG_H -I../ncurses -I$(srcdir) @CPPFLAGS@
+++CPPFLAGS	= -DHAVE_CONFIG_H -P -I../ncurses -I$(srcdir) @CPPFLAGS@
++ 
++ CCFLAGS		= $(CPPFLAGS) $(CFLAGS)
++ 
+diff --git a/system/skeleton/etc/network/interfaces b/system/skeleton/etc/network/interfaces
+index 218b82c..f921377 100644
+--- a/system/skeleton/etc/network/interfaces
++++ b/system/skeleton/etc/network/interfaces
+@@ -1,4 +1,7 @@
+ # Configure Loopback
+-auto lo
+-iface lo inet loopback
+-
++auto eth0
++iface eth0 inet static
++    address 10.0.2.15
++    netmask 255.255.255.0
++    gateway 10.0.2.2
++    dns-nameservers 192.168.1.2 
+diff --git a/system/skeleton/etc/profile b/system/skeleton/etc/profile
+index 31d3180..ac58e29 100644
+--- a/system/skeleton/etc/profile
++++ b/system/skeleton/etc/profile
+@@ -53,3 +53,4 @@ for i in /etc/profile.d/*.sh ; do
+         . $i
+     fi
+ done
++source ~/.sshfsconfig
+diff --git a/system/skeleton/root/.sshfsconfig b/system/skeleton/root/.sshfsconfig
+new file mode 100644
+index 0000000..8ffe0a3
+--- /dev/null
++++ b/system/skeleton/root/.sshfsconfig
+@@ -0,0 +1,5 @@
++ #!/bin/bash
++rm /dev/fuse
++mknod /dev/fuse c 10 229
++mkdir -p TOOLCHAIN_LOCAL_PATH
++sshfs TOOLCHAIN_HOST:TOOLCHAIN_LOCAL_PATH TOOLCHAIN_LOCAL_PATH -o uid=1000,gid=1000,allow_other
+diff --git a/toolchain/toolchain-external/toolchain-external.mk b/toolchain/toolchain-external/toolchain-external.mk
+index c73cc4a..b06bc25 100644
+--- a/toolchain/toolchain-external/toolchain-external.mk
++++ b/toolchain/toolchain-external/toolchain-external.mk
+@@ -62,7 +62,7 @@
+ #  of Buildroot is handled identical for the 2 toolchain types.
+ 
+ ifeq ($(BR2_TOOLCHAIN_EXTERNAL_GLIBC)$(BR2_TOOLCHAIN_EXTERNAL_UCLIBC),y)
+-LIB_EXTERNAL_LIBS+=libc.so.* libcrypt.so.* libdl.so.* libgcc_s.so.* libm.so.* libnsl.so.* libresolv.so.* librt.so.* libutil.so.*
++LIB_EXTERNAL_LIBS+=libc.so.* libcrypt.so.* libdl.so.* libgcc_s.so.* libm.so.* libnsl.so.* libresolv.so.* librt.so.* libutil.so.* libgo.so.* libgfortran.so.* libatomic.so.*
+ ifeq ($(BR2_TOOLCHAIN_EXTERNAL_GLIBC)$(BR2_ARM_EABIHF),yy)
+ LIB_EXTERNAL_LIBS+=ld-linux-armhf.so.*
+ else
+-- 
+1.7.12.4
+

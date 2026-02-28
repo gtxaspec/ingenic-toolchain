@@ -1,0 +1,13 @@
+set host_alias i686-pc-linux-gnu
+set host_triplet i686-pc-linux-gnu
+set target_alias mips-linux-gnu
+set target_triplet mips-linux-gnu
+set build_triplet i686-pc-linux-gnu
+
+set tool gas
+set srcdir /home/toolchains/r2.1/obj/binutils-src-2012.09-99-mips-linux-gnu-i686-pc-linux-gnu/gas/testsuite/gas/mips
+set all_flag 1
+
+#fix boards_dir to your position of the dejagnu
+lappend boards_dir "/home/toolchains/dejagnu-r2.1"
+

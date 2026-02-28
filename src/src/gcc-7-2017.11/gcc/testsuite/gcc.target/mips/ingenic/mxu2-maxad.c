@@ -1,0 +1,27 @@
+/* Test builtins for MIPS MXU2 ASE instructions */
+/* { dg-options "-mmxu2" } */
+
+#include "mxu2.h"
+#include "mxu2-check.h"
+
+int main (void)
+{
+  union_signed_d u, v, s1, s2;
+  int i;
+  int len = 2;
+  s1.x = (v2i64){(1), (2),};
+  s2.x = (v2i64){(-2), (-1),};
+  u.x = __builtin_mxu2_maxa_d(s1.x, s2.x);
+
+  for(i = 0; i < len; i++)
+  {
+     if(abs (s1.a[i]) > abs (s2.a[i]))
+       v.a[i] = s1.a[i];
+     else
+       v.a[i] = s2.a[i];
+  }
+
+  if(check_d (&u, &v, len))
+    abort ();
+  return 0;
+}

@@ -1,0 +1,82 @@
+From 05cf584c38e6e07af1f11566ab0f4f16c35e78ef Mon Sep 17 00:00:00 2001
+From: Liu Qian <qian.liu@ingenic.com>
+Date: Tue, 5 Dec 2017 15:04:04 +0800
+Subject: [PATCH] Buildroot.2017 patch of gcc72
+
+---
+ ...001-Buildroot-build-patch-for-ltp-gcc-7.2.patch | 24 ++++++++++++++++++++++
+ package/openssh/openssh.mk                         |  7 +++++++
+ toolchain/helpers.mk                               |  1 -
+ 3 files changed, 31 insertions(+), 1 deletion(-)
+ create mode 100644 package/ltp-testsuite/0001-Buildroot-build-patch-for-ltp-gcc-7.2.patch
+
+diff --git a/package/ltp-testsuite/0001-Buildroot-build-patch-for-ltp-gcc-7.2.patch b/package/ltp-testsuite/0001-Buildroot-build-patch-for-ltp-gcc-7.2.patch
+new file mode 100644
+index 0000000..0c85ea8
+--- /dev/null
++++ b/package/ltp-testsuite/0001-Buildroot-build-patch-for-ltp-gcc-7.2.patch
+@@ -0,0 +1,24 @@
++From 6dbcb85d0013568f4a6bc32190e44467d2420fe1 Mon Sep 17 00:00:00 2001
++From: LiuQian <qian.liu@ingenic.com>
++Date: Wed, 29 Nov 2017 17:31:56 +0800
++Subject: [PATCH] ltp for gcc-7.2 build patch
++
++---
++ include/tst_safe_net.h | 1 +
++ 1 file changed, 1 insertion(+)
++
++diff --git a/include/tst_safe_net.h b/include/tst_safe_net.h
++index 3ba410a..406657d 100644
++--- a/include/tst_safe_net.h
+++++ b/include/tst_safe_net.h
++@@ -21,6 +21,7 @@
++ #include <sys/types.h>
++ #include <sys/socket.h>
++ #include <netinet/in.h>
+++#include <stdint.h>
++ #include <arpa/inet.h>
++ #include <sys/un.h>
++ 
++-- 
++1.9.1
++
+diff --git a/package/openssh/openssh.mk b/package/openssh/openssh.mk
+index ce37ee7..9d1118c 100644
+--- a/package/openssh/openssh.mk
++++ b/package/openssh/openssh.mk
+@@ -28,6 +28,10 @@ endif
+ 
+ OPENSSH_DEPENDENCIES = zlib openssl
+ 
++define OPENSSH_INSTALL_ROOTLOGIN_CONF
++	${SED} 's/\#PermitRootLogin prohibit-password/PermitRootLogin yes/' $(TARGET_DIR)/etc/ssh/sshd_config
++endef
++
+ ifeq ($(BR2_PACKAGE_LINUX_PAM),y)
+ define OPENSSH_INSTALL_PAM_CONF
+ 	$(INSTALL) -D -m 644 $(@D)/contrib/sshd.pam.generic $(TARGET_DIR)/etc/pam.d/sshd
+@@ -42,6 +46,9 @@ else
+ OPENSSH_CONF_OPTS += --without-pam
+ endif
+ 
++OPENSSH_POST_INSTALL_TARGET_HOOKS += OPENSSH_INSTALL_ROOTLOGIN_CONF
++
++
+ ifeq ($(BR2_PACKAGE_LIBSELINUX),y)
+ OPENSSH_DEPENDENCIES += libselinux
+ OPENSSH_CONF_OPTS += --with-selinux
+diff --git a/toolchain/helpers.mk b/toolchain/helpers.mk
+index 72e7292..b065f3b 100644
+--- a/toolchain/helpers.mk
++++ b/toolchain/helpers.mk
+@@ -151,7 +151,6 @@ check_gcc_version = \
+ 	if [[ ! "$${real_version}" =~ ^$${expected_version}\. ]] ; then \
+ 		printf "Incorrect selection of gcc version: expected %s.x, got %s\n" \
+ 			"$${expected_version}" "$${real_version}" ; \
+-		exit 1 ; \
+ 	fi
+ 
+ #
+-- 
+1.7.12.4
+

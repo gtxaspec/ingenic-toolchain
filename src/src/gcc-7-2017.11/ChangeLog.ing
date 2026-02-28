@@ -1,0 +1,605 @@
+2018-08-09 Jianfang Li<jianfang.li@ingenic.com>
+
+	Add "-mmxu" options for gcc
+
+	gcc/config/mips/
+	* mips.opt (mmxu):New.
+	* mips.h (__mips_mxu):New.
+	(mmxu,mno-mmxu):Likewise.
+
+	gcc/testsuite/gcc.target/mips/
+	* mips.exp (mips-dg-init): Add -mmxu and -mno-mxu options.
+
+2018-07-05 Jian Wang <jian.wang@ingenic.com>
+
+	Add -mfused-madd option for mips testsuites.
+
+	gcc/config/mips/
+	* mips.exp (option): Add -mfused-madd/-mno-fused-madd
+	option to mips_option_groups.
+
+	gcc/testsuite/gcc.target/mips/ingenic/
+	* mxu2.c (dg-options): Add -mfused-madd option.
+
+	gcc/testsuite/gcc.target/mips/
+	* madd4-2.c (dg-options): Add -mfused-madd option.
+	* mips-ps-type-2.c (dg-options): Likewise.
+	* mips-ps-type.c (dg-options): Likewise.
+	* nmadd-1.c (dg-options): Likewise.
+	* nmadd-2.c (dg-options): Likewise.
+
+2018-06-27 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix bug: #970
+	UNSUPPORTED: gcc.dg/vect/vect-reduc-sad.c
+
+	Fixed issue that unsupport vect_usad_char.
+
+	gcc/testsuite/lib/
+	* target-supports.exp (check_effective_target_vect_usad_char): add
+	check_effective_target_mips_mxu2 ,check_effective_target_mips_msa.
+
+2018-06-27 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix bug: #969
+	UNSUPPORTED: gcc.dg/vect/aligned-section-anchors-nest-1.c  -mmxu2
+
+	Fixed issue that unsupport section_anchors.
+
+	gcc/testsuite/lib/
+	* target-supports.exp (check_effective_target_section_anchors): add
+	mips*-*-* options.
+
+
+2018-06-26 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix bug: #967
+	UNSUPPORT: gcc.dg/graphite/run-id-5.c
+
+	Fixed issue that return incorrect value  when check vect_int.
+
+	gcc/testsuite/lib/
+	* target-supports.exp (check_effective_target_vect_int): modify
+	et-is-effective-target * to check_effective_target_*
+
+2018-06-21 Jianfang Li <jianfang.li@ingenic.com>
+
+	Debug MXU2 compare insn, Implement maxs mins minu template
+	with standard operation.
+
+	gcc/config/mips/
+	* mips-msa.md (smaxm3): add MXU2 maxs template.
+	(sminm3): add MXU2 mins template.
+	(uminm3): add MXU2 minu template.
+
+2018-06-19 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix bug: #960
+	FAIL: gcc.misc-tests/help.exp
+
+	Resolved "absent from output -mmxu2 "error.
+
+	gcc/config/mips/
+	* mips.opt (mmxu2): Fixed mmxu2 option format.
+
+2018-06-19 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix bug: #958
+	FAIL: gcc.dg/vect/nodump-forwprop-22.c
+
+	Resolved -mmsa unbalanced open parent
+
+	gcc/testsuite/lib
+	* target-supports.exp (check_effective_target_vect_double): Fix judgement
+	condition.
+
+2018-06-14 Qian Liu <qian.liu@ingenic.com>
+
+
+	Debug const range in vector init expand to signed 15bit.
+
+	gcc/config/mips/
+	* mips.c (mips_expand_vector_init): Debug vector const
+	range to signed 15bit. And update vector expand implement.
+
+2018-06-14 Qian Liu <qian.liu@ingenic.com>
+
+	Optimize MXU2 idiv cost calculate implement.
+
+	gcc/config/mips/
+	* mips.c (mips_idiv_insns): Handle MXU2 idiv.
+	(mips_msa_idiv_insns): Remove function.
+	(mips_rtx_costs): Remove calling of mips_msa_idiv_insns.
+
+2018-06-14 Qian Liu <qian.liu@ingenic.com>
+
+	Implement MXU2 bselv template with standard operation.
+
+	gcc/config/mips/
+	* mips-mxu2.md (mxu2_bselvm): Instead UNSPEC with standard
+	operation for "mxu2_bselvm" template.
+	* mips.c (mips_expand_vec_cond_expr): Remove Superfluous space.
+
+2018-06-12 Jianfang Li <jianfang.li@ingenic.com>
+
+	Debug fixuns_truncmn2 insn pattern.
+
+	gcc/config/mips/
+	* mips-msa.md (fixuns_truncmn2): Fix Output template for MXU2.
+
+2018-06-12 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix print operand error.
+
+	gcc/config/mips/
+	* mips.c (mips_print_operand): modify 'V' for
+	switch MXU2 regisiter print.
+
+2018-06-07 Jianfang Li <jianfang.li@ingenic.com>
+
+	Reference MSA merge MXU2 li insn to movm_mxu2 pattern.
+
+	gcc/config/mips/
+	* constraints.md (YN) : define new constraint for mxu2 15bit
+	signed immediate.
+	* mips.c (mips_output_move): add MXU2 processing.
+	(mips_const_insns): Likewise.
+	* mips-mxu2.md (movm_mxu2): add operand constraints
+	for immediate.
+	(mxu2_lim): Reference msa_lim optimization code.
+
+	gcc/testsuite/gcc.target/mips/ingenic/
+	* mxu2.c (<TYPE>_LDI_MIN): Renameing to ...
+	(<TYPE>_LI_MIN): ... this. Note: <TYPE> contain v16i8 v8i16 v4i32 v2i64
+	(<TYPE>_LDI_MAX): Renameing to ...
+	(<TYPE>_LI_MAX): ... this. Note: <TYPE> contain v16i8 v8i16 v4i32 v2i64
+	(LOAD_I_MIN): modify LDI to LI.
+	(LOAD_I_MAX): Likewise.
+
+2018-06-06 Jianfang Li <jianfang.li@ingenic.com>
+
+	Front End use add function to implement unsigned
+	immediate subtraction. so we modify corresponding
+	testcases.
+
+	gcc/testsuite/gcc.target/mips/ingenic/
+	* mxu2.c (dg-final):modify test21_v16u8,test21_v8u16
+	test21_v4u32,test21_v2u64
+
+2018-06-06 Jianfang Li <jianfang.li@ingenic.com>
+
+	Modify "xor,ior,and" instruction standard template.
+
+	gcc/config/mips/
+	* mips-msa.md (xor<mode>3): Add mxu2 xorib insn.
+	(ior<mode>3): Add mxu2 orib insn.
+	(and<mode>3): Add mxu2 andib insn.
+
+2018-06-05 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix print operand error.
+
+	gcc/config/mips/
+	* mips.c (mips_print_operand): add new letter 'w' for
+	switch MXU2 regisiter print.
+
+2018-06-05 Jianfang Li <jianfang.li@ingenic.com>
+
+	Passing the parameter "-mmxu2/-mno-mxu2" to binutils.
+
+	gcc/config/mips/
+	* mips.h (mips_cpu_info): add "mmxu2,mno-mxu2" in ASM_SPEC
+
+2018-06-05 Jianfang Li <jianfang.li@ingenic.com>
+
+	Add MXU2 compare insn support.
+
+	gcc/config/mips/
+	* mips.c (mips_expand_mxu2_cmp): new function, generate
+	RTL for comparing.
+	(mips_expand_vec_cond_expr): Add MXU2 processing
+
+2018-06-04 Jianfang Li <jianfang.li@ingenic.com>
+
+	Fix bug: #936
+	FAIL: gcc.target/mips/ingenic/mxu2-fclassd.c
+
+	Resolved ICE in mips_variable_issue.
+
+	gcc/config/mips/
+	* mips-mxu2.md (move<mode>_mxu2): remove attr "move_type"
+
+2018-05-29 Jianfang Li <jianfang.li@ignenic.com>
+
+	Merge MXU2 support.
+
+	* gcc/config.gcc (extra_headers): Add mxu2.h
+
+	gcc/config/mips/
+	* constraints.md (define_register_constraint): New COP2_REGS define.
+	* mips.opt (mmxu2): New option.
+	* mips-ftypes.def : Add MXU2 type define.
+	* mips-protos.h (mips_split_mxu2_mtcpu_d): New declaration.
+	(mips_expand_mxu2_branch): Likewise.
+	(mips_split_mxu2_mfcpu_d): Likewise.
+	(mips_split_mxu2_insert_d): Likewise.
+	(mips_mxu2_output_division): Likewise.
+	* predicates.md (aq10_4_operand): add mxu2 needed predicate.
+	(const_vector_same_simm15_operand):Likewise.
+	(const_imm15_operand):Likewise.
+	* mips.h (mips_cpu_info): New builtin __mips_mxu2, __mips_mxu2_width
+	(ISA_HAS_MXU2): New macro.
+	(UNITS_PER_MXU2_REG): Likewise.
+	(BITS_PER_MXU2_REG): Likewise.
+	(BIGGEST_ALIGNMENT): Set MSA and MXU2 BIGGEST_ALIGNMENT.
+	(FIXED_REGISTERS): Allocate COP2 register to MXU2.
+	(CALL_USED_REGISTERS): Likewise.
+	(CALL_REALLY_USED_REGISTERS): Likewise.
+	(MXU2_REG_FIRST): New macro.
+	(MXU2_REG_LAST): Likewise.
+	(MXU2_REG_NUM): Likewise.
+	(ALL_COP_REG_NUM): Define ALL_COP_REG_NUM for COP2
+	(MXU2_REG_P): New macro.
+	(MXU2_REG_RTX_P): Likewise.
+	(HARD_REGNO_CALL_PART_CLOBBERED): Set MXU2 as part clobbered.
+	(IMM15_OPERAND): New macro.
+	(MXU2_SUPPORTED_MODE_P): Likewise.
+	(REGISTER_NAMES): Rename $c2r to $vr
+	(ADDITIONAL_REGISTER_NAMES): Attach MXU2 register name.
+	* mips-msa.md (MODE128): New mode interator define.
+	(VHALFMODE,FINT): New mode attr define.
+	(RES,unitfmt,mxu2fmt_ivconv): Likewise.
+	(vec_init): Merge msa and mxu2 common patter.
+	(vec_extract, vec_set,vcondu,vcond,neg,mov): Likewise.
+	(movmisalign, add, sub, mul,div,udiv,mod,umod): Likewise.
+	(xor,ior ,and,one_cmpl, vlshr, vashr): Likewise.
+	(vashl,sqrt,ssadd, usadd,float, floatuns,smax): Likewise.
+	(smin,fixuns_trunc, umax,fix_trunc,umin): Likewise.
+	* mips.md (move_type): New vpload move type.
+	(mips-mxu2.md): Include mxu2 patters define.
+	* mips.c: Merge mxu2 support.
+	* ingenic.c : New MXU2 instruction cost define and and new
+	function mips_adjust_cost_ingenic .
+
+2018-05-29 Jianfang Li <jianfang.li@ingenic.com>
+
+	Merge MXU2 testsuites from release_3.3.0-gcc540
+
+	gcc/testsuite/
+	* gcc.gd/vect/tree-vect.h (check_vect): Add __mips_mxu2 vector check.
+	* lib/target-support.exp (check_mips_mxu2_hw_available):New function.
+	(check_effective_target_mips_mxu2_runtime): Likewise.
+	(add_options_for_mips_mxu2): Likewise.
+	(check_effective_target_mips_mxu2): Likewise.
+	(check_effective_target_vect_int): Add condition
+	et-is-effective-target mips_mxu2.
+	(check_effective_target_vect_uintfloat_cvt): Likewise.
+	(check_effective_target_vect_floatint_cvt): Likewise.
+	(check_effective_target_vect_floatuint_cvt): Likewise.
+	(check_effective_target_vect_shift): Likewise.
+	(check_effective_target_whole_vector_shift): Likewise.
+	(check_effective_target_vect_shift_char): Likewise.
+	(check_effective_target_vect_long): Likewise.
+	(check_effective_target_vect_float): Likewise.
+	(check_effective_target_vect_double): Likewise.
+	(check_effective_target_vect_long_long): Likewise.
+	(check_effective_target_vect_usad_char): Likewise.
+	(check_effective_target_vect_no_align): Likewise.
+	(check_effective_target_vect_hw_misalign): Likewise.
+	(check_effective_target_vect_condition): Likewise.
+	(check_effective_target_vect_cond_mixed): Likewise.
+	(check_effective_target_vect_short_mult): Likewise.
+	(check_effective_target_vect_int_mult): Likewise.
+	(check_vect_support_and_set_flags): Handle "MSA run" or "MXU2 run"
+	or "MSA compile".
+
+	gcc/testsuite/gcc.target/mips/
+	* mips.exp: Add condition test ingenic/* testcases.
+	* ingenic/*: Add ingenic testcase.
+
+2018-04-27 Jianfang Li <jianfang.li@ingenic.com>
+
+	Rollback following submission, Restore multilib default
+	configurate to mfp32
+
+	jwang <jwang@ingenic.cn>
+	commit 4c8308
+	 [Modify] Remove the fp32 library
+	commit bfa2c0
+	 [Modify] change the default multilib from mfp32 to mfp64
+
+	gcc/config/mips/
+	* t-sgxxlite-linux (MULTLIB_OPTIONS): Add mfp64 options.
+	(MULTILIB_DIRNAMES): Add fp64 dir.
+	(MULTILIB_OSDIRNAMES): Set the mpf64 option corresponds
+	to the fp64 dir.
+	* t-sgxxlite-sde: Likewise.
+	* cs-sgxxlite-linux.h (DRIVER_SELF_SPECS): Remove the limitation
+	of the mips32r2/mips32 to increase of attach mfp64.
+	(SYSROOT_SUFFIX_SPEC): Set mfp64 and mmsa options corresponds
+	to the mfp64 dir.
+	* sde.h (DRIVER_SELF_SPECS): Remove the limitation of the
+	mips32r2/mips32 to increase of attach mfp64.
+
+2017-11-24 Qian Liu <qian.liu@ingenic.com>
+
+	Backup for setting prefetch schedule barrier.
+
+	commit 3591d2.
+	  [optimize] Set prefetch as schedule barrier.
+
+	* gcc/config/mips/mips.md (prefetch): Renaming to
+	(prefetch1). And rewrite prefetch as expand to set
+	PREFETCH_SCHEDULE_BARRIER_P.
+
+2017-11-22 Qian Liu <qian.liu@ingenic.com>
+
+	Update target options help message. Remove mmxu option.
+
+	gcc/config/mips
+	* mips.h (ASM_SPEC): Remov mmxu case.
+	* mips.opt (mfused-madd): Update help message.
+	(mfusion): Likewise.
+	(mmxu): Remove.
+
+2017-11-22 Qian Liu <qian.liu@ingenic.com>
+
+	Merge PROCESSOR_XBURST2 support from sourcery-201511-dev.
+
+	commit 0c4b4b.
+	[Add] PROCESSOR_XBURST2 support.
+
+	- Add xburst2 processor and xburst2_main automaton support.
+	Define processor xburst2 as dual issue cpu.
+
+	gcc/config/mips
+	* mips.md (processor): Add xburst2 processor.
+	(xburst2.md): New include.
+	* mips-cpus.def (xburst2): Use PROCESSOR_XBURST2 for xburst2.
+	* mips.h (TUNE_XBURST2): New macro.
+	* mips.c (mips_rtx_cost_data): Add XBURST2 cost.
+	(mips_issue_rate): Handle PROCESSOR_XBURST2 issue 2 rate.
+	(mips_multipass_dfa_lookahead): Handle TUNE_XBURST2.
+
+2017-11-21 Qian Liu <qian.liu@ingenic.com>
+
+	Backup from sourcery-201511-dev for disable "lsa" insn
+	generate.
+
+	commit eb333f.
+	Add target flag -mslsa to generate lsa instructions.
+	- For MSA does't generate lsa instructions default.
+
+	gcc/config/mips
+	* mips.opt (mslsa): New.
+	(TARGET_SLSA): New.
+	* mips.h (ISA_HAS_LSA): Add TARGET_SLSA condition.
+
+2017-11-21 Qian Liu <qian.liu@ingenic.com>
+
+	Backup from branch sourcery-201511-dev for Macro Fusion.
+
+	Liu Qian <qian.liu@ingenic.com>
+	commit f56c92
+	commit ad9d9b
+	commit 7acccb
+
+	Implement macro fusion, and be enabled by -mfusion opt.
+
+	gcc/config/mips
+	* mips.c (TARGET_SCHED_MACRO_FUSION_P): New macro.
+	(TARGET_SCHED_MACRO_FUSION_PAIR_P): New macro.
+	(mips_macro_fusion_p): New function.
+	(mips_can_fusiable_pair_check): Likewise.
+	(mips_macro_fusion_pair_p): Likewise.
+
+2017-11-20 Qian Liu <qian.liu@ingenic.com>
+
+	Backup from branch sourcery-201511-dev commit 765c4e2.
+
+	[Debug] Use simplify_gen_subreg instead of gen_rtx_SUBREG
+	in vec_extract.
+
+	Fix Bug #269:
+	when extract field from vector v4f32/v2f64 mode, should
+	generate (subreg:V16QI ... ) use simplify_gen_subreg.
+
+	gcc/config/mips
+	* mips-msa.md (vec_extract<mode>): Get ws though
+	simplify_gen_subreg.
+
+2017-11-20 Qian Liu <qian.liu@ingenic.com>
+
+	Backup from branch sourcery-201511-dev commit d45e99.
+
+	[Debug]Change the cost of moving between two registers of
+	MSA_SUPPORTED_MODE_P mode to 4.
+
+	if ISA_HAS_MSA, moving between two registers of vector
+	mode just need one MSA insn
+
+	Fix bugs:
+	FAIL: gcc.dg/pr57233.c
+	FAIL: gcc.dg/torture/pr52402.c
+	FAIL: gcc.dg/torture/va-arg-25.c
+	......
+
+	Above case, on gcc-5.2 fail because of timeout. Instead on
+	gcc-7.2 generate redundant L/S instructions.
+
+	gcc/config/mips
+	* mips.c (mips_set_reg_reg_piece_cost): If target MSA enable
+	and MSA_SUPPORTED_MODE_P, one instruction is needed.
+
+2017-11-20 Qian Liu <qian.liu@ingenic.com>
+
+	Backup from branch sourcery-201511-dev commit 56b460.
+
+	Attach -mabs=2008 for ingenic O32_FP64 must be mips32r2.
+
+	* gcc/config/mips/ingenic-sgxxlite-common.h
+	(MIPS_INGENIC_ABS2008_SPEC): Add mips32r2 spec.
+
+
+2017-11-16 Qian Liu <qian.liu@ingenic.com>
+
+	Disable all FMA instruction generate as default.
+
+	gcc/config/mips
+	* mips.opt (TARGET_FUSED_MADD): Set the default value of
+	TARGET_FUSED_MADD to 0;
+	* ingenic-sgxxlite-common.h (MIPS_INGENIC_FUSE_MADD_SPEC):
+	Remove.
+	(MIPS_INGENIC_SELF_SPEC): Remove reference
+	MIPS_INGENIC_FUSE_MADD_SPEC.
+	* mips.h (FLOAT_MADD4): Renameing to ...
+	(GENERATE_FMADD): ... this.
+	(ISA_HAS_UNFUSED_MADD4): Replace FLOAT_MADD4 with
+	GENERATE_FMADD.
+	* mips-msa.h (fma<mode>4): Renaming to ...
+	(*fma<mode>4): ... this. Add condition GENERATE_FMADD.
+	(fnma<mode>4):
+	(*fnma<mode>4): Likewise.
+	(fman<mode>4_intrinsic): New.
+	(fnman<mode>4_intrinsic): New.
+	* mips.c (CODE_FOR_msa_fmadd_w): Defined with
+	fma<mode>4_intrinsic template.
+	(CODE_FOR_msa_fmadd_d): Likewise.
+	(CODE_FOR_msa_fmsub_w): Defined with
+	fnma<mode>4_intrinsic template.
+	(CODE_FOR_msa_fmsub_w): Likewise.
+
+2017-10-09 Qian Liu <qian.liu@ingenic.com>
+
+	Rename ing-common.h to ingenic-sgxxlite-common.h
+
+	gcc/config/mips
+	* ing-common.h : Renamed to ...
+	* ingenic-sgxxlite-common.h: ...this.
+	* gcc/config.gcc : Replace all ing-common.h to
+	ingenic-sgxxlite-common.h.
+
+
+2017-10-09 Qian Liu <qian.liu@ingenic.com>
+
+	Support Ingenic Xburst2 SIMD extension MXA instructions.
+
+	gcc/config/mips
+	* mips-ftypes.def : Add type for MXA instructions.
+	* mips.c (mips_builtins): Add MXA instructions's builtin.
+	(CODE_FOR_msa_bmr_v): New macro.
+	* mips.md (ingenic-mxa.md): Included.
+	* msa.h : Add MXA instructions's builtin declaration.
+	* ingenic-mxa.md: New file.
+
+	* testsuite/gcc.target/mips/msa-builtins.c : Add
+	MXA instructions testcases.
+
+2017-09-22 Qian Liu <qian.liu@ingenic.com>
+
+	Debug vec_permm pattern implement. MSA instruction "vshf"
+	can not be used directly when selector is "11xx xxxxB".
+
+	gcc/config/mips
+	* mips.md (vec_perm<mode>): expand vec_permm with "sel & 0x3f",
+	then pass the result to gen_msa_vshf.
+	(msa_vshf_<msafmt_f>): Add new instruction define.
+	* mips.c (CODE_FOR_msa_vshf_b): Remove macro define.
+	(CODE_FOR_msa_vshf_h): Likewise.
+	(CODE_FOR_msa_vshf_w): Likewise.
+	(CODE_FOR_msa_vshf_d): Likewise.
+
+2017-09-22 Qian Liu <qian.liu@ingenic.com>
+
+	Cherry pick commit 5de699 from branch "sourcery-201511-dev"
+	for debugging PR/57233.c execute fail with msa flag.
+
+	* gcc/config/mips/mips.c (mips_expand_vector_init): Instead
+	emit_move_insn with mips_expand_vector_init.
+
+2017-09-18 Qian Liu <qian.liu@ingenic.com>
+
+	Debug testsuites output compare fail.
+
+	gcc/testsuite/gfortran.dg
+
+	* fmt_float.f90 (dg-output): last output without any line feed
+	in dejagnu result.
+	* fmt_l.f90 (dg-output): Likewise.
+	* fmt_l0.f90 (dg-output): Likewise.
+	* fmt_t_8.f90 (dg-output): Likewise.
+	* fmt_zero_precision (dg-output): Likewise.
+	* namelist_40.f90 (dg-output): Likewise.
+	* namelist_47.f90 (dg-output): Likewise.
+	* namelist_print_1.f (dg-output): Likewise.
+	* parameter_array_dummy.f90 (dg-output): Likewise.
+	* g77/f77-edit-apostrophe-out.f (dg-output): Likewise.
+	* g77/f77-edit-colon-out.f (dg-output): Likewise.
+	* g77/f77-edit-h-out.f (dg-output): Likewise.
+	* g77/f77-edit-i-out.f (dg-output): Likewise.
+	* g77/f77-edit-s-out.f (dg-output): Likewise.
+	* g77/f77-edit-slash-out.f (dg-output): Likewise.
+	* g77/f77-edit-t-out.f (dg-output): Likewise.
+	* g77/f77-edit-x-out.f (dg-output): Likewise.
+
+	* libffi/testsuite/libffi.call/cls_dbls_struct.c
+	(dg-output): Likewise.
+
+2017-09-08 Qian Liu <qian.liu@ingenic.com>
+
+	Support language go build.
+
+	Skip libgo build while multi lib contain "uclibc"
+
+	* config-ml.in (multi-do): if build libgo and multi
+	dir contain "uclibc" just break.
+
+	Merge upstream commit 7a0d2c8 for libffi softfloat
+	build issue.
+
+	libffi/src/
+	* o32.S (ffi_call_O32): Add mips soft float conditions.
+	(ffi_closure_O32): Likewise.
+	* n32.S (ffi_call_N32): Likewise.
+	(ffi_closure_N32): Likewise.
+
+2017-09-04 Qian Liu <qian.liu@ingenic.com>
+
+	Support target -mfused-madd flag. Set xburst* as 32bit mips arch.
+
+	* gcc/config.gcc (extra_options): Remove fused-madd.opt. To Define
+	mips target -mfused-madd flag.
+	* gcc/config/mips/mips.opt (mfused-madd): Add target flag.
+	* gcc/config/mips/mips.h (mips_cpu_info): Handle march xburst* .
+	(MIPS_32BIT_OPTION_SPEC): Add xburst*.
+	(FLOAT_MADD4): New macro.
+	(ISA_HAS_UNFUSED_MADD4): Add control condtion FLOAD_MADD4.
+	(MIPS_32BIT_OPTION_SPEC): Add xburst*.
+
+	Merge multilib support and new options from branch ingenic-201705-dev.
+
+	* gcc/config.gcc (mips*-*-linux*): Handle enable_extra_sgxxlite_multilibs.
+	(mips*-sde-elf*): Likewiset.
+
+	gcc/config/mips/
+	* cs-sgxxlite-linux.h: New file.
+	* t-sgxxlite-linux: New file.
+	* t-sgxxlite-sde: New file.
+	* ing-common.h: New file.
+	* sde.h (DRIVER_SELF_SPECS): Add FP ABI option configure
+	spec; add MIPS_INGENIC_SELF_SPEC spec.
+	* mips.opt (mmxu): Add new options mmxu.
+	* mips.h (ASM_SPEC): Handle new option mmxu to assembler.
+	(MIPS_ISA_LEVEL_SPEC): Handle march=xburst* as mips32r2.
+	* mips-tables.opt (xburst): New option.
+	(xburst2): Likewise.
+	* mips-cpus.def (xburst): New cpu.
+	(xburst2): Likewise.
+	(mips32r2): Set processor as M4K.
+
+Local Variables:
+mode: change-log
+left-margin: 8
+fill-column: 76
+version-control: never
+End:

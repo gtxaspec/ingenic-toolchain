@@ -1,0 +1,25 @@
+2015-12-17  ChengLulu  <lulu.cheng@ingenic.com>
+
+	* tlchtest/configs/dorado_v22_tlchenv_defconfig: Config file
+	of kernel3.10.14 for dejagnu test (dorado v22).
+	* tlchtest/configs/ingenic_tlchenv_defconfig: Config file of
+	buildroot for dejagnu test.
+	* tlchtest/dejagnu: dejaGnu test script.
+	* pretest.sh,sshcheck.exp,tlchtest.sh: Construct the dejagnu
+	test environment script.
+
+2015-03-06  ChengLulu  <lulu.cheng@ingenic.com>
+
+	* buildLogs/mipsElfBuildLog: mips-elf buildlogs.
+	* buildLogs/mipsLinuxBuildLog: mips-linux buildlogs.
+	* dejaGnu/dejagnu-scrip/dorado_v2.1_env: Development board
+	environment configuration script.
+	* dejaGnu/dejagnu-scrip/mips-elf: dejaGnu test script for
+	mips-elf.
+	* dejaGnu/dejagnu-scrip/mips-linux: dejaGnu test script for
+	mips-linux.
+	* docs/README_SSH.doc: Regenerate.
+	* docs/\345\267\245\345\205\267\351\223\276\347\232\204\347
+	\274\226\350\257\221\345\217\212dejaGNU\346\265\213\350\257
+	\225\346\226\207\346\241\243.doc: dejaGnu text documents.
+	* dejagnu_overview.pdf:dejagnu overview.

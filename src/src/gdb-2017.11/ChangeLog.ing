@@ -1,0 +1,235 @@
+2018-05-25 Jian Wang <jian.wang@ingenic.com>
+
+	Backup tlbinv/tlbinvf enable from branch "sourcery-201511".
+
+	Disable tlbinv/tlbinvf ase from ASE_EVA and set membership to mips32r3.
+
+	In order to use tlbinv/tlbinvf on xBurst2 ,set these two insn. membership
+	to mips32r3 and disable ase EVA which must use -march=p5600.
+
+	Note: The membership mips32r3 may be update future.
+
+2018-05-22 Jian Wang <jian.wang@ingenic.com>
+
+	Merge MXU support from branch "sourcery-201511".
+
+	* gas/config/tc-mips.c (md_longopts): Add mmxu and mno-mxu.
+	(mips_ases): Add "mxu" mips ase defined.
+	(RTYPE_MXU): New macro.
+	(RTYPE_MXU_CR): Likewise.
+	(MIPS32_JZ_REGISTER_NAMES): Likewise.
+	(reg_names): Add MIPS32_JZ_REGISTER_NAMES to reg_names.
+	(args): New struct.
+	(args_mxu_opts): MXU operand match.
+	(mips_parse_argument_token): For mxu insn, treat user defined
+	identifier as constant instead of symbol.
+	(operand_reg_mask): Handle MXU operand type.
+	(fpr_read_mask): mask with OP_REG_MXU.
+	(fpr_write_mask): Likewise.
+	(convert_reg_type): Handle OP_REG_MXU and OP_REG_MXU_CR.
+	(match_fixed_int_operand): Add OP_INT_FIXED match.
+	(match_operand): Handle MXU operand type.
+	(mips_ip): For mxu insn, the opcode format is 'm'.
+	(md_show_usage): Add options "-mmxu" and "-mno-mxu" usages.
+	* opcodes/mips-opc.c (decode_mips_operand): add MXU decode operand
+	'a', 'b', 'c', 'd', 'e', 'f', 'i', 'm', 'o', 'p', 'q', 'r', 'z',
+	'A', 'B', 'E', 'I', 'O', 'P', 'R', 'T', 'U'.
+	(MXU) : New macro.
+	(mips_builtin_opcodes): Add MXU instructions.
+	"d16mul", "d16mulf", "d16mule", "d16mac", "d16macf", "d16madl",
+	"q16add", "d16mace", "q8mul", "q8mulsu", "q8movz", "q8movn",
+	"d16movz", "d16movn", "s32movz", "s32movn", "q8mac", "q8macsu",
+	"q16scop", "q8madl", "s32sfl", "q8sad", "d32add", "d32addc",
+	"d32acc", "d32accm", "d32asum", "q16acc", "q16accm", "d16asum",
+	"q8adde", "d8sum", "d8sumc", "q8acce", "s32cps", "d16cps",
+	"q8abd", "q16sat", "s32slt", "d16slt", "d16avg", "d16avgr",
+	"q8avg", "q8avgr", "q8add", "s32max", "s32min", "d16max",
+	"d16min", "q8max", "q8min", "q8slt", "q8sltu", "s16mad",
+	"d32sll", "d32slr", "d32sarl", "d32sar", "q16sll", "q16slr",
+	"q16sar", "d32sllv", "d32slrv", "d32sarv", "q16sllv", "q16slrv",
+	"q16sarv", "d32sarw", "s32aln", "s32alni", "s32nor", "s32and",
+	"s32or", "s32xor", "s32madd", "s32maddu", "s32msub", "s32msubu",
+	"s32mul", "s32mulu", "s32extrv", "s32extr", "s32lui", "lxb",
+	"lxbu", "lxh", "lxhu", "lxw", "s16ldd", "s16std",
+	"s16ldi", "s16sdi", "s32m2i", "s32i2m", "s32lddv", "s32lddvr",
+	"s32stdv", "s32stdvr", "s32ldiv", "s32ldivr", "s32sdiv", "s32sdivr",
+	"s32ldd", "s32lddr", "s32std", "s32stdr", "s32ldi", "s32ldir",
+	"s32sdi", "s32sdir", "s8ldd", "s8std", "s8ldi", "s8sdi".
+	* opcode/mips-dis.c (args): New struct.
+	(args_mxu_opts): MXU operand match.
+	(mips_gpr_names_xr): MXU registers name.
+	(parse_mips_dis_option): Handle disassemble option "mxu".
+	Clean MXU128 mask form MXU ase.
+	(print_reg): Handle OP_REG_MXU and OP_REG_MXU_CR.
+	(print_insn_arg): Handle MXU operand type.
+	(print_mips_disassembler_options): Add "mxu" option usage.
+	* opcode/mips-formats.h (UINT_MXU): Define MUX operand formats.
+	(INT_ADJ_MXU): Likewise.
+	* include/opcode/mips.h (mips_operand_type): Add MXU operand type
+	OPT, OPTNUM, APT1, APT2, EPT, FIXED.
+	(mips_reg_operand_type): New OP_REG_MXU and OP_REG_MXU_CR.
+	(mips_fixedint_operand): New struct.
+	(ASE_MXU): New macro.
+
+	gas/testsuite/gas/mips/
+	* mips.exp: Call run_dump_test_arches run mxu testcases.
+	* mxu.s: New file.
+	* mxu.d: Likewise.
+
+2018-05-21 Jian Wang <jian.wang@ingenic.com>
+
+	Merge MXU2 support from branch "sourcery-201511".
+
+	bfd/
+	* bfd-in2.h (bfd_reloc_code_real): New enum element
+	BFD_RELOC_10_PCREL_S2 for MXU2 condition branch instructions.
+	* elf32-mips.c (elf_mips_howto_table_rel): New relocation type
+	R_MIPS_PC10 for MXU2 condition branch instructions.
+	(mips_reloc_map): New map { BFD_RELOC_10_PCREL_S2, R_MIPS_PC10 }.
+	* elfxx-mips.c (mips_elf_relocation_needs_la25_stub): Handle R_MIPS_PC10
+	case.
+	(mips_elf_calculate_relocation): Likewise.
+	(_bfd_mips_elf_check_relocs): Likewise.
+	* elfcpp/mips.h (R_MIPS_PC10): New enum element R_MIPS_PC10 to 52.
+	* include/opcode/mips.h (mips_reg_operand_type): New OP_REG_MXU128 and
+	OP_REG_MXU128_CR.
+	(ASE_MXU128): New macro.
+	* include/elf/mips.h (elf_mips_reloc_type): Add R_MIPS_PC10 relocation
+	number to 52.
+	* gas/config/tc-mips.c (md_longopts): Add mmxu2 and mno-mxu2.
+	(mips_ases): Add "mxu2" mips ase defined.
+	(RTYPE_MXU128): New macro.
+	(validate_mips_insn): Skip prefix charactor '='.
+	(md_begin): insert MXU R2 registers name to symbol table.
+	(limited_pcrel_reloc_p): Handle BFD_RELOC_10_PCREL_S2.
+	(fpr_read_mask): mask with OP_REG_MXU and OP_REG_MXU128.
+	(fpr_write_mask): Likewise.
+	(convert_reg_type): Handle OP_REG_MXU128 and OP_REG_MXU128_CR.
+	(append_insn): Handle BFD_RELOC_10_PCREL_S2.
+	(md_pcrel_from): Likewise.
+	(md_apply_fix): Likewise.
+	(tc_gen_reloc): Additon assert check condition BFD_RELOC_10_PCREL_S2.
+	(match_insn): Handle "=g" for BFD_RELOC_10_PCREL_S2.
+	Skip prefix charactor '='.
+	(md_show_usage): Add options "-mmxu2" and "-mno-mxu2" usages.
+	* opcodes/mips-opc.c (decode_mips_operand): add MXU2 decode operand
+	'g', 'h', 'j', 'k', 'l', 'n', 's', 't', 'v', 'w', 'x', 'y', 'L'.
+	(MXU128) : New macro.
+	(mips_builtin_opcodes): Add MXU2 instructions.
+	"bnez16b", "bnez8h", "bnez4w", "bnez2d", "bnez1q",
+	"beqz16b", "beqz8h", "beqz4w", "beqz2d", "beqz1q",
+	"ceqb", "ceqh", "ceqw", "ceqd", "cneb", "cneh",
+	"cnew", "cned", "ceqzb", "ceqzh", "ceqzw", "
+	"ceqzd", "cnezb", "cnezh", "cnezw", "cnezd",
+	"clesb", "clesh", "clesw", "clesd", "cleub",
+	"cleuh", "cleuw", "cleud", "clezb", "clezh",
+	"clezw", "clezd", "cltsb", "cltsh", "cltsw",
+	"cltsd", "cltub", "cltuh", "cltuw", "cltud",
+	"cltzb", "cltzh", "cltzw", "cltzd", "addab",
+	"addah", "addaw", "addad", "addasb", "addash",
+	"addasw", "addasd", "addssb", "addssh",
+	"addssw", "addssd", "adduub", "adduuh", "adduuw",
+	"adduud", "addb", "addh", "addw", "addd",
+	"subsab", "subsah", "subsaw", "subsad", "subuab",
+	"subuah", "subuaw", "subuad", "subssb", "subssh",
+	"subssw", "subssd", "subuub", "subuuh", "subuuw",
+	"subuud", "subusb", "subush", "subusw", "subusd",
+	"subb", "subh", "subw", "subd", "avesb", "avesh",
+	"avesw", "avesd", "aveub", "aveuh", "aveuw", "aveud",
+	"aversb", "aversh", "aversw", "aversd", "averub",
+	"averuh", "averuw", "averud", "divsb", "divsh",
+	"divsw", "divsd", "divub", "divuh", "divuw", "divud",
+	"modsb", "modsh", "modsw", "modsd", "modub",
+	"moduh", "moduw", "modud", "maddb", "maddh",
+	"maddw", "maddd", "msubb", "msubh", "msubw",
+	"msubd", "mulb", "mulh", "mulw", "muld", "maxab",
+	"maxah", "maxaw", "maxad", "maxsb", "maxsh", "maxsw",
+	"maxsd", "maxub", "maxuh", "maxuw", "maxud",
+	"minab", "minah", "minaw", "minad", "minsb",
+	"minsh", "minsw", "minsd", "minub", "minuh",
+	"minuw", "minud", "dotpsh", "dotpsw", "dotpsd",
+	"dotpuh", "dotpuw", "dotpud", "daddsh", "daddsw",
+	"daddsd", "dadduh", "dadduw", "daddud", "dsubsh",
+	"dsubsw", "dsubsd", "dsubuh", "dsubuw", "dsubud",
+	"locb", "loch", "locw", "locd", "lzcb", "lzch", "lzcw",
+	"lzcd", "bcntb", "bcnth", "bcntw", "bcntd", "satsb",
+	"satsh", "satsw", "satsd", "satub", "satuh", "satuw",
+	"satud", "andv", "andib", "bselv", "norv", "norib",
+	"orv", "orib", "xorv", "xorib", "faddw", "faddd", "fsubw",
+	"fsubd", "fmulw", "fmuld", "fdivw", "fdivd", "fsqrtw",
+	"fsqrtd", "fmaddw", "fmaddd", "fmsubw", "fmsubd", "fmaxw",
+	"fmaxd", "fmaxaw", "fmaxad", "fminw", "fmind", "fminaw",
+	"fminad", "fclassw", "fclassd", "fceqw", "fceqd", "fclew",
+	"fcled", "fcltw", "fcltd", "fcorw", "fcord", "vcvths",
+	"vcvtsd", "vcvtesh", "vcvteds", "vcvtosh", "vcvtods",
+	"vcvtssw", "vcvtsdl", "vcvtusw", "vcvtudl", "vcvtrws",
+	"vcvtrld", "vcvtsws", "vcvtsld", "vcvtuws", "vcvtuld",
+	"vtruncsws", "vtruncsld", "vtruncuws", "vtrunculd"
+	"vcvtqesh", "vcvtqedw", "vcvtqosh", "vcvtqodw",
+	"vcvtqhs", "vcvtqwd", "maddqh", "maddqw", "maddqrh",
+	"maddqrw", "msubqh", "msubqw", "msubqrh", "msubqrw",
+	"mulqh", "mulqw", "mulqrh", "mulqrw", "sllb", "sllh",
+	"sllw", "slld", "sllib", "sllih", "slliw", "sllid",
+	"srab", "srah", "sraw", "srad", "sraib", "sraih",
+	"sraiw", "sraid", "srarb", "srarh", "srarw", "srard",
+	"srarib", "srarih", "srariw", "srarid", "srlb",
+	"srlh", "srlw", "srld", "srlib", "srlih", "srliw",
+	"srlid", "srlrb", "srlrh", "srlrw", "srlrd", "srlrib",
+	"srlrih", "srlriw", "srlrid", "insfcpub", "insfcpuh",
+	"insfcpuw", "insffpuw", "insffpud", "insfmxub",
+	"insfmxuh", "insfmxuw", "insfmxud", "repxb", "repxh",
+	"repxw", "repxd", "repib", "repih", "repiw", "repid",
+	"shufv", "lib", "lih", "liw", "lid", "lu1q", "lu1qx",
+	"su1q", "su1qx", "la1q", "la1qx", "sa1q", "sa1qx",
+	"mtcpusb", "mtcpush", "mtcpusw", "mtcpuub", "mtcpuuh",
+	"mtcpuuw", "mfcpub", "mfcpuh", "mfcpuw", "mtfpuw",
+	"mtfpud", "mffpuw", "mffpud", "ctcmxu", "cfcmxu".
+	* opcode/mips-dis.c (mips_arch_choices): Set ASE_MXU128 mask
+	in arch "mips32r2".
+	(parse_mips_dis_option): Handle disassemble option "mxu2".
+	(print_reg): Handle OP_REG_MXU128 and OP_REG_MXU128_CR.
+	(print_mips_disassembler_options): Add "mxu2" option usage.
+
+	gas/testsuite/gas/mips/
+	* mips.exp: Call run_dump_test_arches run mxu2 testcases.
+	* mxu2.s: New file.
+	* mxu2.d: Likewise.
+
+2017-12-06 Qian Liu <qian.liu@ingenic.com>
+
+	Define "mips-linux-gnu" as little endian target.
+
+	* gas/configure.tgt (mips*): Re-define mips* case
+	same with mips*el.
+	* gold/configure.tgt (mips*-*-*): Re-define
+	mips*-*-* case same with mips*el*-*-*.
+	* ld/configure.tgt (mips*-*-linux-*): Re-define
+	mips*-*-linux-* same with mips*el-*-linux-*.
+
+2017-10-09 Qian Liu <qian.liu@ingenic.com>
+
+	Add arch options xburst and xburst2 for Ingenic
+	xburst and xburst2 architecture.
+
+	* gas/config/tc-mips.c (mips_cpu_info_table): Add
+	xburst and xburst2 items.
+
+2017-10-09 Qian Liu <qian.liu@ingenic.com>
+
+	Support Ingenic Xburst2 SIMD MXA instructions.
+
+	* opcodes/mips-opc.c (decode_mips_operand): Handle
+	charactors '<' '>' ')' '(' ',' '?' for MXA.
+	(mips_builtin_opcodes): Add MXA instructions.
+
+	gas/testsuite/gas/mips/
+	* msa.d : New file.
+	* msa.s : Likewise.
+	* mipsr6@msa.d : Likewise.
+
+Local Variables:
+mode: change-log
+left-margin: 8
+fill-column: 76
+version-control: never
+End:

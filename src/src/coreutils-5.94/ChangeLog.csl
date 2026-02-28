@@ -1,0 +1,148 @@
+2015-01-07  Zachary T Welch  <zwelch@codesourcery.com>
+
+	* lib/mkdir.c (mkdir): Fix for Win64 target.
+	* lib/mktime.c (ydhms_diff): Likewise.
+
+2013-06-27  Meador Inge  <meadori@codesourcery.com>
+
+	issue15027
+
+	Backport from upstream.  Git commits:
+
+	* da9541f18e6985593b73c30d121605e8cff62a7b
+	* 731f957965a6ad48deb6522ff87bcf52b1e523e4
+
+	* src/remove.c (nonexistent_file_errno): New function.
+	(ignorable_missing): Likewise.
+	(is_dir_lstat): Update to use 'ignorable_missing'.
+	(remove_entry): Likewise.
+	(remove_cmd_entries): Likewise.
+	* tests/rm/ignore-name-too-long: New test.
+	* tests/rm/ignorable: Likewise.
+	* tests/rm/Makefile.am (TESTS): Add new tests.
+
+2013-03-27  Janis Johnson  <janisjo@codesourcery.com>
+
+	* configure.ac: Update URL for bug reports.
+	* configure: Regenerate.
+
+2009-08-05  Joseph Myers  <joseph@codesourcery.com>
+
+	lib/
+	* strtod.c: Disable contents for MinGW.
+
+2006-10-30  Carlos O'Donell  <carlos@codesourcery.com>
+
+	m4/
+	* getgroups.m4 (gl_FUNC_GETGROUPS): Handle case where 
+	$ac_cv_func_getgroups_works is empty string.
+	* ls-mntd-fs.m4: Handle case where $ac_cv_func_getmntent 
+	and $ac_list_mounted_fs are empty strings.
+
+	* configure: Regenerate.
+
+2006-09-18  Vladimir Prus  <vladiir@codesourcery.com>
+
+	m4/
+	* jm-macros.m4 (gl_MACROS): Handle --with-pkgversion.
+
+	* configure.ac (AC_INIT): Change bug URL.
+	
+2006-08-10  Carlos O'Donell  <carlos@codesourcery.com>
+
+	* src/Makefile.am: Remove bin_SCRIPTS variables, and remove su 
+	from install-exec-local target. 
+	* src/Makefile.in: Regenerate.
+	* doc/coreutils.info: Likewise.
+	* doc/stamp-vti: Likewise.
+	* doc/version.texi: Likewise.
+
+2006-08-09  Carlos O'Donell  <carlos@codesourcery.com>
+
+	* Makefile.in: Regenerate.
+	* doc/Makefile.in: Likewise.
+	* lib/Makefile.in: Likewise.
+	* man/Makefile.in: Likewise.
+	* src/Makefile.in: Likewise.
+	* tests/Makefile.in: Likewise.
+	* tests/basename/Makefile.in: Likewise.
+	* tests/chgrp/Makefile.in: Likewise.
+	* tests/chmod/Makefile.in: Likewise.
+	* tests/chown/Makefile.in: Likewise.
+	* tests/cp/Makefile.in: Likewise.
+	* tests/cut/Makefile.in: Likewise.
+	* tests/dd/Makefile.in: Likewise.
+	* tests/dircolors/Makefile.in: Likewise.
+	* tests/du/Makefile.in: Likewise.
+	* tests/expr/Makefile.in: Likewise.
+	* tests/factor/Makefile.in: Likewise.
+	* tests/fmt/Makefile.in: Likewise.
+	* tests/head/Makefile.in: Likewise.
+	* tests/install/Makefile.in: Likewise.
+	* tests/join/Makefile.in: Likewise.
+	* tests/ln/Makefile.in: Likewise.
+	* tests/ls/Makefile.in: Likewise.
+	* tests/ls-2/Makefile.in: Likewise.
+	* tests/md5sum/Makefile.in: Likewise.
+	* tests/misc/Makefile.in: Likewise.
+	* tests/mkdir/Makefile.in: Likewise.
+	* tests/mv/Makefile.in: Likewise.
+	* tests/od/Makefile.in: Likewise.
+	* tests/pr/Makefile.in: Likewise.
+	* tests/readlink/Makefile.in: Likewise.
+	* tests/rm/Makefile.in: Likewise.
+	* tests/rmdir/Makefile.in: Likewise.
+	* tests/seq/Makefile.in: Likewise.
+	* tests/sha1sum/Makefile.in: Likewise.
+	* tests/shred/Makefile.in: Likewise.
+	* tests/sort/Makefile.in: Likewise.
+	* tests/stty/Makefile.in: Likewise.
+	* tests/sum/Makefile.in: Likewise.
+	* tests/tac/Makefile.in: Likewise.
+	* tests/tail/Makefile.in: Likewise.
+	* tests/tail-2/Makefile.in: Likewise.
+	* tests/tee/Makefile.in: Likewise.
+	* tests/test/Makefile.in: Likewise.
+	* tests/touch/Makefile.in: Likewise.
+	* tests/tr/Makefile.in: Likewise.
+	* tests/tsort/Makefile.in: Likewise.
+	* tests/unexpand/Makefile.in: Likewise.
+	* tests/uniq/Makefile.in: Likewise.
+	* tests/wc/Makefile.in: Likewise.
+	* config.hin: Likewise.
+	* configure: Likewise.
+	* aclocal.m4: Likewise.
+
+2006-08-09  Carlos O'Donell  <carlos@codesourcery.com>
+
+	* configure.ac: Do not call coreutils_DUMMY_1
+	* lib/errno--h.: New file.
+	* lib/lstat.h: New file.
+	* lib/mkdir.h: New file.
+	* lib/canonicalize.c: Include "errno--.h"
+	* lib/fts.c [!nlink_t]: Define nlink_t as int.
+	[!O_NONBLOCK]: Define O_NONBLOCK as 0.
+	[!O_NOCTTY]: Define O_NOCTTY as 0.
+	* lib/getcwd.c: Include "lstat.h"
+	[!_LIBC && !WIN32]: Define __getcwd as getcwd.
+	* lib/getcwd.h [WIN32]: Define getcwd as _getcwd.
+	* lib/lstat.c [WIN32]: Define __lstat as stat.
+	[!WIN32]: Define __lstat as lstat.
+	(rpl_lstat): Use __lstat.
+	* lib/mkdir-p.c: Include "mkdir.h"
+	* lib/root-dev-ino.c: Include "lstat.h"
+	* lib/tempname.c: Include "mkdir.h"
+	* lib/unlinkdir.c [WIN32] (cannot_unlink_dir): Set cannot to 1.
+	* m4/jm-macros.m4: Do not call gl_FUNC_GROUP_MEMBER.
+	* m4/ls-mntd-fs.m4: Missing $ac_list_mounted_fs is a warning.
+	* m4/prereq.m4: Do not call gl_CANON_HOST, gl_FD_REOPEN, 
+	gl_FUNC_NONREENTRANT_EUIDACCESS, gl_GETGROUPS, gl_IDCACHE, 
+	gl_READUTMP, gl_USERSPEC.
+	* man/Makefile.am: dist_man_MANS to empty since target programs don't
+	run on host. 
+	* src/Makefile.am: Remove EXTRA_PROGRAMS and noinst_PROGRAMs.
+	Set bin_PROGRAMS to "rm". Set all-local target to empty.
+	* src/remove.c: Include "errno--.h" 
+	(write_protected_non_symlink) [WIN32]: Return true if lstat failed.
+	* lib/cycle-check.c (check_cycle) [WIN32]: Return true.
+	
