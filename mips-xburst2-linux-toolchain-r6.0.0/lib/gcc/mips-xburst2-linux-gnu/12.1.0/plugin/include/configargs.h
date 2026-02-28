@@ -1,0 +1,7 @@
+/* Generated automatically. */
+static const char configuration_arguments[] = "/home/users/ylli/work/mips-gnu-toolchain-v2.0/build_linux/../gcc/configure --target=mips-xburst2-linux-gnu --prefix=/home/users/ylli/work/mips-gnu-toolchain-v2.0/install_linux --with-sysroot=/home/users/ylli/work/mips-gnu-toolchain-v2.0/install_linux/sysroot --with-pkgversion='Ingenic MIPS Linux Tools GCC12.1 Release6.0.0 Default xburst2 glibc2.33 support MXA build at 2023.01-09 09:35:48' --without-system-zlib --enable-shared --enable-tls --enable-languages=c,c++,fortran,go --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libsanitizer --disable-nls --disable-bootstrap --src=/home/users/ylli/work/mips-gnu-toolchain-v2.0/gcc --disable-multilib --with-abi=32 --with-arch=mips32r2 --with-endian=little --with-float=hard --with-fpu=double --with-nan=2008 --with-fp-32=64 --with-odd-spreg-32=yes --with-divide=traps --with-synci=yes --with-madd4=no --with-mips-plt 'CFLAGS_FOR_TARGET=-O2  ' 'CXXFLAGS_FOR_TARGET=-O2  '";
+static const char thread_model[] = "posix";
+
+static const struct {
+  const char *name, *value;
+} configure_default_options[] = { { "abi", "32" }, { "arch", "mips32r2" }, { "float", "hard" }, { "fpu", "double" }, { "nan", "2008" }, { "fp_32", "64" }, { "odd_spreg_32", "odd-spreg" }, { "divide", "traps" }, { "llsc", "llsc" }, { "mips-plt", "plt" }, { "synci", "synci" }, { "madd4", "no-madd4" } };
