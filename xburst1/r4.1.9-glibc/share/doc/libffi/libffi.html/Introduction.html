@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+<title>Introduction - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="prev" href="index.html#Top" title="Top">
+<link rel="next" href="Using-libffi.html#Using-libffi" title="Using libffi">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Introduction"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Using-libffi.html#Using-libffi">Using libffi</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="index.html#Top">Top</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr>
+</div>
+
+<h2 class="chapter">1 What is libffi?</h2>
+
+<p>Compilers for high level languages generate code that follow certain
+conventions.  These conventions are necessary, in part, for separate
+compilation to work.  One such convention is the <dfn>calling
+convention</dfn>.  The calling convention is a set of assumptions made by
+the compiler about where function arguments will be found on entry to
+a function.  A calling convention also specifies where the return
+value for a function is found.  The calling convention is also
+sometimes called the <dfn>ABI</dfn> or <dfn>Application Binary Interface</dfn>. 
+<a name="index-calling-convention-1"></a><a name="index-ABI-2"></a><a name="index-Application-Binary-Interface-3"></a>
+Some programs may not know at the time of compilation what arguments
+are to be passed to a function.  For instance, an interpreter may be
+told at run-time about the number and types of arguments used to call
+a given function.  &lsquo;<samp><span class="samp">Libffi</span></samp>&rsquo; can be used in such programs to
+provide a bridge from the interpreter program to compiled code.
+
+   <p>The &lsquo;<samp><span class="samp">libffi</span></samp>&rsquo; library provides a portable, high level programming
+interface to various calling conventions.  This allows a programmer to
+call any function specified by a call interface description at run
+time.
+
+   <p><acronym>FFI</acronym> stands for Foreign Function Interface.  A foreign
+function interface is the popular name for the interface that allows
+code written in one language to call code written in another language. 
+The &lsquo;<samp><span class="samp">libffi</span></samp>&rsquo; library really only provides the lowest, machine
+dependent layer of a fully featured foreign function interface.  A
+layer must exist above &lsquo;<samp><span class="samp">libffi</span></samp>&rsquo; that handles type conversions for
+values passed between the two languages. 
+<a name="index-FFI-4"></a><a name="index-Foreign-Function-Interface-5"></a>
+
+   </body></html>
+

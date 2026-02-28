@@ -1,0 +1,6 @@
+;
+/uclibc;/uclibc
+;/soft-float
+;/fp32
+/uclibc;/uclibc/soft-float
+/uclibc;/uclibc/fp32

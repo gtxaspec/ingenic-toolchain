@@ -1,0 +1,114 @@
+<html lang="en">
+<head>
+<title>Primitive Types - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Types.html#Types" title="Types">
+<link rel="next" href="Structures.html#Structures" title="Structures">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Primitive-Types"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Structures.html#Structures">Structures</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr>
+</div>
+
+<h4 class="subsection">2.3.1 Primitive Types</h4>
+
+<p><code>Libffi</code> provides a number of built-in type descriptors that can
+be used to describe argument and return types:
+
+     <dl>
+<dt><code>ffi_type_void</code><dd><a name="index-ffi_005ftype_005fvoid-13"></a>The type <code>void</code>.  This cannot be used for argument types, only
+for return values.
+
+     <br><dt><code>ffi_type_uint8</code><dd><a name="index-ffi_005ftype_005fuint8-14"></a>An unsigned, 8-bit integer type.
+
+     <br><dt><code>ffi_type_sint8</code><dd><a name="index-ffi_005ftype_005fsint8-15"></a>A signed, 8-bit integer type.
+
+     <br><dt><code>ffi_type_uint16</code><dd><a name="index-ffi_005ftype_005fuint16-16"></a>An unsigned, 16-bit integer type.
+
+     <br><dt><code>ffi_type_sint16</code><dd><a name="index-ffi_005ftype_005fsint16-17"></a>A signed, 16-bit integer type.
+
+     <br><dt><code>ffi_type_uint32</code><dd><a name="index-ffi_005ftype_005fuint32-18"></a>An unsigned, 32-bit integer type.
+
+     <br><dt><code>ffi_type_sint32</code><dd><a name="index-ffi_005ftype_005fsint32-19"></a>A signed, 32-bit integer type.
+
+     <br><dt><code>ffi_type_uint64</code><dd><a name="index-ffi_005ftype_005fuint64-20"></a>An unsigned, 64-bit integer type.
+
+     <br><dt><code>ffi_type_sint64</code><dd><a name="index-ffi_005ftype_005fsint64-21"></a>A signed, 64-bit integer type.
+
+     <br><dt><code>ffi_type_float</code><dd><a name="index-ffi_005ftype_005ffloat-22"></a>The C <code>float</code> type.
+
+     <br><dt><code>ffi_type_double</code><dd><a name="index-ffi_005ftype_005fdouble-23"></a>The C <code>double</code> type.
+
+     <br><dt><code>ffi_type_uchar</code><dd><a name="index-ffi_005ftype_005fuchar-24"></a>The C <code>unsigned char</code> type.
+
+     <br><dt><code>ffi_type_schar</code><dd><a name="index-ffi_005ftype_005fschar-25"></a>The C <code>signed char</code> type.  (Note that there is not an exact
+equivalent to the C <code>char</code> type in <code>libffi</code>; ordinarily you
+should either use <code>ffi_type_schar</code> or <code>ffi_type_uchar</code>
+depending on whether <code>char</code> is signed.)
+
+     <br><dt><code>ffi_type_ushort</code><dd><a name="index-ffi_005ftype_005fushort-26"></a>The C <code>unsigned short</code> type.
+
+     <br><dt><code>ffi_type_sshort</code><dd><a name="index-ffi_005ftype_005fsshort-27"></a>The C <code>short</code> type.
+
+     <br><dt><code>ffi_type_uint</code><dd><a name="index-ffi_005ftype_005fuint-28"></a>The C <code>unsigned int</code> type.
+
+     <br><dt><code>ffi_type_sint</code><dd><a name="index-ffi_005ftype_005fsint-29"></a>The C <code>int</code> type.
+
+     <br><dt><code>ffi_type_ulong</code><dd><a name="index-ffi_005ftype_005fulong-30"></a>The C <code>unsigned long</code> type.
+
+     <br><dt><code>ffi_type_slong</code><dd><a name="index-ffi_005ftype_005fslong-31"></a>The C <code>long</code> type.
+
+     <br><dt><code>ffi_type_longdouble</code><dd><a name="index-ffi_005ftype_005flongdouble-32"></a>On platforms that have a C <code>long double</code> type, this is defined. 
+On other platforms, it is not.
+
+     <br><dt><code>ffi_type_pointer</code><dd><a name="index-ffi_005ftype_005fpointer-33"></a>A generic <code>void *</code> pointer.  You should use this for all
+pointers, regardless of their real type.
+
+     <br><dt><code>ffi_type_complex_float</code><dd><a name="index-ffi_005ftype_005fcomplex_005ffloat-34"></a>The C <code>_Complex float</code> type.
+
+     <br><dt><code>ffi_type_complex_double</code><dd><a name="index-ffi_005ftype_005fcomplex_005fdouble-35"></a>The C <code>_Complex double</code> type.
+
+     <br><dt><code>ffi_type_complex_longdouble</code><dd><a name="index-ffi_005ftype_005fcomplex_005flongdouble-36"></a>The C <code>_Complex long double</code> type. 
+On platforms that have a C <code>long double</code> type, this is defined. 
+On other platforms, it is not. 
+</dl>
+
+   <p>Each of these is of type <code>ffi_type</code>, so you must take the address
+when passing to <code>ffi_prep_cif</code>.
+
+   </body></html>
+

@@ -1,0 +1,135 @@
+<html lang="en">
+<head>
+<title>The Closure API - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Using-libffi.html#Using-libffi" title="Using libffi">
+<link rel="prev" href="Multiple-ABIs.html#Multiple-ABIs" title="Multiple ABIs">
+<link rel="next" href="Closure-Example.html#Closure-Example" title="Closure Example">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="The-Closure-API"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Closure-Example.html#Closure-Example">Closure Example</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Multiple-ABIs.html#Multiple-ABIs">Multiple ABIs</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Using-libffi.html#Using-libffi">Using libffi</a>
+<hr>
+</div>
+
+<h3 class="section">2.5 The Closure API</h3>
+
+<p><code>libffi</code> also provides a way to write a generic function &ndash; a
+function that can accept and decode any combination of arguments. 
+This can be useful when writing an interpreter, or to provide wrappers
+for arbitrary functions.
+
+   <p>This facility is called the <dfn>closure API</dfn>.  Closures are not
+supported on all platforms; you can check the <code>FFI_CLOSURES</code>
+define to determine whether they are supported on the current
+platform. 
+<a name="index-closures-41"></a><a name="index-closure-API-42"></a><a name="index-FFI_005fCLOSURES-43"></a>
+Because closures work by assembling a tiny function at runtime, they
+require special allocation on platforms that have a non-executable
+heap.  Memory management for closures is handled by a pair of
+functions:
+
+   <p><a name="index-ffi_005fclosure_005falloc-44"></a>
+
+<div class="defun">
+&mdash; Function: <b>void</b><var> *ffi_closure_alloc </var>(<var>size_t size, void **code</var>)<var><a name="index-void-45"></a></var><br>
+<blockquote><p>Allocate a chunk of memory holding <var>size</var> bytes.  This returns a
+pointer to the writable address, and sets *<var>code</var> to the
+corresponding executable address.
+
+        <p><var>size</var> should be sufficient to hold a <code>ffi_closure</code> object. 
+</p></blockquote></div>
+
+   <p><a name="index-ffi_005fclosure_005ffree-46"></a>
+
+<div class="defun">
+&mdash; Function: <b>void</b><var> ffi_closure_free </var>(<var>void *writable</var>)<var><a name="index-void-47"></a></var><br>
+<blockquote><p>Free memory allocated using <code>ffi_closure_alloc</code>.  The argument is
+the writable address that was returned. 
+</p></blockquote></div>
+
+   <p>Once you have allocated the memory for a closure, you must construct a
+<code>ffi_cif</code> describing the function call.  Finally you can prepare
+the closure function:
+
+   <p><a name="index-ffi_005fprep_005fclosure_005floc-48"></a>
+
+<div class="defun">
+&mdash; Function: <b>ffi_status</b><var> ffi_prep_closure_loc </var>(<var>ffi_closure *closure, ffi_cif *cif, void </var>(<var>*fun</var>) (<var>ffi_cif *cif, void *ret, void **args, void *user_data</var>)<var>, void *user_data, void *codeloc</var>)<var><a name="index-ffi_005fstatus-49"></a></var><br>
+<blockquote><p>Prepare a closure function.
+
+        <p><var>closure</var> is the address of a <code>ffi_closure</code> object; this is
+the writable address returned by <code>ffi_closure_alloc</code>.
+
+        <p><var>cif</var> is the <code>ffi_cif</code> describing the function parameters.
+
+        <p><var>user_data</var> is an arbitrary datum that is passed, uninterpreted,
+to your closure function.
+
+        <p><var>codeloc</var> is the executable address returned by
+<code>ffi_closure_alloc</code>.
+
+        <p><var>fun</var> is the function which will be called when the closure is
+invoked.  It is called with the arguments:
+          <dl>
+<dt><var>cif</var><dd>The <code>ffi_cif</code> passed to <code>ffi_prep_closure_loc</code>.
+
+          <br><dt><var>ret</var><dd>A pointer to the memory used for the function's return value. 
+<var>fun</var> must fill this, unless the function is declared as returning
+<code>void</code>. 
+<!-- FIXME: is this NULL for void-returning functions? -->
+
+          <br><dt><var>args</var><dd>A vector of pointers to memory holding the arguments to the function.
+
+          <br><dt><var>user_data</var><dd>The same <var>user_data</var> that was passed to
+<code>ffi_prep_closure_loc</code>. 
+</dl>
+
+        <p><code>ffi_prep_closure_loc</code> will return <code>FFI_OK</code> if everything
+went ok, and something else on error. 
+<!-- FIXME: what? -->
+
+        <p>After calling <code>ffi_prep_closure_loc</code>, you can cast <var>codeloc</var>
+to the appropriate pointer-to-function type. 
+</p></blockquote></div>
+
+   <p>You may see old code referring to <code>ffi_prep_closure</code>.  This
+function is deprecated, as it cannot handle the need for separate
+writable and executable addresses.
+
+   </body></html>
+

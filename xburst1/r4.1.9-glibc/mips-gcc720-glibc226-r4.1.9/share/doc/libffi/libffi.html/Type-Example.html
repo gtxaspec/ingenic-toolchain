@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+<title>Type Example - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Types.html#Types" title="Types">
+<link rel="prev" href="Structures.html#Structures" title="Structures">
+<link rel="next" href="Complex.html#Complex" title="Complex">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Type-Example"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Complex.html#Complex">Complex</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Structures.html#Structures">Structures</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr>
+</div>
+
+<h4 class="subsection">2.3.3 Type Example</h4>
+
+<p>The following example initializes a <code>ffi_type</code> object
+representing the <code>tm</code> struct from Linux's <samp><span class="file">time.h</span></samp>.
+
+   <p>Here is how the struct is defined:
+
+<pre class="example">     struct tm {
+         int tm_sec;
+         int tm_min;
+         int tm_hour;
+         int tm_mday;
+         int tm_mon;
+         int tm_year;
+         int tm_wday;
+         int tm_yday;
+         int tm_isdst;
+         /* Those are for future use. */
+         long int __tm_gmtoff__;
+         __const char *__tm_zone__;
+     };
+</pre>
+   <p>Here is the corresponding code to describe this struct to
+<code>libffi</code>:
+
+<pre class="example">         {
+           ffi_type tm_type;
+           ffi_type *tm_type_elements[12];
+           int i;
+     
+           tm_type.size = tm_type.alignment = 0;
+           tm_type.type = FFI_TYPE_STRUCT;
+           tm_type.elements = &amp;tm_type_elements;
+     
+           for (i = 0; i &lt; 9; i++)
+               tm_type_elements[i] = &amp;ffi_type_sint;
+     
+           tm_type_elements[9] = &amp;ffi_type_slong;
+           tm_type_elements[10] = &amp;ffi_type_pointer;
+           tm_type_elements[11] = NULL;
+     
+           /* tm_type can now be used to represent tm argument types and
+     	 return types for ffi_prep_cif() */
+         }
+</pre>
+   </body></html>
+

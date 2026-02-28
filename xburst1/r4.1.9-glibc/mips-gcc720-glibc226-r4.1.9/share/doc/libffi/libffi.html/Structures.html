@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+<title>Structures - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Types.html#Types" title="Types">
+<link rel="prev" href="Primitive-Types.html#Primitive-Types" title="Primitive Types">
+<link rel="next" href="Type-Example.html#Type-Example" title="Type Example">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Structures"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Type-Example.html#Type-Example">Type Example</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Primitive-Types.html#Primitive-Types">Primitive Types</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr>
+</div>
+
+<h4 class="subsection">2.3.2 Structures</h4>
+
+<p>Although &lsquo;<samp><span class="samp">libffi</span></samp>&rsquo; has no special support for unions or
+bit-fields, it is perfectly happy passing structures back and forth. 
+You must first describe the structure to &lsquo;<samp><span class="samp">libffi</span></samp>&rsquo; by creating a
+new <code>ffi_type</code> object for it.
+
+   <p><a name="index-ffi_005ftype-37"></a>
+
+<div class="defun">
+&mdash; Data type: <b>ffi_type</b><var><a name="index-ffi_005ftype-38"></a></var><br>
+<blockquote><p>The <code>ffi_type</code> has the following members:
+          <dl>
+<dt><code>size_t size</code><dd>This is set by <code>libffi</code>; you should initialize it to zero.
+
+          <br><dt><code>unsigned short alignment</code><dd>This is set by <code>libffi</code>; you should initialize it to zero.
+
+          <br><dt><code>unsigned short type</code><dd>For a structure, this should be set to <code>FFI_TYPE_STRUCT</code>.
+
+          <br><dt><code>ffi_type **elements</code><dd>This is a &lsquo;<samp><span class="samp">NULL</span></samp>&rsquo;-terminated array of pointers to <code>ffi_type</code>
+objects.  There is one element per field of the struct. 
+</dl>
+        </p></blockquote></div>
+
+   </body></html>
+

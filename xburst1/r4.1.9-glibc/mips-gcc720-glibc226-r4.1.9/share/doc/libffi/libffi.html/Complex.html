@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+<title>Complex - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Types.html#Types" title="Types">
+<link rel="prev" href="Type-Example.html#Type-Example" title="Type Example">
+<link rel="next" href="Complex-Type-Example.html#Complex-Type-Example" title="Complex Type Example">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Complex"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Complex-Type-Example.html#Complex-Type-Example">Complex Type Example</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Type-Example.html#Type-Example">Type Example</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Types.html#Types">Types</a>
+<hr>
+</div>
+
+<h4 class="subsection">2.3.4 Complex Types</h4>
+
+<p>&lsquo;<samp><span class="samp">libffi</span></samp>&rsquo; supports the complex types defined by the C99
+standard (<code>_Complex float</code>, <code>_Complex double</code> and
+<code>_Complex long double</code> with the built-in type descriptors
+<code>ffi_type_complex_float</code>, <code>ffi_type_complex_double</code> and
+<code>ffi_type_complex_longdouble</code>.
+
+   <p>Custom complex types like <code>_Complex int</code> can also be used. 
+An <code>ffi_type</code> object has to be defined to describe the
+complex type to &lsquo;<samp><span class="samp">libffi</span></samp>&rsquo;.
+
+   <p><a name="index-ffi_005ftype-39"></a>
+
+<div class="defun">
+&mdash; Data type: <b>ffi_type</b><var><a name="index-ffi_005ftype-40"></a></var><br>
+<blockquote><dl>
+<dt><code>size_t size</code><dd>This must be manually set to the size of the complex type.
+
+          <br><dt><code>unsigned short alignment</code><dd>This must be manually set to the alignment of the complex type.
+
+          <br><dt><code>unsigned short type</code><dd>For a complex type, this must be set to <code>FFI_TYPE_COMPLEX</code>.
+
+          <br><dt><code>ffi_type **elements</code><dd>
+This is a &lsquo;<samp><span class="samp">NULL</span></samp>&rsquo;-terminated array of pointers to
+<code>ffi_type</code> objects.  The first element is set to the
+<code>ffi_type</code> of the complex's base type.  The second element
+must be set to <code>NULL</code>. 
+</dl>
+        </p></blockquote></div>
+
+   <p>The section <a href="Complex-Type-Example.html#Complex-Type-Example">Complex Type Example</a> shows a way to determine
+the <code>size</code> and <code>alignment</code> members in a platform
+independent way.
+
+   <p>For platforms that have no complex support in <code>libffi</code> yet,
+the functions <code>ffi_prep_cif</code> and <code>ffi_prep_args</code> abort
+the program if they encounter a complex type.
+
+   </body></html>
+

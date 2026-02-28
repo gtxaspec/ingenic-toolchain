@@ -1,0 +1,10 @@
++7740b3095b9f64843271a2ac22177c86be9789db glibc (glibc-2.33-1-g7740b30)
++f314e133929b6379eccc632bef32eaebb66a7335 musl (v1.2.3-150-gf314e13)
+ 5ba5e09b9d39feaedc9be0dcd88d085b256c5d40 newlib (cygwin-3.5.0-dev-30-g5ba5e09)
+ 2efabd3e6604b8a9e8f70baf52f57696680c7855 pk (v1.0.0-89-g2efabd3)
++823a3f11fb8f04c3c3cc0f95f968fef1bfc6534f qemu (v7.0.0)
+ b57cf508c2dcbd201592493b4fc5dada15452d4e riscv-binutils (heads/research-riscv-binutils-2.39-aie-vector1.0)
+-4ea498a8e1fafeb568530d84db1880066478c86b riscv-dejagnu
++e044e5d04648f9de9078fe5ff1c0676901aee955 riscv-gcc (heads/research-riscv-gcc-12.1.0-aie-to-vector1.0)
++be871390a9a2b8ed0f0abd99f3f4b42d535d47a0 riscv-gdb (heads/research-riscv-binutils-2.38-ingenic-trigger)
+-a0298a33e7b2091ba8d9f3a20838d96dc1164cac spike

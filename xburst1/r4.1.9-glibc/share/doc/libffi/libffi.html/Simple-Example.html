@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+<title>Simple Example - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Using-libffi.html#Using-libffi" title="Using libffi">
+<link rel="prev" href="The-Basics.html#The-Basics" title="The Basics">
+<link rel="next" href="Types.html#Types" title="Types">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="Simple-Example"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Types.html#Types">Types</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="The-Basics.html#The-Basics">The Basics</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Using-libffi.html#Using-libffi">Using libffi</a>
+<hr>
+</div>
+
+<h3 class="section">2.2 Simple Example</h3>
+
+<p>Here is a trivial example that calls <code>puts</code> a few times.
+
+<pre class="example">     #include &lt;stdio.h&gt;
+     #include &lt;ffi.h&gt;
+     
+     int main()
+     {
+       ffi_cif cif;
+       ffi_type *args[1];
+       void *values[1];
+       char *s;
+       ffi_arg rc;
+     
+       /* Initialize the argument info vectors */
+       args[0] = &amp;ffi_type_pointer;
+       values[0] = &amp;s;
+     
+       /* Initialize the cif */
+       if (ffi_prep_cif(&amp;cif, FFI_DEFAULT_ABI, 1,
+     		       &amp;ffi_type_sint, args) == FFI_OK)
+         {
+           s = "Hello World!";
+           ffi_call(&amp;cif, puts, &amp;rc, values);
+           /* rc now holds the result of the call to puts */
+     
+           /* values holds a pointer to the function's arg, so to
+              call puts() again all we need to do is change the
+              value of s */
+           s = "This is cool!";
+           ffi_call(&amp;cif, puts, &amp;rc, values);
+         }
+     
+       return 0;
+     }
+</pre>
+   </body></html>
+

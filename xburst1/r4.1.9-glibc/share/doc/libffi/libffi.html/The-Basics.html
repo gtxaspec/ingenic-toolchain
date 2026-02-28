@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+<title>The Basics - libffi</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="libffi">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Using-libffi.html#Using-libffi" title="Using libffi">
+<link rel="next" href="Simple-Example.html#Simple-Example" title="Simple Example">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+This manual is for Libffi, a portable foreign-function interface
+library.
+
+Copyright (C) 2008, 2010, 2011 Red Hat, Inc.
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2, or
+     (at your option) any later version.  A copy of the license is
+     included in the section entitled ``GNU General Public License''.
+
+   -->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+<link rel="stylesheet" type="text/css" href="../cs.css">
+</head>
+<body>
+<div class="node">
+<a name="The-Basics"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Simple-Example.html#Simple-Example">Simple Example</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Using-libffi.html#Using-libffi">Using libffi</a>
+<hr>
+</div>
+
+<h3 class="section">2.1 The Basics</h3>
+
+<p>&lsquo;<samp><span class="samp">Libffi</span></samp>&rsquo; assumes that you have a pointer to the function you wish
+to call and that you know the number and types of arguments to pass
+it, as well as the return type of the function.
+
+   <p>The first thing you must do is create an <code>ffi_cif</code> object that
+matches the signature of the function you wish to call.  This is a
+separate step because it is common to make multiple calls using a
+single <code>ffi_cif</code>.  The <dfn>cif</dfn> in <code>ffi_cif</code> stands for
+Call InterFace.  To prepare a call interface object, use the function
+<code>ffi_prep_cif</code>. 
+<a name="index-cif-6"></a>
+<a name="index-ffi_005fprep_005fcif-7"></a>
+
+<div class="defun">
+&mdash; Function: <b>ffi_status</b><var> ffi_prep_cif </var>(<var>ffi_cif *cif, ffi_abi abi, unsigned int nargs, ffi_type *rtype, ffi_type **argtypes</var>)<var><a name="index-ffi_005fstatus-8"></a></var><br>
+<blockquote><p>This initializes <var>cif</var> according to the given parameters.
+
+        <p><var>abi</var> is the ABI to use; normally <code>FFI_DEFAULT_ABI</code> is what
+you want.  <a href="Multiple-ABIs.html#Multiple-ABIs">Multiple ABIs</a> for more information.
+
+        <p><var>nargs</var> is the number of arguments that this function accepts.
+
+        <p><var>rtype</var> is a pointer to an <code>ffi_type</code> structure that
+describes the return type of the function.  See <a href="Types.html#Types">Types</a>.
+
+        <p><var>argtypes</var> is a vector of <code>ffi_type</code> pointers. 
+<var>argtypes</var> must have <var>nargs</var> elements.  If <var>nargs</var> is 0,
+this argument is ignored.
+
+        <p><code>ffi_prep_cif</code> returns a <code>libffi</code> status code, of type
+<code>ffi_status</code>.  This will be either <code>FFI_OK</code> if everything
+worked properly; <code>FFI_BAD_TYPEDEF</code> if one of the <code>ffi_type</code>
+objects is incorrect; or <code>FFI_BAD_ABI</code> if the <var>abi</var> parameter
+is invalid. 
+</p></blockquote></div>
+
+   <p>If the function being called is variadic (varargs) then
+<code>ffi_prep_cif_var</code> must be used instead of <code>ffi_prep_cif</code>.
+
+   <p><a name="index-ffi_005fprep_005fcif_005fvar-9"></a>
+
+<div class="defun">
+&mdash; Function: <b>ffi_status</b><var> ffi_prep_cif_var </var>(<var>ffi_cif *cif, ffi_abi varabi, unsigned int nfixedargs, unsigned int varntotalargs, ffi_type *rtype, ffi_type **argtypes</var>)<var><a name="index-ffi_005fstatus-10"></a></var><br>
+<blockquote><p>This initializes <var>cif</var> according to the given parameters for
+a call to a variadic function.  In general it's operation is the
+same as for <code>ffi_prep_cif</code> except that:
+
+        <p><var>nfixedargs</var> is the number of fixed arguments, prior to any
+variadic arguments.  It must be greater than zero.
+
+        <p><var>ntotalargs</var> the total number of arguments, including variadic
+and fixed arguments.
+
+        <p>Note that, different cif's must be prepped for calls to the same
+function when different numbers of arguments are passed.
+
+        <p>Also note that a call to <code>ffi_prep_cif_var</code> with
+<var>nfixedargs</var>=<var>nototalargs</var> is NOT equivalent to a call to
+<code>ffi_prep_cif</code>.
+
+        </blockquote></div>
+
+   <p>To call a function using an initialized <code>ffi_cif</code>, use the
+<code>ffi_call</code> function:
+
+   <p><a name="index-ffi_005fcall-11"></a>
+
+<div class="defun">
+&mdash; Function: <b>void</b><var> ffi_call </var>(<var>ffi_cif *cif, void *fn, void *rvalue, void **avalues</var>)<var><a name="index-void-12"></a></var><br>
+<blockquote><p>This calls the function <var>fn</var> according to the description given in
+<var>cif</var>.  <var>cif</var> must have already been prepared using
+<code>ffi_prep_cif</code>.
+
+        <p><var>rvalue</var> is a pointer to a chunk of memory that will hold the
+result of the function call.  This must be large enough to hold the
+result, no smaller than the system register size (generally 32 or 64
+bits), and must be suitably aligned; it is the caller's responsibility
+to ensure this.  If <var>cif</var> declares that the function returns
+<code>void</code> (using <code>ffi_type_void</code>), then <var>rvalue</var> is
+ignored.
+
+        <p><var>avalues</var> is a vector of <code>void *</code> pointers that point to the
+memory locations holding the argument values for a call.  If <var>cif</var>
+declares that the function has no arguments (i.e., <var>nargs</var> was 0),
+then <var>avalues</var> is ignored.  Note that argument values may be
+modified by the callee (for instance, structs passed by value); the
+burden of copying pass-by-value arguments is placed on the caller. 
+</p></blockquote></div>
+
+   </body></html>
+
